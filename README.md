@@ -19,3 +19,5 @@ When CI checks pass, PRs should be [squash merged](https://docs.github.com/en/re
 ## Architectural goals
 
 The Privacy Deployments Registry uses simple, widely adopted, actively maintained technologies to ensure its sustainability. Static site generation, particularly Jekyll on Github Pages, is favored. We are conservative about introducing new libraries. Any front-end libraries used should be pulled from a CDN, rather than checked in to the codebase. We avoid inline Javascript, and favor modern widely supported JS language features like [modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). Deployment should not rely on any steps apart from the static site generator, and the output files should be git-ignored.
+
+This repo will describe DP in general terms. The details of particular deployments will be kept in [`deployments-registry-data`](https://github.com/opendp/deployments-registry-data). How that data is incorporated for display is still to be determined: Options include git submodules, generated JSONP, and Github Actions.
