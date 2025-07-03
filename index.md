@@ -4,3 +4,6 @@
 
 layout: home
 ---
+
+{{ site.data.deployments }}
+
