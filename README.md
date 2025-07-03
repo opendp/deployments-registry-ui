@@ -27,3 +27,6 @@ This repo will describe DP in general terms. Particular deployments are describe
 ```
 git clone --recurse-submodules https://github.com/opendp/deployments-registry-ui.git
 cd deployments-registry-ui
+bundle install
+bundle exec jekyll serve
+```
