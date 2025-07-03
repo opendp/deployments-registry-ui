@@ -1,7 +1,7 @@
 # deployments-registry-ui
-Front-end for the Privacy Deployments Registry
+Front-end for the Differential Privacy Deployments Registry
 
-Shared development practices and architectural goals will make the Privacy Deployments Registry a sustainable community project.
+Shared development practices and architectural goals will make the Differential Privacy Deployments Registry a sustainable community project.
 
 ## Development practices
 
@@ -18,7 +18,7 @@ When CI checks pass, PRs should be [squash merged](https://docs.github.com/en/re
 
 ## Architectural goals
 
-The Privacy Deployments Registry uses simple, widely adopted, actively maintained technologies to ensure its sustainability. It uses Jekyll to render static pages, and Github Pages to serve the content. We are conservative about introducing new libraries. Any front-end libraries used should be pulled from a CDN, rather than checked in to the codebase. We avoid inline Javascript, and favor modern widely supported JS language features like [modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). Deployment should not rely on any steps apart from the static site generator, and the output files should be git-ignored.
+The Differential Privacy Deployments Registry uses simple, widely adopted, actively maintained technologies to ensure its sustainability. It uses Jekyll to render static pages, and Github Pages to serve the content. We are conservative about introducing new libraries. Any front-end libraries used should be pulled from a CDN, rather than checked in to the codebase. We avoid inline Javascript, and favor modern widely supported JS language features like [modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). Deployment should not rely on any steps apart from the static site generator, and the output files should be git-ignored.
 
 This repo will describe DP in general terms. Particular deployments are described in [`deployments-registry-data`](https://github.com/opendp/deployments-registry-data) which is referenced as a git module.
 
