@@ -12,7 +12,7 @@ theme: minima
 plugins:
   - jekyll-feed
 header_pages:
-  - overview.md
+  - content/overview.md
 
 
 # Exclude from processing.
