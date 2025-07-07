@@ -1,10 +1,11 @@
 ---
 title: Official Guidance and Standardization
+order: 2
 ---
 
 Before diving into the main document, it is important to note that the two prominent standardization bodies, NIST and ISO/IEC, have been active in providing guidance and standardization in the space of data anonymization, and in particular differential privacy.
 
-**ISO/IEC 20889:2018** ([34][34]): This standard by the ISO/IEC focuses broadly on de-identification techniques, including synthetic data and randomization techniques. Despite being a normative standard in part, differential privacy is introduced as a formal privacy measure in the style of an informative standard. Only ε-differential privacy is considered with Laplace, Gaussian and Exponential mechanisms and the concept of cumulative privacy loss. Interestingly, despite Gaussian noise typically being associated with (ε, δ)-differential privacy and zero-concentrated differential privacy, as will be introduced in section [(ε, δ)-Differential Privacy](TODO), these more nuanced privacy models are not defined.
+**ISO/IEC 20889:2018** ([34][34]): This standard by the ISO/IEC focuses broadly on de-identification techniques, including synthetic data and randomization techniques. Despite being a normative standard in part, differential privacy is introduced as a formal privacy measure in the style of an informative standard. Only ϵ-differential privacy is considered with Laplace, Gaussian and Exponential mechanisms and the concept of cumulative privacy loss. Interestingly, despite Gaussian noise typically being associated with (ϵ, δ)-differential privacy and zero-concentrated differential privacy, as will be introduced in section [(ϵ, δ)-Differential Privacy](TODO), these more nuanced privacy models are not defined.
 
 **NIST SP 800-226 ipd** ([35][35]): The guidance paper extends far beyond ISO/IEC 20889:2018, considering multiple privacy models, considerations with regard to the conversion between privacy models, basic mechanisms, threat models in terms of local and central models and more. This is an excellent resource for understanding the nomenclature, security model and goals of applying differential privacy in practice. Throughout this document we endeavor to align the terminology with the NIST guidance paper, leaving formal definitions to the original source.
 

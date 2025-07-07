@@ -1,5 +1,6 @@
 ---
 title: Overview
+order: 1
 ---
 
 Over the last five years, the use of differential privacy as an output disclosure control for sensitive data releases and queries has grown substantially. This is due in part to the elegant and theoretically robust underpinning of the differential privacy literature, in part to the prevalence of attacks on traditional disclosure techniques, and in part to the adoption of differential privacy by those perceived to set the "gold standard" such as the US Census ([22][22], [23][23]) which acts as a form of social proof, giving greater confidence to other early adopters.

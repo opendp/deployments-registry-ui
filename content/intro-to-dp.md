@@ -1,0 +1,67 @@
+---
+title: Introduction to Differential Privacy
+order: 3
+---
+
+## Randomized Response Surveys
+
+Before the age of big data and data science, traditional data collection faced the challenge called the evasive answer bias. That is to say, people not answering survey questions honestly in fear that their answers may be used against them. Randomized responses emerged in the mid-twentieth century to address this.
+
+Randomized response is a technique to protect the privacy of individuals in surveys. It involves adding local noise, such as flipping a coin multiple times and assigning the responses of the individual based on the coin-flip sequence. In doing so, the responses can be true in expectation but any given response is uncertain. This uncertainty over the response of an individual is one of the first applications of differential privacy, although it was not called as such at the time and the quantification of privacy was simply the weighting of probabilities determined by the mechanism. 
+
+{% include image.html
+    url="/images/randomized-response.png"
+    alt="On the left a coin is flipped, it branches to the right and Truth is on one branch, and another coin flip on the other. The second flip determines Truth or Lie. Truth : Lie :: 3 : 1"
+    caption="An example of using a conditional coin-flip to achieve plausible deniability with a calibrated bias."
+%}
+
+This approach of randomizing the output of the answer to a question by a mechanism, a stochastic intervention such as coin flipping, is still the very backbone of differential privacy today.
+
+(The original approach by S.L. Warner actually involved spinning a "spinner" and as such he could easily change the weighting of the outcome based on the proportion of the circle assigned to each outcome. Whether you prefer a mental model of a roulette wheel, a spinner, coins flipping or dice rolling, as long as we can portray a well calibrated stochastic mechanism which is biased towards the truth, then the approach will work.)
+
+## ϵ-Differential Privacy
+
+Pure epsilon-differential privacy ϵ-DP is a mathematical
+guarantee that enables the sharing of aggregated statistics about a dataset while
+protecting individual privacy by adding random noise. Simply put,
+it ensures that the outcome of any analysis is nearly the same,
+regardless of whether _any individual's data_ is either included or
+removed from the dataset.
+
+Formally, the privacy guarantee is quantified using the privacy parameter
+ϵ (epsilon). A randomized algorithm \\(A\\) is
+ϵ-differentially private if for all neighboring datasets
+\\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all
+subsets of outputs \\(S \subseteq \text{Range}(M)\\)
+
+$$
+\Pr[M(D_1) \in S] \leq e^{\epsilon} \cdot \Pr[M(D_2) \in S]
+$$
+
+This \\(M\\) algorithm will provide a set amount of noise, quantified by ϵ, which would generate outputs with certain error from the real value, which can be quantified by the following interactive widget.
+
+<!-- TODO: port "Randomized Response was ε-Differential Privacy" -->
+
+<!-- TODO: port "Intuition of the Laplace Mechanism" -->
+
+## (ε, δ)-Differential Privacy
+
+(ε, δ)-differential privacy is a mathematical guarantee that extends the concept of pure epsilon-differential privacy by allowing for a small probability of failure, with a second privacy parameter \\(\delta\\). Just as we described pure DP in our previous section, it also ensures that the outcome of any analysis is nearly the same, regardless of whether any individual's data is present, but further includes a small allowance for a cryptographically small chance of error.
+
+Formally, the privacy guarantee is now quantified using both \\(\epsilon\\) (epsilon) and also \\(\delta\\) (delta). A randomized algorithm \\(M\\) is \\((\epsilon, \delta)\\)-differentially private if for all neighboring datasets \\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all subsets of outputs \\(S \subseteq \text{Range}(M)\\)
+
+$$
+\Pr[M(D_1) \in S] \leq e^{\epsilon} \cdot \Pr[M(D_2) \in S] + \delta
+$$
+
+<!-- TODO: port "Intuition of (ε, δ)-Differential Privacy" -->
+
+## Zero-Concentrated Differential Privacy
+
+Zero-Concentrated Differential Privacy (zCDP) introduces a parameter \\(\rho\\) (rho) to measure the concentration of privacy loss around its expected value, enabling tighter control over cumulative privacy loss in repeated or iterative analyses. This makes zCDP particularly useful in applications that require multiple queries or iterative data use.
+
+Formally, a randomized algorithm \\(M\\) satisfies \\(\rho\\)-zCDP such that for neighboring datasets \\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all \\(\alpha\\) in (1, ∞), the following holds:
+
+$$
+D_{\alpha}(M(D_1) \parallel M(D_2)) \leq \rho \alpha
+$$

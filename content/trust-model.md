@@ -1,5 +1,6 @@
 ---
 title: Defining the Trust Model
+order: 4
 ---
 
 ## The Local Model

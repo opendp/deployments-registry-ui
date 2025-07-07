@@ -17,7 +17,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
             <td>{{ s.data_curator.description }}</td>
         </tr>
         <tr>
-            <th>Epsilon (ε)</th>
+            <th>Epsilon (ϵ)</th>
             <!-- TODO: Add a description in the schema for epsilon in particular. -->
             <td>{{ s.privacy_loss.properties.privacy_parameters.description }}</td>
         </tr>
@@ -36,7 +36,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     <thead>
         <tr>
             <th>Curator</th>
-            <th>Epsilon (ε)</th>
+            <th>Epsilon (ϵ)</th>
             <th>Model</th>
             <th>Intended Use</th>
         </tr>
@@ -54,7 +54,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     </tbody>
 </table>
 
-{% assign pages = site.pages | where_exp: 'page', 'page.title' %}
+{% assign pages = site.pages | where_exp: 'page', 'page.title' | sort: 'order' %}
 {% for page in pages %}
 - [{{page.title}}]({{page.url}})
 {% endfor %}
