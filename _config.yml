@@ -11,6 +11,9 @@ url: "http://registry.opendp.org/"
 theme: minima
 plugins:
   - jekyll-feed
+header_pages:
+  - about.md
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.

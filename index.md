@@ -54,3 +54,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     </tbody>
 </table>
 
+{% assign pages = site.pages | where_exp: 'page', 'page.title' %}
+{% for page in pages %}
+- [{{page.title}}]({{page.url}})
+{% endfor %}
