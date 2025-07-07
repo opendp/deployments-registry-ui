@@ -1,0 +1,18 @@
+---
+title: Overview
+---
+
+Over the last five years, the use of differential privacy as an output disclosure control for sensitive data releases and queries has grown substantially. This is due in part to the elegant and theoretically robust underpinning of the differential privacy literature, in part to the prevalence of attacks on traditional disclosure techniques, and in part to the adoption of differential privacy by those perceived to set the "gold standard" such as the US Census which acts as a form of social proof, giving greater confidence to other early adopters.
+
+As a reference, one way to classify the maturity and readiness of a technology in industry is to consider the technology readiness level of the technology . Systems built with differential privacy guarantees can be found between TRL 6-9. In other words, some industry applications of differential privacy have only been demonstrated in relevant domains, while others have been deployed and tested in operational environments. As such, finding common ground on privacy deployments appears to be an urgent challenge for the DP industry.
+
+The purpose of this document is to support the responsible adoption of differential privacy in the industry. Differential privacy, as will be introduced in an upcoming section, is simply a measure of information loss about data subjects or entities. However, there are few guidelines or recommendations for choosing the thresholds of what a reasonable balance between privacy and query accuracy should be. Furthermore, in many scenarios, these thresholds are context-specific and thus, any organization endeavoring to adopt differential privacy in practice will find its selection extremely important.
+
+In this document, we describe some dimensions with which we can describe applications of differential privacy and label many real-world case studies based on the setting they are deployed in and the privacy budgets chosen. While this is not intended to act as an endorsement of any application, we hope that the document will act as a baseline for informed debate, precedence and eventually, best practices to emerge.
+
+Core to this document, is a registry of case studies present at the end. Much of the work of identifying these initial case studies is due to the great prior work from personal blogs , government and NGO guides . Despite pre-existing work, the motivation of this document lies on expanding expand the number and classification of these case studies in an open-source fashion, such that the community as a whole can contribute and shape a shared understanding.
+
+On the other hand, if the reader is interested more in an introduction to differential privacy, there are some excellent resources available such as books/papers , online lecture notes and websites . While this document introduces some of the nomenclature of differential privacy, it is not intended to be a standalone resource and will refer to common techniques and mechanisms with only references where the reader can learn more.
+
+Finally, and importantly, this document is not intended to be static in nature. One core purpose behind the document is to periodically add new case studies, to keep up with the ever evolving practices of industry and government applications and align with guidance from regulators which are expected to be more prevalent in coming years. If you would like to join the authors of this document and support the registry, please head over to the Contribute page.
+
