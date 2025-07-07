@@ -2,14 +2,6 @@
 title: ε-Differential Privacy
 ---
 
-<!--
-TODO: This should be part of the site-wide template. 
-Expected "_includes/custom-head.html" to work, but it doesn't work for me.
-https://github.com/jekyll/minima/blob/master/_includes/head.html
--->
-
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
 Pure epsilon-differential privacy \\((\epsilon\)-DP\\) is a mathematical
 guarantee that enables the sharing of aggregated statistics about a dataset while
 protecting individual privacy by adding random noise. Simply put,
