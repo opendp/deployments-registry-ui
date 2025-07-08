@@ -1,3 +1,85 @@
 <details>
-    {{ include.deployment }}
+    {% assign d = include.deployment %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>{{ d.name }}</td>
+        </tr>
+        <tr>
+            <th>Data Curator</th>
+            <td>{{ d.data_curator }}</td>
+        </tr>
+        <tr>
+            <th>Intended Use</th>
+            <td>{{ d.intended_use }}</td>
+        </tr>
+        <tr>
+            <th>Data Product Type</th>
+            <td>{{ d.data_product_type }}</td>
+        </tr>
+        <tr>
+            <th>Data Product Region</th>
+            <td>{{ d.data_product_region }}</td>
+        </tr>
+        <tr>
+            <th>Data Product Description</th>
+            <td>{{ d.data_product_description }}</td>
+        </tr>
+        <tr>
+            <th>Publication Date</th>
+            <td>{{ d.publication_date }}</td>
+        </tr>
+        <tr>
+            <th>DP Flavor</th>
+            <td>
+                <dl>
+                    <dt>Name</dt><dd>{{ d.dp_flavor.name }}</dd>
+                    <dt>Data Domain</dt><dd>{{ d.dp_flavor.data_domain }}</dd>
+                    <dt>Unprotected Quantities</dt><dd>{{ d.dp_flavor.unprotected_quantities }}</dd>
+                </dl>
+            </td>
+        </tr>
+        <tr>
+            <th>Privacy Loss</th>
+            <td>
+                <dl>
+                    <dt>Privacy Unit</dt><dd>{{d.privacy_loss.privacy_unit}}</dd>
+                    <dt>Privacy Unit Description</dt><dd>{{d.privacy_loss.privacy_unit_description}}</dd>
+                    <dt>Privacy Parameters</dt><dd>{{d.privacy_loss.privacy_parameters}}</dd>
+                    <dt>Privacy Parameters Description</dt><dd>{{d.privacy_loss.privacy_parameters_description}}</dd>
+                </dl>
+            </td>
+        </tr>
+        <tr>
+            <th>Model</th>
+            <td>
+                <dl>
+                    <dt>Model Type</dt><dd>{{d.model.model_type}}</dd>
+                    <dt>Model Type Description</dt><dd>{{d.model.model_type_description}}</dd>
+                    <dt>Release Type</dt><dd>{{d.model.release_type}}</dd>
+                    <dt>Release Type Description</dt><dd>{{d.model.release_type_description}}</dd>
+                    <dt>Interactivity</dt><dd>{{d.model.interactivity}}</dd>
+                </dl>
+            </td>
+        </tr>
+        <tr>
+            <th>Additional DP Information</th>
+            <td>
+                <dl>
+                    <dt>Post-Processing</dt><dd>{{d.additional_dp_information.post_processing}}</dd>
+                    <dt>Composition</dt><dd>{{d.additional_dp_information.composition}}</dd>
+                </dl>
+            </td>
+        </tr>
+        <tr>
+            <th>Implementation</th>
+            <td>
+                <dl>
+                    <dt>Pre-Processing/EDA/Hyperparameter Tuning</dt><dd>{{d.implementation.pre_processing_eda_hyperparameter_tuning}}</dd>
+                    <dt>Mechanisms</dt><dd>{{d.implementation.mechanisms}}</dd>
+                    <dt>Justification</dt><dd>{{d.implementation.justification}}</dd>
+                </dl>
+            </td>
+        </tr>
+    </table>
 </details>
