@@ -50,6 +50,11 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
             <td>{{ d.model.model_type }}</td>
             <td>{{ d.intended_use }}</td>
         </tr>
+        <tr>
+            <td colspan=4>
+                {% include details.html deployment=d %}
+            </td>
+        </tr>
     {% endfor %}
     </tbody>
 </table>
