@@ -34,7 +34,7 @@ To build the site locally:
 git clone --recurse-submodules https://github.com/opendp/deployments-registry-ui.git
 cd deployments-registry-ui
 bundle install
-bundle exec jekyll serve
+bundle exec jekyll build
 ```
 
 To run tests:
