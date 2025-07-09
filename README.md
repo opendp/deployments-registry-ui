@@ -16,17 +16,32 @@ Reviewers should confirm that a PR actually addresses the linked issue, that the
 
 When CI checks pass, PRs should be [squash merged](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github#squashing-your-merge-commits). The linked issue will be automatically closed, and the new version of the site automatically published.
 
-## Architectural goals
+## Architecture
 
-The Differential Privacy Deployments Registry uses simple, widely adopted, actively maintained technologies to ensure its sustainability. It uses Jekyll to render static pages, and Github Pages to serve the content. We are conservative about introducing new libraries. Any front-end libraries used should be pulled from a CDN, rather than checked in to the codebase. We avoid inline Javascript, and favor modern widely supported JS language features like [modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). Deployment should not rely on any steps apart from the static site generator, and the output files should be git-ignored.
+**Static site generation**: The Differential Privacy Deployments Registry uses simple, widely adopted, actively maintained technologies to ensure its sustainability. It uses Jekyll to render static pages, and Github Pages to serve the content. Deployment should not rely on any steps apart from the static site generator, and the output files should be git-ignored.
 
-This repo will describe DP in general terms. Particular deployments are described in [`deployments-registry-data`](https://github.com/opendp/deployments-registry-data) which is referenced as a git module.
+**Javascript**: We are conservative about introducing new libraries. Any front-end libraries used should be pulled from a CDN, rather than checked in to the codebase. We avoid inline Javascript, and favor modern widely supported JS language features like [modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
+
+**Testing**: Additional testing (playwright end-to-end tests, link checking, etc.) will use Python, just because of our greater familiarity with Python testing tools. We'll focus on making simple assertions with these tests, so if there is a desire in the future to make the whole project Ruby, it shouldn't be too hard.
+
+**Separation of concerns**: This repo has front end details, and will describe DP in general terms. Particular deployments are described in [`deployments-registry-data`](https://github.com/opendp/deployments-registry-data) which is referenced as a git module.
+
 
 ## Getting started
 
+To build the site locally:
 ```
 git clone --recurse-submodules https://github.com/opendp/deployments-registry-ui.git
 cd deployments-registry-ui
 bundle install
 bundle exec jekyll serve
+```
+
+To run tests:
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r tests/requirements.txt
+playwright install
+pytest
 ```

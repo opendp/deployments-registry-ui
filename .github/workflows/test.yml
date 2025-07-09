@@ -20,8 +20,16 @@ jobs:
           ruby-version: '3.4'
           bundler-cache: true # runs 'bundle install' and caches installed gems
 
-      - name: Build "_site"
-        run: bundle exec jekyll build
+      - name: Run Jekyll
+        run: bundle exec jekyll serve &
 
-      - name: Check that "_site" exists
-        run: '[ -e _site/index.html ]'
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install -r tests/requirements.txt
+
+      - name: Run tests
+        run: pytest -vv
