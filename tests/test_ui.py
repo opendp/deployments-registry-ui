@@ -12,5 +12,20 @@ if bp in Path(__file__).read_text():
 
 
 def test_ui(page: Page):
-    page.goto('http://localhost:4000/')
-    expect(page.get_by_role("heading", name="Differential Privacy Deployments Registry")).to_be_visible()
+    # Page load?
+    page.goto("http://localhost:4000/")
+    expect(
+        page.get_by_role("heading", name="Differential Privacy Deployments Registry")
+    ).to_be_visible()
+
+    # Schema load?
+    expect(
+        page.get_by_text("The name of the entity publishing the data product.")
+    ).to_be_visible()
+
+    # Data load?
+    expect(
+        page.get_by_text(
+            "To help researchers, public health experts, and data analysts"
+        )
+    ).to_be_visible()
