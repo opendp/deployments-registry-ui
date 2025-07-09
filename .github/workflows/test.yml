@@ -31,5 +31,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r tests/requirements.txt
 
+      - name: Install browsers
+        # Install just one browser instead of the default three.
+        # https://playwright.dev/python/docs/browsers#managing-browser-binaries
+        run: playwright install chromium
+
       - name: Run tests
         run: pytest -vv
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-traces
+          path: test-results/
