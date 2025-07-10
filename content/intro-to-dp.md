@@ -109,7 +109,10 @@ $$
 
 <!-- eslint-enable markdown/no-missing-label-refs -->
 
-<!-- TODO: port "Intuition of (ε, δ)-Differential Privacy" -->
+The following widget describes the expected error for noise added under (ε, δ)-DP.
+
+<div id="laplace-to-gaussian"></div>
+<script type="module" src="/assets/js/laplace-to-gaussian.js"></script>
 
 ## Zero-Concentrated Differential Privacy
 
