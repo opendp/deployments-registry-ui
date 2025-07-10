@@ -34,9 +34,11 @@ Formally, the privacy guarantee is quantified using the privacy parameter
 \\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all
 subsets of outputs \\(S \subseteq \text{Range}(M)\\)
 
+<!-- eslint-disable markdown/no-missing-label-refs -->
 $$
 \Pr[M(D_1) \in S] \leq e^{\epsilon} \cdot \Pr[M(D_2) \in S]
 $$
+<!-- eslint-enable markdown/no-missing-label-refs -->
 
 This \\(M\\) algorithm will provide a set amount of noise, quantified by ϵ, which would generate outputs with certain error from the real value, which can be quantified by the following interactive widget.
 
@@ -78,9 +80,11 @@ guarantees to have a meaningful privacy assurance.
 
 Formally, the privacy guarantee is now quantified using both \\(\epsilon\\) (epsilon) and also \\(\delta\\) (delta). A randomized algorithm \\(M\\) is \\((\epsilon, \delta)\\)-differentially private if for all neighboring datasets \\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all subsets of outputs \\(S \subseteq \text{Range}(M)\\)
 
+<!-- eslint-disable markdown/no-missing-label-refs -->
 $$
 \Pr[M(D_1) \in S] \leq e^{\epsilon} \cdot \Pr[M(D_2) \in S] + \delta
 $$
+<!-- eslint-enable markdown/no-missing-label-refs -->
 
 <!-- TODO: port "Intuition of (ε, δ)-Differential Privacy" -->
 

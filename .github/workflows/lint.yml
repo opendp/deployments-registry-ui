@@ -20,4 +20,4 @@ jobs:
           node-version: 22
       
       - name: Run ESLint
-        run: npx eslint assets/js
+        run: npm test

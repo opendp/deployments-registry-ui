@@ -24,7 +24,7 @@ This repo will describe DP in general terms. Particular deployments are describe
 
 ## Getting started
 
-```
+```shell
 git clone --recurse-submodules https://github.com/opendp/deployments-registry-ui.git
 cd deployments-registry-ui
 bundle install
