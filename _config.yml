@@ -13,10 +13,11 @@ plugins:
   - jekyll-feed
 header_pages:
   - content/overview.md
-markdown: kramdown # The default: GFM would strip <script> tags.
+markdown: kramdown # The default: passes <script> tags through verbatim.
 
 exclude:
   - eslint.config.mjs
   - node_modules/
   - package-lock.json
   - package.json
+  - vendor
