@@ -30,7 +30,7 @@ function convertToOdds(truthProbability, lieProbability) {
     return `${approximatedTruth}:1`;
 }
 
-function loadProbTable() {
+function loadProbabilityTable() {
     const epsilons = [0, 0.01, 0.1, 1, 5, 10, 50, 100];
     const tableBody = document.getElementById("probability-table-body");
 
@@ -60,6 +60,6 @@ function loadProbTable() {
     });
 };
 
-window.addEventListener("load", (event) => {
-    loadProbTable();
+window.addEventListener("load", () => {
+    loadProbabilityTable();
 });
