@@ -74,7 +74,26 @@ often advocate for \\(\epsilon \approx 1\\) for differential privacy
 guarantees to have a meaningful privacy assurance.
 
 
-<!-- TODO: port "Intuition of the Laplace Mechanism" -->
+### Intuition of the Laplace Mechanism
+
+One of the most widely used mechanisms in ε-differential privacy is the
+Laplace mechanism. It is used when we are adding bounded values
+together such as counts or summations of private values, provided the
+extreme values (usually referenced as _bounds_) of the private
+values are known and hence the maximum contribution of any data
+subject is _bounded_.
+
+In practice, the true sum is first computed, then noise is sampled from the Laplace distribution, and finally this noise is added to the result.
+For example, if you're counting and all the values lie within range in (0, 1), the widget below shows how the
+distribution of noise and expected error change as
+ε varies.
+
+Note that the error is additive and so we can make claims about the
+absolute error, but not the relative error of the final stochastic
+result.
+
+<div id="epsilon-expected-error"></div>
+<script type="module" src="/assets/js/epsilon-expected-error.js"></script>
 
 ## (ε, δ)-Differential Privacy
 
