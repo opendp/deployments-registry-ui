@@ -290,5 +290,6 @@ const spec = {
   
 
 window.addEventListener("load", () => {
+    // eslint-disable-next-line no-undef
     vegaEmbed('#laplace-to-gaussian', spec);
 });

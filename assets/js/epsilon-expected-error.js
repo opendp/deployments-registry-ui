@@ -134,5 +134,6 @@ const spec = {
 }
 
 window.addEventListener("load", () => {
+    // eslint-disable-next-line no-undef
     vegaEmbed('#epsilon-expected-error', spec);
 });
