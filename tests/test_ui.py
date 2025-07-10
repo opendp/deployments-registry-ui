@@ -26,7 +26,5 @@ def test_ui(page: Page):
 
     # Data load?
     expect(
-        page.get_by_text(
-            "To help researchers, public health experts, and data analysts"
-        )
+        page.get_by_role("cell", name="To help researchers")
     ).to_be_visible()
