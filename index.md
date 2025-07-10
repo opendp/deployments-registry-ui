@@ -5,6 +5,16 @@
 layout: home
 ---
 
+<!-- TODO: Move CSS to header, or remove. -->
+<style>
+    dt {
+        font-weight: bold;
+    }
+    dd {
+        padding-left: 1em;
+    }
+</style>
+
 Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://journalprivacyconfidentiality.org/index.php/jpc/article/view/689) by Cynthia Dwork, Nitin Kohli, and Deirdre Mulligan, this registry provides: 
 
 > a publicly available communal body of knowledge about differential privacy implementations that can be used by various stakeholders to drive the identification and adoption of judicious differentially private implementations
@@ -49,6 +59,11 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
             <td>{{ d.privacy_loss.privacy_parameters.epsilon }}</td>
             <td>{{ d.model.model_type }}</td>
             <td>{{ d.intended_use }}</td>
+        </tr>
+        <tr>
+            <td colspan=4>
+                {% include details.html deployment=d %}
+            </td>
         </tr>
     {% endfor %}
     </tbody>

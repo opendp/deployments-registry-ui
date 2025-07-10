@@ -10,7 +10,11 @@ Before the age of big data and data science, traditional data collection faced t
 Randomized response is a technique to protect the privacy of individuals in surveys. It involves adding local noise, such as flipping a coin multiple times and assigning the responses of the individual based on the coin-flip sequence. In doing so, the responses can be true in expectation but any given response is uncertain. This uncertainty over the response of an individual is one of the first applications of differential privacy, although it was not called as such at the time and the quantification of privacy was simply the weighting of probabilities determined by the mechanism. 
 
 {% include image.html
+<<<<<<< HEAD
     url="/assets/images/randomized-response.png"
+=======
+    url="/images/randomized-response.png"
+>>>>>>> main
     alt="On the left a coin is flipped, it branches to the right and Truth is on one branch, and another coin flip on the other. The second flip determines Truth or Lie. Truth : Lie :: 3 : 1"
     caption="An example of using a conditional coin-flip to achieve plausible deniability with a calibrated bias."
 %}
