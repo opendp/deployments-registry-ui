@@ -11,6 +11,9 @@ url: "http://registry.opendp.org/"
 theme: minima
 plugins:
   - jekyll-feed
+header_pages:
+  - content/overview.md
+
 
 exclude:
   - tests

@@ -25,6 +25,9 @@ jobs:
       - name: Run Jekyll
         run: bundle exec jekyll build
 
+      - name: Check that "_site" exists
+        run: '[ -e _site/index.html ]'
+
       - name: Install Python
         uses: actions/setup-python@v5
         with:
@@ -41,7 +44,8 @@ jobs:
       - name: Run tests
         run: pytest -vv
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload Playwright traces
+        uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: playwright-traces
