@@ -62,6 +62,7 @@ This mechanism is incredibly useful for building intuition among a non-technical
     </thead>
     <tbody id="probability-table-body"></tbody>
 </table>
+<script type="module" src="/assets/js/probability-table.js"></script>
 
 While the above odds are merely illustrative, they help convey the practical meaning of epsilon
 in relation to the more intuitive randomized response mechanism. As a point of reference, theorists

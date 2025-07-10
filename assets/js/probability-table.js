@@ -59,3 +59,7 @@ function loadProbTable() {
         tableBody.appendChild(row);
     });
 };
+
+window.addEventListener("load", (event) => {
+    loadProbTable();
+});
