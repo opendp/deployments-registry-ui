@@ -5,16 +5,6 @@
 layout: home
 ---
 
-<!-- TODO: Move CSS to header, or remove. -->
-<style>
-    dt {
-        font-weight: bold;
-    }
-    dd {
-        padding-left: 1em;
-    }
-</style>
-
 Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://journalprivacyconfidentiality.org/index.php/jpc/article/view/689) by Cynthia Dwork, Nitin Kohli, and Deirdre Mulligan, this registry provides: 
 
 > a publicly available communal body of knowledge about differential privacy implementations that can be used by various stakeholders to drive the identification and adoption of judicious differentially private implementations
