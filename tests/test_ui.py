@@ -13,8 +13,7 @@ if bp in Path(__file__).read_text():
 
 def test_ui(page: Page):
     # Page load?
-    root = Path(__file__).parent.parent
-    page.goto(f"file://{root}/_site/index.html")
+    page.goto(f"http://localhost:4000/")
     expect(
         page.get_by_role("heading", name="Differential Privacy Deployments Registry")
     ).to_be_visible()
