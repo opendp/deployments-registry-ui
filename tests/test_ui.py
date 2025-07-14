@@ -31,8 +31,27 @@ def test_ui(page: Page):
     ).to_be_visible()
 
     # Markdown and Latex rendering?
-    page.locator("mjx-container").filter(has_text="ϵsym").is_hidden()
+    # Confirm hidden:
+    latex_node = page.locator("mjx-container").filter(has_text="ϵsym")
+    latex_node.is_hidden()
+
+    markdown_p_1_text = "A region-specific constant c"
+    markdown_p_1_node = page.get_by_text(markdown_p_1_text)
+    markdown_p_1_node.is_hidden()
+
+    # Click:
     # TODO: Update ID when https://github.com/opendp/deployments-registry-data/issues/51 is done.
     page.get_by_test_id("google_covid_19_sympton_search").click()
-    page.locator("mjx-container").filter(has_text="ϵsym").is_visible()
 
+    # Confirm visible
+    latex_node.is_visible()
+
+    markdown_p_1_node.is_visible()
+
+    # ... and confirm the second paragraph is in a separate element.
+    # We could also confirm that markdown lists or links are rendered.
+    markdown_p_2_text = "Unreliable metrics are removed"
+    assert markdown_p_2_text not in markdown_p_1_node.text_content()
+
+    parent = page.locator("dd").filter(has=markdown_p_1_node)
+    assert markdown_p_2_text in parent.text_content()
