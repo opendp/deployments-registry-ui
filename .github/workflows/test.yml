@@ -7,6 +7,22 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm ci
+      
+      - run: npm test
+
   test:
     runs-on: ubuntu-22.04
 

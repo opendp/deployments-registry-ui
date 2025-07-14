@@ -30,7 +30,8 @@ When CI checks pass, PRs should be [squash merged](https://docs.github.com/en/re
 ## Getting started
 
 To build the site locally:
-```
+
+```shell
 git clone --recurse-submodules https://github.com/opendp/deployments-registry-ui.git
 cd deployments-registry-ui
 bundle install
@@ -38,7 +39,8 @@ bundle exec jekyll build
 ```
 
 To run tests:
-```
+
+```shell
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r tests/requirements.txt
@@ -47,11 +49,13 @@ pytest
 ```
 
 We're using [Playwright](https://playwright.dev/python/) for end-to-end tests. You can use it to [generate test code](https://playwright.dev/python/docs/codegen-intro) just by interacting with the app in a browser:
+
 ```shell
 playwright codegen http://127.0.0.1:4000/
 ```
 
 You can also [step through these tests](https://playwright.dev/python/docs/running-tests#debugging-tests) and see what the browser sees:
+
 ```shell
 PWDEBUG=1 pytest
 ```
@@ -63,9 +67,11 @@ If Playwright fails in CI, we can still see what went wrong:
 - Don't unzip it! Instead, open it with [trace.playwright.dev](https://trace.playwright.dev/).
 
 To update the `deployments-registry-data` submodule, start a new branch and run:
-```
+
+```shell
 git submodule update --remote
 ```
+
 CI in the data repo is responsible for validating the deployment records,
 but if there are changes to the schema, corresponding changes may be needed here.
 After making any necessary updates, commit your changes and make a PR.
