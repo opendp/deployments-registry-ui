@@ -29,3 +29,10 @@ def test_ui(page: Page):
         # US Census:
         page.get_by_text("ε: 19.61")
     ).to_be_visible()
+
+    # Markdown and Latex rendering?
+    page.locator("mjx-container").filter(has_text="ϵsym").is_hidden()
+    # TODO: Update ID when https://github.com/opendp/deployments-registry-data/issues/51 is done.
+    page.get_by_test_id("google_covid_19_sympton_search").click()
+    page.locator("mjx-container").filter(has_text="ϵsym").is_visible()
+

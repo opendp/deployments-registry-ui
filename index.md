@@ -42,6 +42,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     </thead>
     <tbody>
     {% for deployment in site.data.deployments %}
+        {% assign id = deployment[0] %}
         {% assign d = deployment[1].deployment %}
         <tr>
             <td>{{ d.data_curator }}</td>
@@ -57,7 +58,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
         </tr>
         <tr>
             <td colspan=6>
-                {% include details.html deployment=d %}
+                {% include details.html id=id deployment=d %}
             </td>
         </tr>
     {% endfor %}
