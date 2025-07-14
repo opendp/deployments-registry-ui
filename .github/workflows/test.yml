@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
@@ -36,8 +38,31 @@ jobs:
           ruby-version: '3.4'
           bundler-cache: true # runs 'bundle install' and caches installed gems
 
-      - name: Build "_site"
+      - name: Run Jekyll
         run: bundle exec jekyll build
 
       - name: Check that "_site" exists
         run: '[ -e _site/index.html ]'
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install -r tests/requirements.txt
+
+      - name: Install browsers
+        # Install just one browser instead of the default three.
+        # https://playwright.dev/python/docs/browsers#managing-browser-binaries
+        run: playwright install chromium
+
+      - name: Run tests
+        run: pytest -vv
+
+      - name: Upload Playwright traces
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-traces
+          path: test-results/

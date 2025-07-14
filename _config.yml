@@ -21,3 +21,6 @@ exclude:
   - package-lock.json
   - package.json
   - vendor
+  - tests
+  - .venv
+  - test-results/
