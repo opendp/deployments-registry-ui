@@ -61,3 +61,12 @@ If Playwright fails in CI, we can still see what went wrong:
 - Download the zipped artifact locally.
 - Inside the zipped artifact will be _another_ zip: `trace.zip`.
 - Don't unzip it! Instead, open it with [trace.playwright.dev](https://trace.playwright.dev/).
+
+To update the `deployments-registry-data` submodule, start a new branch and run:
+```
+git submodule update --remote
+```
+CI in the data repo is responsible for validating the deployment records,
+but if there are changes to the schema, corresponding changes may be needed here.
+After making any necessary updates, commit your changes and make a PR.
+
