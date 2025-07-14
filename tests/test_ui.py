@@ -26,5 +26,6 @@ def test_ui(page: Page):
 
     # Data load?
     expect(
-        page.get_by_role("cell", name="To help researchers")
+        # US Census:
+        page.get_by_text("ε: 19.61")
     ).to_be_visible()
