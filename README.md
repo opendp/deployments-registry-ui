@@ -32,9 +32,11 @@ bundle exec jekyll serve
 ```
 
 To update the `deployments-registry-data` submodule, start a new branch and run:
-```
+
+```shell
 git submodule update --remote
 ```
+
 CI in the data repo is responsible for validating the deployment records,
 but if there are changes to the schema, corresponding changes may be needed here.
 After making any necessary updates, commit your changes and make a PR.
