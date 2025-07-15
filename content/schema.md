@@ -10,8 +10,7 @@ order: 5
 
     
 
-    function fillTable(id, schema) {
-        const table = document.getElementById(id);
+    function fillTable(table, schema) {
         for (const [name, def] of Object.entries(schema)) {
             const row = document.createElement("tr");
 
@@ -20,13 +19,19 @@ order: 5
             row.appendChild(nameCell);
 
             const descriptionCell = document.createElement("td");
-            descriptionCell.textContent = def.description;
+            if (def.properties) {
+                const subTable = document.createElement("table");
+                fillTable(subTable, def.properties);
+                descriptionCell.appendChild(subTable);
+            } else {
+                descriptionCell.textContent = def.description;
+            }
             row.appendChild(descriptionCell);
 
             table.appendChild(row);
         }
     }
 
-    fillTable("schema-table", schema);
+    fillTable(document.getElementById("schema-table"), schema);
 
 </script>
