@@ -22,4 +22,7 @@ function fillTable(table, schema) {
     }
 }
 
-fillTable(document.getElementById("schema-table"), schema);
+window.addEventListener("load", () => {
+    // eslint-disable-next-line no-undef
+    fillTable(document.getElementById("schema-table"), schema);
+});
