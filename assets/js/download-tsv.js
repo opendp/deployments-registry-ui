@@ -10,7 +10,7 @@ function flatten(obj, parent, result = {}){
     return result;
 }
 
-function fillTsvHref(id, deployments) {
+function setTsvHref(id, deployments) {
     const details = Object.values(deployments).map((entry) => entry.deployment);
     const rows = details.map((detail) => flatten(detail));
     const columns = Array.from(rows.map((row) => new Set(Object.keys(row))).reduce((unionOfKeys, currentKeys) => unionOfKeys.union(currentKeys), new Set()));
@@ -20,5 +20,7 @@ function fillTsvHref(id, deployments) {
     document.getElementById(id).setAttribute("href", tsvUrl);
 }
 
-// eslint-disable-next-line no-undef
-fillTsvHref("download-tsv", deployments);
+window.addEventListener("load", () => {
+    // eslint-disable-next-line no-undef
+    setTsvHref("download-tsv", deployments);
+});
