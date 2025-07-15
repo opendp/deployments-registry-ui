@@ -6,6 +6,32 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 
 > a publicly available communal body of knowledge about differential privacy implementations that can be used by various stakeholders to drive the identification and adoption of judicious differentially private implementations
 
+<script>
+const deployments = {{ site.data.deployments | jsonify }};
+const details = Object.values(deployments).map((entry) => entry.deployment)
+
+function flatten(obj, parent, result = {}){
+    for(let key in obj){
+        let propName = parent ? `${parent}.${key}` : key;
+        if (typeof obj[key] == 'object'){
+            flatten(obj[key], propName, result);
+        } else {
+            result[propName] = obj[key];
+        }
+    }
+    return result;
+}
+
+const rows = details.map((detail) => flatten(detail));
+const columns = Array.from(rows.map((row) => new Set(Object.keys(row))).reduce((unionOfKeys, currentKeys) => unionOfKeys.union(currentKeys), new Set()));
+
+const table = columns.join("\t") + "\n" + rows.map((row) => columns.map((col) => row[col]).join("\t")).join("\n");
+
+document.write(JSON.stringify(table));
+
+</script>
+
+
 <table>
     <tbody>
         {% assign s = site.data.schemas.deployments-schema.properties.deployment.properties %}
