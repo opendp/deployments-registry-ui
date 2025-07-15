@@ -54,3 +54,14 @@ def test_ui(page: Page):
 
     parent = page.locator("dd").filter(has=markdown_p_1_node)
     assert markdown_p_2_text in parent.text_content()
+
+    with page.expect_download() as tsv_download_info:
+        page.get_by_text("Download TSV").click()
+    
+    tsv_content = tsv_download_info.value.path().read_text()
+    # header row:
+    assert "name\tdata_curator" in tsv_content
+    # dotted keys:
+    assert "additional_dp_information.composition" in tsv_content
+    # body row:
+    assert "Assistive AI\tMicrosoft" in tsv_content
