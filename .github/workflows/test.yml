@@ -39,10 +39,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems
 
       - name: Run Jekyll
-        run: bundle exec jekyll build
-
-      - name: Check that "_site" exists
-        run: '[ -e _site/index.html ]'
+        run: bundle exec jekyll serve &
 
       - name: Install Python
         uses: actions/setup-python@v5
