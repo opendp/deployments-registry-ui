@@ -20,4 +20,5 @@ function fillTsvHref(id, deployments) {
     document.getElementById(id).setAttribute("href", tsvUrl);
 }
 
-fillTsvHref("download-tsv", deployments)
+// eslint-disable-next-line no-undef
+fillTsvHref("download-tsv", deployments);
