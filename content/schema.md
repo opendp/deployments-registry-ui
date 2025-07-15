@@ -4,11 +4,12 @@ order: 5
 ---
 
 <table id="schema-table"></table>
-
 <script>
-    const schema = {{ site.data.schemas.deployments-schema.properties.deployment.properties | jsonify }};
+const schema = {{ site.data.schemas.deployments-schema.properties.deployment.properties | jsonify }};
+</script>
 
-    
+<script type="module">
+    import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
     function fillTable(table, schema) {
         for (const [name, def] of Object.entries(schema)) {
@@ -24,7 +25,7 @@ order: 5
                 fillTable(subTable, def.properties);
                 descriptionCell.appendChild(subTable);
             } else {
-                descriptionCell.textContent = def.description;
+                descriptionCell.innerHTML = marked.parse(def.description || '');
             }
             row.appendChild(descriptionCell);
 
