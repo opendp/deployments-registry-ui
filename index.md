@@ -25,9 +25,13 @@ function flatten(obj, parent, result = {}){
 const rows = details.map((detail) => flatten(detail));
 const columns = Array.from(rows.map((row) => new Set(Object.keys(row))).reduce((unionOfKeys, currentKeys) => unionOfKeys.union(currentKeys), new Set()));
 
-const table = columns.join("\t") + "\n" + rows.map((row) => columns.map((col) => row[col]).join("\t")).join("\n");
+const tsv = columns.join("\t") + "\n" + rows.map((row) => columns.map((col) => row[col]).join("\t")).join("\n");
 
-document.write(JSON.stringify(table));
+const tsvBlob = new Blob([tsv], {type: "text/tab-separated-values"});
+const tsvUrl = URL.createObjectURL(tsvBlob);
+
+
+document.write(`<a download="registry.tsv" href="${tsvUrl}">Download TSV</a>`);
 
 </script>
 
