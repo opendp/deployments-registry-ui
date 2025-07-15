@@ -57,7 +57,7 @@ def test_ui(page: Page):
 
     with page.expect_download() as tsv_download_info:
         page.get_by_text("Download TSV").click()
-    
+
     tsv_content = tsv_download_info.value.path().read_text()
     # header row:
     assert "name\tdata_curator" in tsv_content
