@@ -1,6 +1,6 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
-function fillTable(table, properties, required) {
+function fillTable(table, properties, required, groupCells) {
     required = required || [];
     for (const [name, def] of Object.entries(properties)) {
         const row = document.createElement("tr");
@@ -8,21 +8,26 @@ function fillTable(table, properties, required) {
         const nameCell = document.createElement("td");
         const typeMd = def.type || 'string';
         const requiredMd = required.includes(name) ? `(required ${typeMd})` : `(optional ${typeMd})`;
-        nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${requiredMd}`)
+        nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${requiredMd}`);
         row.appendChild(nameCell);
 
         const descriptionCell = document.createElement("td");
         if (def.properties) {
-            const subTable = document.createElement("table");
-            fillTable(subTable, def.properties, def.required);
-            descriptionCell.appendChild(subTable);
+            const descriptionCell = document.createElement("td");
+            descriptionCell.innerHTML = marked.parse(def.description || '');
+            row.appendChild(descriptionCell);
+            table.appendChild(row);
+            fillTable(table, def.properties, def.required, groupCells.concat(nameCell));
         } else {
+            const descriptionCell = document.createElement("td");
             const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
             descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
+            row.appendChild(descriptionCell);
+            table.appendChild(row);
+            for (const cell of groupCells) {
+                cell.rowSpan += 1;
+            }
         }
-        row.appendChild(descriptionCell);
-
-        table.appendChild(row);
     }
 }
 
@@ -32,7 +37,7 @@ function fillDiv(div, schema) {
     div.appendChild(description);
 
     const table = document.createElement("table");
-    fillTable(table, schema.properties, schema.required);
+    fillTable(table, schema.properties, schema.required, []);
     div.appendChild(table);
 }
 
