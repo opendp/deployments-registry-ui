@@ -6,8 +6,9 @@ function fillTable(table, properties, required) {
         const row = document.createElement("tr");
 
         const nameCell = document.createElement("td");
-        const requiredText = required.includes(name) ? '(required)' : '(optional)';
-        nameCell.innerHTML = marked.parse(`\`${name}\` ${requiredText}`)
+        const typeMd = def.type || 'string';
+        const requiredMd = required.includes(name) ? `(required ${typeMd})` : `(optional ${typeMd})`;
+        nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${requiredMd}`)
         row.appendChild(nameCell);
 
         const descriptionCell = document.createElement("td");
@@ -16,7 +17,8 @@ function fillTable(table, properties, required) {
             fillTable(subTable, def.properties, def.required);
             descriptionCell.appendChild(subTable);
         } else {
-            descriptionCell.innerHTML = marked.parse(def.description || '');
+            const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
+            descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
         }
         row.appendChild(descriptionCell);
 
