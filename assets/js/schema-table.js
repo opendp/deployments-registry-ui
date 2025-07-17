@@ -26,7 +26,17 @@ function fillTable(table, properties, required) {
     }
 }
 
+function fillDiv(div, schema) {
+    const description = document.createElement('div');
+    description.innerHTML = marked.parse(schema.description);
+    div.appendChild(description);
+
+    const table = document.createElement("table");
+    fillTable(table, schema.properties, schema.required);
+    div.appendChild(table);
+}
+
 window.addEventListener("load", () => {
     // eslint-disable-next-line no-undef
-    fillTable(document.getElementById("schema-table"), schema.properties, schema.required);
+    fillDiv(document.getElementById("schema-table"), schema);
 });
