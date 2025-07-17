@@ -1,5 +1,7 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
+const maxDepth = 4;
+
 function fillTable(table, properties, required, groupCells) {
     required = required || [];
     for (const [name, def] of Object.entries(properties)) {
@@ -11,10 +13,10 @@ function fillTable(table, properties, required, groupCells) {
         nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${requiredMd}`);
         row.appendChild(nameCell);
 
-        const descriptionCell = document.createElement("td");
         if (def.properties) {
             const descriptionCell = document.createElement("td");
             descriptionCell.innerHTML = marked.parse(def.description || '');
+            descriptionCell.colSpan = maxDepth - groupCells.length;
             row.appendChild(descriptionCell);
             table.appendChild(row);
             fillTable(table, def.properties, def.required, groupCells.concat(nameCell));
@@ -22,6 +24,7 @@ function fillTable(table, properties, required, groupCells) {
             const descriptionCell = document.createElement("td");
             const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
             descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
+            descriptionCell.colSpan = maxDepth - groupCells.length;
             row.appendChild(descriptionCell);
             table.appendChild(row);
             for (const cell of groupCells) {
