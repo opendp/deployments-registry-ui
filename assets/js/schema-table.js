@@ -9,8 +9,10 @@ function fillTable(table, properties, required, groupCells) {
 
         const nameCell = document.createElement("td");
         const typeMd = def.type || 'string';
-        const requiredMd = required.includes(name) ? `(required ${typeMd})` : `(optional ${typeMd})`;
-        nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${requiredMd}`);
+        const tierMd = def.tier ? `tier ${def.tier}` : '';
+        const requiredMd = required.includes(name) ? 'required' : 'optional';
+        const fullMd = `(${requiredMd} ${tierMd} ${typeMd})`;
+        nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${fullMd}`);
         row.appendChild(nameCell);
 
         if (def.properties) {
