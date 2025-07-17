@@ -3,7 +3,7 @@ title: Schema
 order: 5
 ---
 
-Entries in the registry conform to a standard schema. The overview below is generated from the [authoritative JSON Schema](https://github.com/opendp/deployments-registry-data/blob/main/schemas/deployments-schema.yaml).
+Entries in the registry conform to a standard schema. The summary below may be slightly behind the latest version of the [JSON Schema](https://github.com/opendp/deployments-registry-data/blob/main/schemas/deployments-schema.yaml) and [data entry template](https://github.com/opendp/deployments-registry-data/blob/main/tests/good_deployments/template.yaml).
 
 <style>
     #schema-table td {
