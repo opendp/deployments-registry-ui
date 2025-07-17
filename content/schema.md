@@ -7,6 +7,6 @@ Entries in the registry conform to a standard schema. The overview below is gene
 
 <table id="schema-table"></table>
 <script>
-const schema = {{ site.data.schemas.deployments-schema.properties.deployment.properties | jsonify }};
+const schema = {{ site.data.schemas.deployments-schema | jsonify }};
 </script>
 <script type="module" src="/assets/js/schema-table.js"></script>

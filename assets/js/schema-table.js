@@ -1,11 +1,11 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
-function fillTable(table, schema) {
-    for (const [name, def] of Object.entries(schema)) {
+function fillTable(table, properties) {
+    for (const [name, def] of Object.entries(properties)) {
         const row = document.createElement("tr");
 
         const nameCell = document.createElement("td");
-        nameCell.textContent = name;
+        nameCell.appendChild(document.createTextNode(name))
         row.appendChild(nameCell);
 
         const descriptionCell = document.createElement("td");
@@ -24,5 +24,5 @@ function fillTable(table, schema) {
 
 window.addEventListener("load", () => {
     // eslint-disable-next-line no-undef
-    fillTable(document.getElementById("schema-table"), schema);
+    fillTable(document.getElementById("schema-table"), schema.properties);
 });
