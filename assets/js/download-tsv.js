@@ -15,7 +15,10 @@ function flatten(obj, parent, result = {}){
 function setTsvHref(id, deployments) {
     const details = Object.values(deployments).map((entry) => entry.deployment);
     const rows = details.map((detail) => flatten(detail));
-    const columns = Array.from(rows.map((row) => new Set(Object.keys(row))).reduce((unionOfKeys, currentKeys) => unionOfKeys.union(currentKeys), new Set()));
+    const columns = Array.from(
+        rows.map((row) => new Set(Object.keys(row)))
+            .reduce((unionOfKeys, currentKeys) => unionOfKeys.union(currentKeys), new Set())
+    );
     const tsv = columns.join("\t") + "\n" + rows.map((row) => columns.map((col) => row[col]).join("\t")).join("\n");
     const tsvBlob = new Blob([tsv], {type: "text/tab-separated-values"});
     const tsvUrl = URL.createObjectURL(tsvBlob);
