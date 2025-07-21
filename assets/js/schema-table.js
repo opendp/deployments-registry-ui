@@ -2,7 +2,7 @@ import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 const maxDepth = 4;
 
-function fillTable(table, properties, required, groupCells) {
+function fillTable(table, properties, required, nameCells) {
     required = required || [];
     for (const [name, def] of Object.entries(properties)) {
         const row = document.createElement("tr");
@@ -15,23 +15,19 @@ function fillTable(table, properties, required, groupCells) {
         nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${fullMd}`);
         row.appendChild(nameCell);
 
+        const descriptionCell = document.createElement("td");
+        const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
+        descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
+        descriptionCell.colSpan = maxDepth - nameCells.length;
+        row.appendChild(descriptionCell);
+
+        table.appendChild(row);
+
+        for (const cell of nameCells) {
+            cell.rowSpan += 1;
+        }
         if (def.properties) {
-            const descriptionCell = document.createElement("td");
-            descriptionCell.innerHTML = marked.parse(def.description || '');
-            descriptionCell.colSpan = maxDepth - groupCells.length;
-            row.appendChild(descriptionCell);
-            table.appendChild(row);
-            fillTable(table, def.properties, def.required, groupCells.concat(nameCell));
-        } else {
-            const descriptionCell = document.createElement("td");
-            const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
-            descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
-            descriptionCell.colSpan = maxDepth - groupCells.length;
-            row.appendChild(descriptionCell);
-            table.appendChild(row);
-            for (const cell of groupCells) {
-                cell.rowSpan += 1;
-            }
+            fillTable(table, def.properties, def.required, nameCells.concat(nameCell));
         }
     }
 }
