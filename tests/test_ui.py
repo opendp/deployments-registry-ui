@@ -65,3 +65,10 @@ def test_ui(page: Page):
     assert "additional_dp_information.composition" in tsv_content
     # body row:
     assert "Assistive AI\tMicrosoft" in tsv_content
+
+    # Schema table?
+    page.get_by_text('Schema').click()
+    # Top level:
+    expect(page.get_by_text("The name of the data product")).to_be_visible()
+    # Second level:
+    expect(page.get_by_text("Actual, potential, or counterfactual datasets")).to_be_visible()
