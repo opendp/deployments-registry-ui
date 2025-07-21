@@ -10,7 +10,7 @@ Entries in the registry conform to a standard schema. The summary below may be s
         vertical-align: top;
     }
 </style>
-<div id="schema-table"></div>
+<table id="schema-table"></table>
 <script>
 const schema = {{ site.data.schemas.deployments-schema | jsonify }};
 </script>

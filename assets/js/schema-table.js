@@ -12,11 +12,11 @@ function makeNameCell(name, def, required) {
     return nameCell
 }
 
-function makeDescriptionCell(def, nameCells) {
+function makeDescriptionCell(def, colSpan) {
     const descriptionCell = document.createElement("td");
     const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
     descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
-    descriptionCell.colSpan = maxDepth - nameCells.length;
+    descriptionCell.colSpan = colSpan;
     return descriptionCell;
 }
 
@@ -27,8 +27,7 @@ function fillTable(table, properties, required, nameCells) {
 
         const nameCell = makeNameCell(name, def, required)
         row.appendChild(nameCell);
-
-        const descriptionCell = makeDescriptionCell(def, nameCells);
+        const descriptionCell = makeDescriptionCell(def, maxDepth - nameCells.length);
         row.appendChild(descriptionCell);
 
         table.appendChild(row);
@@ -42,17 +41,16 @@ function fillTable(table, properties, required, nameCells) {
     }
 }
 
-function fillDiv(div, schema) {
-    const description = document.createElement('div');
-    description.innerHTML = marked.parse(schema.description);
-    div.appendChild(description);
-
-    const table = document.createElement("table");
+function initTable(table, schema) {
+    const row = document.createElement("tr");
+    const cell = makeDescriptionCell(schema, maxDepth + 1);
+    row.appendChild(cell);
+    table.appendChild(row);
+    
     fillTable(table, schema.properties, schema.required, []);
-    div.appendChild(table);
 }
 
 window.addEventListener("load", () => {
     // eslint-disable-next-line no-undef
-    fillDiv(document.getElementById("schema-table"), schema);
+    initTable(document.getElementById("schema-table"), schema);
 });
