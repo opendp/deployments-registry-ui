@@ -1,0 +1,195 @@
+/* Sidebar Styles - Navigation sidebar component including collapsed states and interactions */
+
+/* Sidebar Container */
+.docs-sidebar {
+    box-sizing: border-box;
+    width: 280px;
+    min-width: 280px;
+    border-right: 1px solid #F3F3F3;
+    padding: 2rem 1rem;
+    transition: all 0.2s ease;
+    height: auto;
+    position: relative;
+}
+
+/* Sidebar Toggle Button */
+.docs-sidebar .toggler {
+    position: absolute;
+    z-index: 99;
+    right: -12px;
+    top: 32px;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    aspect-ratio: 1/1;
+    border-radius: 24px;
+    background: var(--Neutral-900, #2E2E2E);
+    transition: all 0.3s ease;
+}
+
+/* Collapsed Sidebar State */
+.docs-sidebar.collapsed {
+    width: 90px;
+    min-width: 30px;
+    margin-right: 5vw;
+}
+
+.docs-sidebar.collapsed .site-logo svg {
+    width: 47px;
+}
+
+.docs-sidebar.collapsed .docs-nav {
+    width: 100%;
+}
+
+.docs-sidebar.collapsed .sidebar-section-title,
+.docs-sidebar.collapsed .sidebar-links {
+    display: none !important;
+}
+
+.docs-sidebar.collapsed .toggler {
+    transform: rotateZ(180deg);
+}
+
+/* Sidebar Links and Elements */
+.docs-sidebar a {
+    box-sizing: border-box;
+}
+
+.docs-sidebar .site-logo {
+    margin-bottom: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.docs-sidebar .site-logo svg {
+    transition: all 0.2s ease;
+}
+
+/* Navigation Container */
+.docs-nav {
+    width: 248px;
+    padding: 0;
+}
+
+/* Sidebar Sections */
+.sidebar-section {
+    margin-bottom: 1.5rem;
+}
+
+/* Sidebar Toggle Buttons/Links */
+.sidebar-toggle {
+    border: none;
+    background: transparent;
+    width: 100%;
+    cursor: pointer;
+    color: #181818;
+    display: flex;
+    height: 40px;
+    padding: 0.5rem 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.sidebar-toggle:hover {
+    background-color: #e9ecef;
+    text-decoration: none;
+    color: #181818;
+}
+
+.sidebar-toggle.active {
+    color: white;
+    background: #2E2E2E;
+    text-decoration: none;
+}
+
+.sidebar-toggle.active:hover {
+    color: white;
+}
+
+.sidebar-toggle svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Sidebar Section Titles */
+.sidebar-section-title {
+    font-size: 1rem;
+    width: 100%;
+    text-align: left;
+    text-transform: capitalize;
+}
+
+/* Sidebar Links List */
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+    display: block; /* Initially expanded */
+}
+
+.sidebar-links li {
+    margin: 0;
+}
+
+/* Individual Sidebar Links */
+.sidebar-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #3A3A3A;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.sidebar-link:hover {
+    background-color: #e9ecef;
+    color: #3A3A3A;
+    text-decoration: none;
+}
+
+.sidebar-link.active {
+    color: #181818;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-underline-offset: 3px;
+}
+
+.sidebar-link.active:hover {
+    background-color: #e9ecef;
+    color: #181818;
+}
+
+/* Sidebar Spacer */
+.sidebar-spacer {
+    border: 1px solid #F3F3F3;
+    margin: 20px 0;
+}
+
+/* Sidebar Responsive Design */
+@media (max-width: 768px) {
+    .docs-sidebar {
+        width: 100%;
+        position: static;
+        order: 2;
+    }
+}

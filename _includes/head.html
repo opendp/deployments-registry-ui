@@ -10,9 +10,14 @@
   {%- endif -%}
 
   <!-- Our additions below: -->
-  <link rel="stylesheet" href="/assets/css/custom.css">
+  <link rel="stylesheet" href="{{ "/assets/css/custom.css" | relative_url }}">
 
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
 
   <!--
     We prefer ESM, but not currently available for Vega.
