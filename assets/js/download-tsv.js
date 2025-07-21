@@ -4,7 +4,9 @@ function flatten(obj, parent, result = {}){
         if (typeof obj[key] == 'object'){
             flatten(obj[key], propName, result);
         } else {
-            result[propName] = obj[key];
+            // If we export CSV, then the white space wouldn't need to be sanitized,
+            // ... but it might still be a good idea.
+            result[propName] = String(obj[key]).replaceAll(/\s+/g, ' ');
         }
     }
     return result;
