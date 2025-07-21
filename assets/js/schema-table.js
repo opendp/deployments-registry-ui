@@ -2,23 +2,33 @@ import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 const maxDepth = 4;
 
+function makeNameCell(name, def, required) {
+    const nameCell = document.createElement("td");
+    const typeMd = def.type || 'string';
+    const tierMd = def.tier ? `tier ${def.tier}` : '';
+    const requiredMd = required.includes(name) ? 'required' : 'optional';
+    const fullMd = `(${requiredMd} ${tierMd} ${typeMd})`;
+    nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${fullMd}`);
+    return nameCell
+}
+
+function makeDescriptionCell(def, nameCells) {
+    const descriptionCell = document.createElement("td");
+    const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
+    descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
+    descriptionCell.colSpan = maxDepth - nameCells.length;
+    return descriptionCell;
+}
+
 function fillTable(table, properties, required, nameCells) {
     required = required || [];
     for (const [name, def] of Object.entries(properties)) {
         const row = document.createElement("tr");
 
-        const nameCell = document.createElement("td");
-        const typeMd = def.type || 'string';
-        const tierMd = def.tier ? `tier ${def.tier}` : '';
-        const requiredMd = required.includes(name) ? 'required' : 'optional';
-        const fullMd = `(${requiredMd} ${tierMd} ${typeMd})`;
-        nameCell.innerHTML = marked.parse(`\`${name}\`\n\n${fullMd}`);
+        const nameCell = makeNameCell(name, def, required)
         row.appendChild(nameCell);
 
-        const descriptionCell = document.createElement("td");
-        const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
-        descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
-        descriptionCell.colSpan = maxDepth - nameCells.length;
+        const descriptionCell = makeDescriptionCell(def, nameCells);
         row.appendChild(descriptionCell);
 
         table.appendChild(row);
