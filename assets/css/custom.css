@@ -4,3 +4,10 @@ dt {
 dd {
     padding-left: 1em;
 }
+.wrapper {
+    /*
+        Needed for side-by-side display of table and details.
+        Remove or update after migration to bootstrap.
+    */
+    max-width: unset;
+}
