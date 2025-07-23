@@ -10,6 +10,10 @@
             <td>{{ d.data_curator | markdownify}}</td>
         </tr>
         <tr>
+            <th>Description</th>
+            <td>{{ d.description | markdownify}}</td>
+        </tr>
+        <tr>
             <th>Intended Use</th>
             <td>{{ d.intended_use | markdownify}}</td>
         </tr>
@@ -18,17 +22,18 @@
             <td>{{ d.data_product_type | markdownify}}</td>
         </tr>
         <tr>
+            <th>Publication Date</th>
+            <td>{{ d.publication_date | markdownify}}</td>
+        </tr>
+        <tr>
             <th>Data Product Region</th>
             <td>{{ d.data_product_region | markdownify}}</td>
         </tr>
         <tr>
-            <th>Data Product Description</th>
-            <td>{{ d.data_product_description | markdownify}}</td>
+            <th>Data Product Sector</th>
+            <td>{{ d.data_product_sector | markdownify}}</td>
         </tr>
-        <tr>
-            <th>Publication Date</th>
-            <td>{{ d.publication_date | markdownify}}</td>
-        </tr>
+
         <tr>
             <th>DP Flavor</th>
             <td>
@@ -54,20 +59,20 @@
             <th>Model</th>
             <td>
                 <dl>
-                    <dt>Model Type</dt><dd>{{d.model.model_type | markdownify}}</dd>
-                    <dt>Model Type Description</dt><dd>{{d.model.model_type_description | markdownify}}</dd>
-                    <dt>Release Type</dt><dd>{{d.model.release_type | markdownify}}</dd>
-                    <dt>Release Type Description</dt><dd>{{d.model.release_type_description | markdownify}}</dd>
-                    <dt>Interactivity</dt><dd>{{d.model.interactivity | markdownify}}</dd>
+                    <dt>Model Name</dt><dd>{{d.model.model_name | markdownify}}</dd>
+                    <dt>Model Name Description</dt><dd>{{d.model.model_name_description | markdownify}}</dd>
+                    <dt>Many releases?</dt><dd>{{d.model.is_many_release}}: {{d.model.is_many_release_description | markdownify}}</dd>
+                    <dt>Dynamic?</dt><dd>{{d.model.is_dynamic}}: {{d.model.is_dynamic_description | markdownify}}</dd>
+                    <dt>Interactive?</dt><dd>{{d.model.is_interactive}}: {{d.model.is_interactive_description | markdownify}}</dd>
                 </dl>
             </td>
         </tr>
         <tr>
-            <th>Additional DP Information</th>
+            <th>Accounting</th>
             <td>
                 <dl>
-                    <dt>Post-Processing</dt><dd>{{d.additional_dp_information.post_processing | markdownify}}</dd>
-                    <dt>Composition</dt><dd>{{d.additional_dp_information.composition | markdownify}}</dd>
+                    <dt>Post-Processing</dt><dd>{{d.accounting.post_processing | markdownify}}</dd>
+                    <dt>Composition</dt><dd>{{d.accounting.composition | markdownify}}</dd>
                 </dl>
             </td>
         </tr>

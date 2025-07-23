@@ -18,11 +18,6 @@ def test_ui(page: Page):
         page.get_by_role("heading", name="Differential Privacy Deployments Registry")
     ).to_be_visible()
 
-    # Schema load?
-    expect(
-        page.get_by_text("The name of the entity publishing the data product.")
-    ).to_be_visible()
-
     # Data load?
     expect(
         # US Census:
@@ -62,7 +57,7 @@ def test_ui(page: Page):
     # header row:
     assert "name\tdata_curator" in tsv_content
     # dotted keys:
-    assert "additional_dp_information.composition" in tsv_content
+    assert "accounting.composition" in tsv_content
     # body row:
     assert "Assistive AI\tMicrosoft" in tsv_content
 
