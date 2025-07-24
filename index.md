@@ -11,13 +11,14 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 const deployments = {{ site.data.deployments | jsonify }};
 </script>
 <script type="module" src="/assets/js/download-tsv.js"></script>
-
+<script src="/assets/js/toggle-details.js"></script>
 
 <div style="column-count: 2;">
     <div>
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Tier</th>
                     <th>Curator</th>
                     <th>Product</th>
@@ -32,6 +33,7 @@ const deployments = {{ site.data.deployments | jsonify }};
                 {% assign id = deployment[0] %}
                 {% assign d = deployment[1].deployment %}
                 <tr>
+                    <td><input type="checkbox" onchange="toggleDetails('{{id}}');"></td>
                     <td>{{ deployment[1].tier }}</td>
                     <td>{{ d.data_curator }}</td>
                     <td>{{ d.data_product_type }}</td>

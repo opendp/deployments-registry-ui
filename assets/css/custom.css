@@ -6,8 +6,15 @@ dd {
 }
 .wrapper {
     /*
-        Needed for side-by-side display of table and details.
+        Needed for side-by-side display of table and details
+        at reasonable window widths.
         Remove or update after migration to bootstrap.
     */
     max-width: unset;
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
 }
