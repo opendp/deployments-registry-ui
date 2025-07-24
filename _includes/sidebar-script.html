@@ -124,7 +124,7 @@
   }
 
   function generateDeploymentDetailsHTML(deployment) {
-    let deploymentSection = `
+    let deploymentHeader = `
       <div class="deployment-header-container">
         <div class="deployment-header">
           <div>
@@ -146,12 +146,14 @@
           </button>
         </div>
         <div class="section-spacer"></div>
-      </div>
+      </div>`
+    let deploymentSection = `
       <div class="deployment-section">
         <div>
             <div class="deployment-section-header">
-                Product Info
+                Header
             </div>
+            <div class="section-sub-heading">Subheader</div>
             <p>
                 ${deployment.data_product_description || ''}
             </p>
@@ -352,7 +354,7 @@
         </div>
       `
     }
-    return deploymentSection;
+    return deploymentHeader + deploymentSection;
   }
 
   function downloadDeployment() {
