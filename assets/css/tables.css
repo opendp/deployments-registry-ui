@@ -1,0 +1,115 @@
+/* Table Styles - Data tables styling including borders, hover effects, and clickable rows */
+
+/* Base Table Styling */
+.docs-content table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    box-shadow: none;
+    border: none;
+    margin: 1rem 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #E7E7E7;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Table Rows */
+.docs-content tbody tr {
+    height: 76px;
+    background-color: transparent;
+}
+
+.docs-content tr th {
+    background-color: transparent;
+}
+
+/* Table Cells */
+.docs-content th,
+.docs-content td {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: left;
+    overflow: hidden;
+    color: #181818;
+    border: 1px solid #E7E7E7;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+/* Table Border Management */
+/* Add right border to last column */
+.docs-content th:last-child,
+.docs-content td:last-child {
+    border-right: 1px solid #E7E7E7;
+}
+
+/* Add bottom border to last row */
+.docs-content tbody tr:last-child td,
+.docs-content tbody tr:last-child th {
+    border-bottom: 1px solid #E7E7E7;
+}
+
+/* Table Corner Radius */
+.docs-content table tr:first-child th:first-child,
+.docs-content table tr:first-child td:first-child {
+    border-top-left-radius: 8px;
+}
+
+.docs-content table tr:first-child th:last-child,
+.docs-content table tr:first-child td:last-child {
+    border-top-right-radius: 8px;
+}
+
+.docs-content table tr:last-child td:first-child,
+.docs-content table tr:last-child th:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.docs-content table tr:last-child td:last-child,
+.docs-content table tr:last-child th:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+/* Table Cell Content */
+.docs-content th {
+    text-overflow: ellipsis;
+    font-weight: 600;
+}
+
+.docs-content td {
+    text-overflow: ellipsis;
+    font-family: Inter;
+    font-weight: 400;
+}
+
+/* Table Hover Effects */
+.docs-content tr:hover {
+    background: #F3F3F3;
+}
+
+.docs-content tr:hover {
+    background-color: #F3F3F3;
+}
+
+/* Clickable Row Styling */
+.deployment-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.deployment-row:hover {
+    background-color: #e9ecef;
+}
+
+.deployment-row.selected {
+    background-color: #d4d4d4;
+    color: white;
+}
+
+.deployment-row.selected:hover {
+    background-color: #d4d4d4;
+}

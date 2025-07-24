@@ -1,0 +1,90 @@
+<!-- Sidebar -->
+<div class="docs-sidebar">
+    <div class="toggler" onclick="toggleSidebar()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 12L6 8L10 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+    <div class="site-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="106" height="28" viewBox="0 0 106 28" fill="none">
+            <g clip-path="url(#clip0_488_2951)">
+                <path
+                    d="M7.3839 9.16421e-07C3.28173 9.16421e-07 0 3.28832 0 7.39871V27.9507H6.56347V7.39871C6.56347 6.74105 7.3839 6.41221 7.9582 6.82325L25.1709 25.7475C29.9294 30.5156 37.8056 27.0628 37.8056 20.6506V-0.0657654H31.2421V20.6506C31.2421 21.3083 30.4217 21.6371 29.8802 21.2261L12.7331 2.31826C11.0923 0.674105 9.77957 0.0164425 7.40031 0.0164425M41.0545 9.16421e-07V20.552C41.0545 22.5142 41.8324 24.3961 43.2172 25.7836C44.6019 27.1712 46.4801 27.9507 48.4384 27.9507H75.9721C78.2569 27.9507 80.448 27.0413 82.0635 25.4225C83.6791 23.8037 84.5867 21.6082 84.5867 19.3188C84.5867 17.0295 83.6791 14.834 82.0635 13.2152C80.448 11.5964 78.2569 10.687 75.9721 10.687H58.7102C58.1662 10.687 57.6445 10.4705 57.2599 10.0851C56.8752 9.69965 56.6591 9.1769 56.6591 8.63183C56.6591 8.08675 56.8752 7.56401 57.2599 7.17858C57.6445 6.79316 58.1662 6.57663 58.7102 6.57663H87.8356V27.9507H94.3991V6.57663H105.885V9.16421e-07H58.7102C56.4255 9.16421e-07 54.2343 0.909423 52.6188 2.5282C51.0033 4.14699 50.0957 6.34252 50.0957 8.63183C50.0957 10.9211 51.0033 13.1167 52.6188 14.7354C54.2343 16.3542 56.4255 17.2637 58.7102 17.2637H75.9393C76.4833 17.2637 77.005 17.4802 77.3896 17.8656C77.7743 18.251 77.9904 18.7738 77.9904 19.3188C77.9904 19.8639 77.7743 20.3867 77.3896 20.7721C77.005 21.1575 76.4833 21.374 75.9393 21.374H48.4548C48.2372 21.374 48.0285 21.2874 47.8747 21.1333C47.7208 20.9791 47.6344 20.77 47.6344 20.552V9.16421e-07H41.0545Z"
+                    fill="black" />
+            </g>
+            <defs>
+                <clipPath id="clip0_488_2951">
+                    <rect width="106" height="28" fill="white" />
+                </clipPath>
+            </defs>
+        </svg>
+    </div>
+    <nav class="docs-nav">
+        <div class="sidebar-section">
+            <a href="/" class="sidebar-toggle {% if page.url == '/' %}active{% endif %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <mask id="mask0_488_809" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+                        <rect width="16" height="16" fill="#D9D9D9" />
+                    </mask>
+                    <g mask="url(#mask0_488_809)">
+                        <path
+                            d="M2.66675 12.6667V6.66671C2.66675 6.4556 2.71397 6.2556 2.80841 6.06671C2.90286 5.87782 3.03341 5.72226 3.20008 5.60004L7.20008 2.60004C7.43341 2.42226 7.70008 2.33337 8.00008 2.33337C8.30008 2.33337 8.56675 2.42226 8.80008 2.60004L12.8001 5.60004C12.9667 5.72226 13.0973 5.87782 13.1917 6.06671C13.2862 6.2556 13.3334 6.4556 13.3334 6.66671V12.6667C13.3334 13.0334 13.2029 13.3473 12.9417 13.6084C12.6806 13.8695 12.3667 14 12.0001 14H10.0001C9.81119 14 9.65286 13.9362 9.52508 13.8084C9.3973 13.6806 9.33341 13.5223 9.33341 13.3334V10C9.33341 9.81115 9.26953 9.65282 9.14175 9.52504C9.01397 9.39726 8.85564 9.33337 8.66675 9.33337H7.33341C7.14453 9.33337 6.98619 9.39726 6.85841 9.52504C6.73064 9.65282 6.66675 9.81115 6.66675 10V13.3334C6.66675 13.5223 6.60286 13.6806 6.47508 13.8084C6.3473 13.9362 6.18897 14 6.00008 14H4.00008C3.63341 14 3.31953 13.8695 3.05841 13.6084C2.7973 13.3473 2.66675 13.0334 2.66675 12.6667Z"
+                            fill="currentColor" />
+                    </g>
+                </svg>
+                <span class="sidebar-section-title">Home</span>
+            </a>
+        </div>
+        
+        {% assign nav_doc = site.navigation | first %}
+        {% for section in nav_doc.navigation %}
+        {% assign section_is_active = false %}
+        {% if section.pages %}
+            {% for nav_page in section.pages %}
+                {% if page.url contains nav_page.path %}
+                    {% assign section_is_active = true %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if section.path %}
+            {% if page.url contains section.path %}
+                {% assign section_is_active = true %}
+            {% endif %}
+        {% endif %}
+        
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-section">
+            {% if section.path %}
+                <a href="{{ section.path | relative_url }}" class="sidebar-toggle {% if section_is_active %}active{% endif %}">
+                    {% if page.title %}
+                    {{ section.icon }}
+                    {% endif %}
+                    <span class="sidebar-section-title">{{ section.title }}</span>
+                </a>
+            {% else %}
+                <button class="sidebar-toggle {% if section_is_active %}active{% endif %}" onclick="toggleSection('{{ section.section }}')">
+                    {% if page.title %}
+                    {{ section.icon }}
+                    {% endif %}
+                    <span class="sidebar-section-title">{{ section.title }}</span>
+                </button>
+            {% endif %}
+            {% if section.pages %}
+                <ul class="sidebar-links" id="{{ section.section }}-links">
+                    {% assign sorted_pages = section.pages | sort: "order" %}
+                    {% for nav_page in sorted_pages %}
+                    <li>
+                        <a href="{{ nav_page.path | relative_url }}"
+                            class="sidebar-link {% if page.url contains nav_page.path %}active{% endif %}">
+                            {{ nav_page.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+    </nav>
+</div>

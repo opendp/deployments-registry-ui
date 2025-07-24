@@ -1,0 +1,92 @@
+/* Base Styles - Global typography, colors, and foundational elements */
+
+/* Typography and Base Elements */
+body {
+    font-family: "Inter", sans-serif;
+    background-color: #FFFFFF;
+    scroll-behavior: smooth;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    padding-left: 1em;
+}
+
+/* Base Table Styles */
+table {
+    background-color: transparent;
+    color: inherit;
+}
+
+/* Base Button Styles */
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 12px;
+    background-color: #F3F3F3;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #bbbbbb;
+}
+
+button:active {
+    background-color: #F3F3F3;
+}
+
+/* Base wrapper for content containers */
+.wrapper {
+    max-width: 940px;
+    margin-right: auto;
+    margin-left: 0;
+    padding-right: 32px;
+    padding-left: 32px;
+}
+
+/* Scrollbar Styles */
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #4f4f4f0f;
+    border-radius: 12px;
+    width: 16px;
+    padding: 24px 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #5c5c5c45;
+    width: 8px;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+::-webkit-scrollbar-corner {
+    background: #f1f1f1;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #5c5c5c45 #f1f1f1;
+}

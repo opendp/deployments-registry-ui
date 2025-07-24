@@ -1,0 +1,101 @@
+/* Content Styles - Main content area, typography, code blocks, and page elements */
+
+/* Main Content Container */
+.docs-content {
+    flex: 1;
+    min-width: 0;
+    padding: 2rem;
+    padding-right: 0;
+}
+
+/* Page Titles and Headers */
+.docs-content .post-title {
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    color: #181818;
+    font-family: "Inter", sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 40px;
+}
+
+.docs-content h2 {
+    color: #34495e;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.docs-content h3 {
+    color: #34495e;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+/* Text Content */
+.docs-content p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+/* Code Styling */
+.docs-content code {
+    background-color: #f1f2f6;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #e74c3c;
+}
+
+.docs-content pre {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+/* Blockquotes */
+.docs-content blockquote {
+    border-left: 4px solid #3498db;
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    background-color: #f8f9fa;
+    font-style: italic;
+}
+
+/* Images */
+.docs-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: 1rem 0;
+}
+
+/* Page Icons */
+.page-icon {
+    margin-bottom: 24px;
+    margin-right: auto;
+}
+
+.page-icon svg {
+    vertical-align: middle;
+    color: #181818;
+}
+
+.post-title {
+    display: flex;
+    align-items: center;
+}
+
+/* Content Responsive Design */
+@media (max-width: 768px) {
+    .docs-content {
+        order: 1;
+        padding: 1.5rem;
+    }
+}

@@ -1,0 +1,211 @@
+/* Side Panel Styles - Right-side panel for deployment details and related interactions */
+
+/* Side Panel Container */
+.side-panel-container {
+    width: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.side-panel-container.expanded {
+    width: calc(min(30vw, 444px) + 2rem);
+    min-width: calc(min(30vw, 444px) + 2rem);
+}
+
+/* Side Panel */
+.side-panel {
+    position: fixed;
+    top: 104px;
+    right: 2rem;
+    z-index: 1000;
+    box-sizing: border-box;
+    width: min(30vw, 444px);
+    border-radius: 8px;
+    border: 1px solid #E7E7E7;
+    background: #FFF;
+    padding: 0;
+    transition: all 0.3s ease;
+    height: fit-content;
+    max-height: calc(100vh - 104px - 2rem);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+}
+
+.side-panel.expanded {
+    padding: 12px 8px 12px 12px;
+    overflow-y: auto;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* Side Panel Content */
+.side-panel-content {
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+}
+
+.side-panel.expanded .side-panel-content {
+    opacity: 1;
+}
+
+.side-panel-content h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+/* Deployment Header */
+.side-panel .deployment-header-container .deployment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    color: #181818;
+    font-size: 16px;
+    gap: 6px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+.side-panel .deployment-header-container .deployment-header p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+}
+
+/* Deployment Sections */
+.side-panel .deployment-section {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: #181818;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    border: 1px solid #E7E7E7;
+    background: #FAFAFA;
+    margin-top: 12px;
+}
+
+.side-panel .deployment-section p {
+    margin-bottom: 0;
+}
+
+.side-panel .section-sub-heading {
+    color: #646464;
+    margin-bottom: 6px;
+}
+
+.side-panel .section-spacer {
+    border: 1px solid #E7E7E7;
+    height: 0;
+}
+
+.side-panel .deployment-section-header {
+    font-weight: 600;
+}
+
+/* Side Panel Tables */
+.side-panel table th, 
+.side-panel table td {
+    padding: 3px 0;
+    background-color: transparent;
+    border: none;
+}
+
+.side-panel table {
+    width: 100%;
+    border: none !important;
+    border-collapse: collapse !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.side-panel table th:hover,
+.side-panel table,
+.side-panel table tr,
+.side-panel table tr th,
+.side-panel table tr td,
+.side-panel table tr:hover,
+.side-panel table td:hover {
+    background-color: transparent;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.side-panel table tbody tr {
+    height: fit-content;
+}
+
+.side-panel table th {
+    color: #646464;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.side-panel table td {
+    font-weight: 600;
+    border: none !important;
+    text-align: right;
+}
+
+/* Side Panel Responsive Design */
+@media (max-width: 768px) {
+    /* Mobile Side Panel - Modal Style */
+    .side-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        width: 100% !important;
+        border-radius: 12px 12px 0 0;
+        height: 0;
+        max-height: 80vh;
+        transform: translateY(100%);
+        transition: transform 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    }
+
+    .side-panel.expanded {
+        height: 80vh;
+        padding: 1.5rem;
+        overflow-y: auto;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    /* Modal overlay for mobile side panel */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}

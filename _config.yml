@@ -11,9 +11,53 @@ url: "http://registry.opendp.org/"
 theme: minima
 plugins:
   - jekyll-feed
+
+# Collections
+collections:
+  navigation:
+    output: false
+
+# Include pages directory in processing
+include:
+  - pages
+
+# Header navigation
 header_pages:
-  - content/overview.md
+  - pages/index.md
+
 markdown: kramdown # The default: passes <script> tags through verbatim.
+
+# Defaults for pages
+defaults:
+  - scope:
+      path: "pages"
+    values:
+      layout: "docs"
+  - scope:
+      path: "pages/background"
+    values:
+      layout: "docs"
+      permalink: /:basename/
+  - scope:
+      path: "pages/concepts"
+    values:
+      layout: "docs"
+      permalink: /concepts/:basename/
+  - scope:
+      path: "pages/deployments-registry"
+    values:
+      layout: "main"
+      permalink: /deployments-registry/:basename/
+  - scope:
+      path: "pages/further-information"
+    values:
+      layout: "docs"
+      permalink: /further-information/:basename/
+  - scope:
+      path: "pages/privacy"
+    values:
+      layout: "docs"
+      permalink: /privacy/:basename/
 
 exclude:
   - eslint.config.mjs

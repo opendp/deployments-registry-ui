@@ -1,0 +1,374 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const deploymentsData = JSON.parse(document.getElementById('deployments-data').textContent);
+    const table = document.getElementById('deployments-table');
+    const tbody = table.querySelector('tbody');
+    
+    // Custom Select Component
+    class CustomSelect {
+        constructor(container, placeholder = 'Select...') {
+            this.container = container;
+            this.placeholder = placeholder;
+            this.value = '';
+            this.options = [];
+            this.isOpen = false;
+            this.onChange = null;
+            
+            this.createSelect();
+            this.bindEvents();
+        }
+        
+        createSelect() {
+            this.container.innerHTML = `
+                <div class="custom-select">
+                    <div class="custom-select-trigger">
+                        <span class="custom-select-value">${this.placeholder}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                            <mask id="mask0_515_4768" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="20">
+                                <rect x="0.666626" width="20" height="20" fill="#D9D9D9"/>
+                            </mask>
+                            <g mask="url(#mask0_515_4768)">
+                                <path d="M8.62927 8.72917L11.3626 5.99583C11.4848 5.87361 11.6265 5.8125 11.7876 5.8125C11.9487 5.8125 12.0904 5.87361 12.2126 5.99583C12.3348 6.11806 12.3959 6.25972 12.3959 6.42083C12.3959 6.58194 12.3329 6.7255 12.2069 6.8515L9.04593 10.0125C8.98593 10.0681 8.92093 10.1097 8.85093 10.1375C8.78093 10.1653 8.70593 10.1792 8.62593 10.1792C8.54593 10.1792 8.47093 10.1653 8.40093 10.1375C8.33093 10.1097 8.26816 10.0681 8.2126 10.0125L5.0516 6.8515C4.9256 6.7255 4.86538 6.58472 4.87093 6.42917C4.87649 6.27361 4.94038 6.13472 5.0626 6.0125C5.18482 5.89028 5.32649 5.82917 5.4876 5.82917C5.64871 5.82917 5.79038 5.89028 5.9126 6.0125L8.62927 8.72917Z" fill="#3A3A3A"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="custom-select-options">
+                        <div class="custom-select-option" data-value="">${this.placeholder}</div>
+                    </div>
+                </div>
+            `;
+            
+            this.trigger = this.container.querySelector('.custom-select-trigger');
+            this.valueElement = this.container.querySelector('.custom-select-value');
+            this.optionsContainer = this.container.querySelector('.custom-select-options');
+        }
+        
+        bindEvents() {
+            this.trigger.addEventListener('click', () => this.toggle());
+            
+            document.addEventListener('click', (e) => {
+                if (!this.container.contains(e.target)) {
+                    this.close();
+                }
+            });
+            
+            this.optionsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('custom-select-option')) {
+                    this.selectOption(e.target.dataset.value, e.target.textContent);
+                }
+            });
+        }
+        
+        toggle() {
+            this.isOpen ? this.close() : this.open();
+        }
+        
+        open() {
+            this.isOpen = true;
+            this.container.querySelector('.custom-select').classList.add('open');
+        }
+        
+        close() {
+            this.isOpen = false;
+            this.container.querySelector('.custom-select').classList.remove('open');
+        }
+        
+        selectOption(value, text) {
+            this.value = value;
+            this.valueElement.textContent = text;
+            this.close();
+            
+            if (this.onChange) {
+                this.onChange(value);
+            }
+        }
+        
+        updateOptions(options) {
+            this.options = options;
+            this.optionsContainer.innerHTML = `<div class="custom-select-option" data-value="">${this.placeholder}</div>`;
+            
+            options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'custom-select-option';
+                optionElement.dataset.value = option;
+                optionElement.textContent = option;
+                this.optionsContainer.appendChild(optionElement);
+            });
+        }
+        
+        setValue(value) {
+            this.value = value;
+            if (value === '') {
+                this.valueElement.textContent = this.placeholder;
+            } else {
+                this.valueElement.textContent = value;
+            }
+        }
+    }
+    
+    // Custom MultiSelect Component
+    class CustomMultiSelect {
+        constructor(container, placeholder = 'Select...') {
+            this.container = container;
+            this.placeholder = placeholder;
+            this.values = [];
+            this.options = [];
+            this.isOpen = false;
+            this.onChange = null;
+            
+            this.createMultiSelect();
+            this.bindEvents();
+        }
+        
+        createMultiSelect() {
+            this.container.innerHTML = `
+                <div class="custom-multiselect">
+                    <div class="custom-multiselect-trigger">
+                        <div class="custom-multiselect-values">
+                            <span class="custom-multiselect-placeholder">${this.placeholder}</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                            <mask id="mask0_515_4275" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="20">
+                                <rect x="0.333313" width="20" height="20" fill="#D9D9D9"/>
+                            </mask>
+                            <g mask="url(#mask0_515_4275)">
+                                <path d="M8.29595 8.72917L11.0293 5.99583C11.1515 5.87361 11.2932 5.8125 11.4543 5.8125C11.6154 5.8125 11.7571 5.87361 11.8793 5.99583C12.0015 6.11806 12.0626 6.25972 12.0626 6.42083C12.0626 6.58194 11.9996 6.7255 11.8736 6.8515L8.71262 10.0125C8.65262 10.0681 8.58762 10.1097 8.51762 10.1375C8.44762 10.1653 8.37262 10.1792 8.29262 10.1792C8.21262 10.1792 8.13762 10.1653 8.06762 10.1375C7.99762 10.1097 7.93484 10.0681 7.87929 10.0125L4.71829 6.8515C4.59229 6.7255 4.53207 6.58472 4.53762 6.42917C4.54318 6.27361 4.60707 6.13472 4.72929 6.0125C4.85151 5.89028 4.99318 5.82917 5.15429 5.82917C5.3154 5.82917 5.45707 5.89028 5.57929 6.0125L8.29595 8.72917Z" fill="#3A3A3A"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="custom-multiselect-options">
+                    </div>
+                </div>
+            `;
+            
+            this.trigger = this.container.querySelector('.custom-multiselect-trigger');
+            this.valuesContainer = this.container.querySelector('.custom-multiselect-values');
+            this.optionsContainer = this.container.querySelector('.custom-multiselect-options');
+            this.placeholder_element = this.container.querySelector('.custom-multiselect-placeholder');
+        }
+        
+        bindEvents() {
+            this.trigger.addEventListener('click', () => this.toggle());
+            
+            document.addEventListener('click', (e) => {
+                if (!this.container.contains(e.target)) {
+                    this.close();
+                }
+            });
+            
+            this.optionsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('custom-multiselect-option')) {
+                    this.toggleOption(e.target.dataset.value);
+                } else if (e.target.parentElement.classList.contains('custom-multiselect-option')) {
+                    this.toggleOption(e.target.parentElement.dataset.value);
+                }
+            });
+        }
+        
+        toggle() {
+            this.isOpen ? this.close() : this.open();
+        }
+        
+        open() {
+            this.isOpen = true;
+            this.container.querySelector('.custom-multiselect').classList.add('open');
+        }
+        
+        close() {
+            this.isOpen = false;
+            this.container.querySelector('.custom-multiselect').classList.remove('open');
+        }
+        
+        toggleOption(value) {
+            console.log("in toggle with value: ", value);
+            const index = this.values.indexOf(value);
+            if (index > -1) {
+                this.values.splice(index, 1);
+            } else {
+                this.values.push(value);
+            }
+            
+            this.updateDisplay();
+            this.updateOptionStates();
+            
+            if (this.onChange) {
+                this.onChange(this.values);
+            }
+        }
+        
+        updateDisplay() {
+            if (this.values.length === 0) {
+                this.valuesContainer.innerHTML = `<span class="custom-multiselect-placeholder">${this.placeholder}</span>`;
+            } else {
+                const tags = this.values.map(value => 
+                    `<span class="custom-multiselect-tag">
+                        ${value}
+                        <span class="custom-multiselect-remove" data-value="${value}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
+                                <mask id="mask0_515_4765" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="13" height="12">
+                                    <rect x="0.333313" width="12" height="12" fill="#D9D9D9"/>
+                                </mask>
+                                <g mask="url(#mask0_515_4765)">
+                                    <path d="M9.33331 3L3.33331 9M3.33331 3L9.33331 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                            </svg>
+                        </span>
+                    </span>`
+                ).join('');
+                this.valuesContainer.innerHTML = tags;
+                
+                // Add remove event listeners
+                this.valuesContainer.querySelectorAll('.custom-multiselect-remove').forEach(removeBtn => {
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleOption(removeBtn.dataset.value);
+                    });
+                });
+            }
+        }
+        
+        updateOptionStates() {
+            this.optionsContainer.querySelectorAll('.custom-multiselect-option').forEach(option => {
+                if (this.values.includes(option.dataset.value)) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+        }
+        
+        updateOptions(options) {
+            this.options = options;
+            this.optionsContainer.innerHTML = '';
+            
+            options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'custom-multiselect-option';
+                optionElement.dataset.value = option;
+                optionElement.id = `option-${option}`;
+                optionElement.innerHTML = `<span class="custom-multiselect-text">${option}</span>`;
+                this.optionsContainer.appendChild(optionElement);
+            });
+            
+            this.updateOptionStates();
+        }
+        
+        clearSelection() {
+            this.values = [];
+            this.updateDisplay();
+            this.updateOptionStates();
+        }
+        
+        getValues() {
+            return this.values;
+        }
+    }
+    
+    // Initialize custom components
+    const curatorFilterElement = document.querySelector('#curator-filter');
+    const modelFilterElement = document.querySelector('#model-filter');
+    const yearFilterElement = document.querySelector('#year-filter');
+    
+    if (!curatorFilterElement || !modelFilterElement || !yearFilterElement) {
+        console.error('One or more filter elements not found!');
+        return;
+    }
+    
+    const curatorFilterGroup = curatorFilterElement.parentElement;
+    const modelFilterGroup = modelFilterElement.parentElement;
+    const yearFilterGroup = yearFilterElement.parentElement;
+    
+    const curatorSelect = new CustomSelect(curatorFilterGroup, 'Curators');
+    const modelMultiSelect = new CustomMultiSelect(modelFilterGroup, 'Models');
+    const yearMultiSelect = new CustomMultiSelect(yearFilterGroup, 'Years');
+    
+    // Hide original selects
+    curatorFilterElement.style.display = 'none';
+    modelFilterElement.style.display = 'none';
+    yearFilterElement.style.display = 'none';
+    
+    // Populate filter options
+    function populateFilters() {
+        const selectedCurator = curatorSelect.value;
+        const selectedModels = modelMultiSelect.getValues();
+        const selectedYears = yearMultiSelect.getValues();
+        
+        // Get unique values from filtered data
+        const curators = [...new Set(deploymentsData.filter(d => {
+            const matchesModel = selectedModels.length === 0 || selectedModels.includes(d.model.model_type);
+            const matchesYear = selectedYears.length === 0 || selectedYears.includes(new Date(d.publication_date).getFullYear().toString());
+            return matchesModel && matchesYear;
+        }).map(d => d.data_curator))].sort();
+        
+        const models = [...new Set(deploymentsData.filter(d => {
+            const matchesCurator = !selectedCurator || d.data_curator === selectedCurator;
+            const matchesYear = selectedYears.length === 0 || selectedYears.includes(new Date(d.publication_date).getFullYear().toString());
+            return matchesCurator && matchesYear;
+        }).map(d => d.model.model_type))].sort();
+        
+        const years = [...new Set(deploymentsData.filter(d => {
+            const matchesCurator = !selectedCurator || d.data_curator === selectedCurator;
+            const matchesModel = selectedModels.length === 0 || selectedModels.includes(d.model.model_type);
+            return matchesCurator && matchesModel;
+        }).map(d => {
+            const date = new Date(d.publication_date);
+            return date.getFullYear().toString();
+        }))].sort((a, b) => b - a);
+        
+        // Update custom components
+        curatorSelect.updateOptions(curators);
+        modelMultiSelect.updateOptions(models);
+        yearMultiSelect.updateOptions(years);
+    }
+    
+    // Filter function
+    function filterTable() {
+        const selectedCurator = curatorSelect.value;
+        const selectedModels = modelMultiSelect.getValues();
+        const selectedYears = yearMultiSelect.getValues();
+        
+        const rows = tbody.querySelectorAll('.deployment-row');
+        
+        rows.forEach((row, index) => {
+            const deployment = deploymentsData[index];
+            const deploymentYear = new Date(deployment.publication_date).getFullYear().toString();
+            
+            const matchesCurator = selectedCurator === '' || deployment.data_curator === selectedCurator;
+            const matchesModel = selectedModels.length === 0 || selectedModels.includes(deployment.model.model_type);
+            const matchesYear = selectedYears.length === 0 || selectedYears.includes(deploymentYear);
+            
+            if (matchesCurator && matchesModel && matchesYear) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+    
+    // Clear filters function
+    function clearFilters() {
+        curatorSelect.setValue('');
+        modelMultiSelect.clearSelection();
+        yearMultiSelect.clearSelection();
+        populateFilters();
+        filterTable();
+    }
+    
+    // Handle filter change
+    function handleFilterChange() {
+        populateFilters();
+        filterTable();
+    }
+    
+    // Set up change handlers
+    curatorSelect.onChange = handleFilterChange;
+    modelMultiSelect.onChange = handleFilterChange;
+    yearMultiSelect.onChange = handleFilterChange;
+    
+    // Event listeners
+    document.getElementById('clear-filters').addEventListener('click', clearFilters);
+    
+    // Initialize - populate filters after components are set up
+    populateFilters();
+});
+</script>
