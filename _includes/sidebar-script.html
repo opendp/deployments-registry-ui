@@ -1,4 +1,6 @@
-<script>
+<script type="module">
+  import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
   let deploymentsData = [];
   // Initialize sidebar state
   document.addEventListener('DOMContentLoaded', function() {
@@ -121,6 +123,38 @@
       const detailsHTML = generateDeploymentDetailsHTML(deployment);
       deploymentDetailsDiv.innerHTML = detailsHTML;
     }
+    MathJax.typeset();
+  }
+
+  function objectToHTML(deploymentObject) {
+    let html = '';
+    for (let [key, value] of Object.entries(deploymentObject)) {
+      if (value === null) {
+        continue;
+      }
+      const label = key.split('_').join(' ');
+      if (value?.length < 40) {
+        html += 
+          `<table><tr>
+            <th style="text-transform: capitalize;">${label}</th>
+            <td>${marked.parse(String(value))}</td>
+          </tr></table>`
+      } else if (typeof value !== 'object') {
+        html += 
+          `<div>
+            <div class="section-sub-heading" style="text-transform: capitalize;">${label}</div>
+            <div>${marked.parse(String(value))}</div>
+          </div>`
+      } else {
+        const inner = objectToHTML(value);
+        html += 
+          `<div class="deployment-section-header" style="text-transform: capitalize;">
+            ${label}
+          </div>
+          ${inner}`
+      }
+    }
+    return html;
   }
 
   function generateDeploymentDetailsHTML(deployment) {
@@ -146,214 +180,11 @@
           </button>
         </div>
         <div class="section-spacer"></div>
-      </div>`
-    let deploymentSection = `
-      <div class="deployment-section">
-        <div>
-            <div class="deployment-section-header">
-                Header
-            </div>
-            <div class="section-sub-heading">Subheader</div>
-            <p>
-                ${deployment.data_product_description || ''}
-            </p>
-        </div>
-        <table>
-            <tr>
-                <th>Product Type</th>
-                <td>${deployment.data_product_type || ''}</td>
-            </tr>
-            <tr>
-                <th>Region</th>
-                <td>${deployment.data_product_region || ''}</td>
-            </tr>
-            <tr>
-                <th>Publication Date</th>
-                <td>${deployment.publication_date || ''}</td>
-            </tr>
-        </table>
-      </div>
-    `;
-
-    if (deployment.dp_flavor && deployment.dp_flavor?.name) {
-      deploymentSection += `
-        <div class="deployment-section">
-          <div class="deployment-section-header">
-            DP Flavor
-          </div>
-          <table>
-            <tr>
-              <th>Flavor Name</th>
-              <td>${deployment.dp_flavor?.name || ''}</td>
-            </tr>
-          </table>
-      `
-
-      if (deployment.dp_flavor?.data_domain) {
-        deploymentSection += `
-          <div>
-            <div class="section-sub-heading">Data Domain</div>
-            <p>${deployment.dp_flavor?.data_domain}</p>
-          </div>
-          <div class="section-spacer"></div>
-        `
-      }
-
-      if (deployment.dp_flavor?.unprotected_quantities) {
-        deploymentSection += `
-          <div>
-            <div class="section-sub-heading">Unprotected Quantities</div>
-            <p>${deployment.dp_flavor?.unprotected_quantities}</p>
-          </div>
-        `
-      }
-
-      deploymentSection += `
-        </div>
-      `
-    }
-
+      </div>`;
     
-    if (deployment.privacy_loss && deployment.privacy_loss?.privacy_unit) {
-      deploymentSection += `
-        <div class="deployment-section">
-          <div class="deployment-section-header">
-            Privacy Loss
-          </div>
-          <table>
-            <tr>
-              <th>Privacy Unit</th>
-              <td>${deployment.privacy_loss?.privacy_unit || ''}</td>
-            </tr>
-          
-      `
+    let deploymentSection = '<div class="deployment-section">';
+    deploymentSection += objectToHTML(deployment);
 
-      if (deployment.privacy_loss?.privacy_parameters.epsilon) {
-        deploymentSection += `
-          <tr>
-            <th>Epsilon</th>
-            <td>${deployment.privacy_loss?.privacy_parameters?.epsilon || ''}</td>
-          </tr>
-        `
-      }
-      if (deployment.privacy_loss?.privacy_parameters.delta) {
-        deploymentSection += `
-          <tr>
-            <th>Delta</th>
-            <td>${deployment.privacy_loss?.privacy_parameters?.delta || ''}</td>
-          </tr>
-        `
-      }
-
-      deploymentSection += `
-        </table>
-        </div>
-      `
-    }
-
-    if(deployment.model && deployment.model?.model_type) {
-      deploymentSection += `
-        <div class="deployment-section">
-          <div class="deployment-section-header">
-            Deployment model
-          </div>
-          <table>
-            <tr>
-              <th>Model</th>
-              <td>${deployment.model?.model_type || ''}</td>
-            </tr>
-            <tr>
-              <th>Release Type</th>
-              <td>${deployment.model?.release_type || ''}</td>
-            </tr>
-          </table>
-          <p>${deployment.model?.model_type_description || ''}</p>
-          <table>
-            <tr>
-              <th>Label</th>
-              <td>${deployment.model?.interactivity || ''}</td>
-            </tr>
-          </table>
-        </div>
-      `
-    }
-
-    if(deployment.additional_dp_information && (deployment.additional_dp_information?.post_processing || deployment.additional_dp_information?.composition)) {
-      deploymentSection += `
-        <div class="deployment-section">
-          <div class="deployment-section-header">
-            Accounting
-          </div>
-      `
-      if(deployment.additional_dp_information?.post_processing) {
-        deploymentSection += `
-          <div>
-            <div class="section-sub-heading">Post processing</div>
-            <p>${deployment.additional_dp_information?.post_processing}</p>
-          </div>
-          <div class="section-spacer"></div>
-        `
-      }
-
-      if(deployment.additional_dp_information?.composition) {
-        deploymentSection += `
-          <div>
-            <div class="section-sub-heading">Composition</div>
-            <p>${deployment.additional_dp_information?.composition}</p>
-          </div>
-        `
-      }
-
-      deploymentSection += `
-        </div>
-      `
-    }
-
-    if(deployment.implementation && (
-        deployment.implementation?.pre_processing_eda_hyperparameter_tuning || 
-        deployment.implementation?.mechanisms || 
-        deployment.implementation?.justification)
-      ) {
-      deploymentSection += `
-        <div class="deployment-section">
-          <div class="deployment-section-header">
-            Implementation
-          </div>
-      `
-
-      if(deployment.implementation?.pre_processing_eda_hyperparameter_tuning) {
-        deploymentSection += `
-          <div>
-            <div class="section-sub-heading">Pre processing</div>
-            <p>${deployment.implementation?.pre_processing_eda_hyperparameter_tuning}</p>
-          </div>
-          <div class="section-spacer"></div>
-        `
-      }
-
-      if(deployment.implementation?.mechanisms) {
-        deploymentSection += `
-          <div>
-            <div class="section-sub-heading">Mechanisms</div>
-            <p>${deployment.implementation?.mechanisms}</p>
-          </div>
-          <div class="section-spacer"></div>
-        `
-      }
-
-      if(deployment.implementation?.justification) {
-        deploymentSection += `
-          <div>
-            <div class="section-sub-heading">Justification</div>
-            <p>${deployment.implementation?.justification}</p>
-          </div>
-        `
-      }
-
-      deploymentSection += `
-        </div>
-      `
-    }
     return deploymentHeader + deploymentSection;
   }
 
