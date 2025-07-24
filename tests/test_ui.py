@@ -18,6 +18,8 @@ def test_ui(page: Page):
         page.get_by_role("heading", name="Differential Privacy Deployments Registry")
     ).to_be_visible()
 
+    page.get_by_role("link", name="Deployments Registry").click()
+
     # Data load?
     expect(
         # US Census:
@@ -34,8 +36,7 @@ def test_ui(page: Page):
     markdown_p_1_node.is_hidden()
 
     # Click:
-    # TODO: Update ID when https://github.com/opendp/deployments-registry-data/issues/51 is done.
-    page.get_by_test_id("google_covid_19_sympton_search").click()
+    page.get_by_text("ε: 1.68").click()
 
     # Confirm visible
     latex_node.is_visible()
