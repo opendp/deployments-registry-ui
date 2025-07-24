@@ -22,3 +22,13 @@ Core to this document, is a registry of case studies present at the end. Much of
 On the other hand, if the reader is interested more in an introduction to differential privacy, there are some excellent resources available such as books/papers ([28][28], [29][29]), online lecture notes and websites ([32]). While this document introduces some of the nomenclature of differential privacy, it is not intended to be a standalone resource and will refer to common techniques and mechanisms with only references where the reader can learn more.
 
 Finally, and importantly, this document is not intended to be static in nature. One core purpose behind the document is to periodically add new case studies, to keep up with the ever evolving practices of industry and government applications and align with guidance from regulators which are expected to be more prevalent in coming years. If you would like to join the authors of this document and support the registry, please head over to the [Github page](https://github.com/opendp/deployments-registry-ui).
+
+[22]: https://lehd.ces.census.gov/data/pseo_experimental.html "U.S.C. Bureau: Post-Secondary Employment Outcomes"
+[23]: https://www.census.gov/newsroom/press-releases/2021/2020-census-key-parameters.html "U.S.C. Bureau: Restricting Demographic Information"
+[24]: https://ec.europa.eu/research/participants/data/ref/h2020/wp/2014_2015/annexes/h2020-wp1415-annex-g-trl_en.pdf "Horizon 2020 - Work Programme 2014-2015: General Annexes. Extract from Part 19 - Commission Decision C(2014)4995"
+[25]: https://desfontain.es/blog/real-world-differential-privacy.html "D. Desfontaines: A list of real-world uses of differential privacy"
+[26]: https://cdeiuk.github.io/pets-adoption-guide/repository/ "Centre for Data Ethics and Innovation (CDEI): Privacy Enhancing Technologies Adoption Guide"
+[27]: https://unstats.un.org/bigdata/task-teams/privacy/guide/ "United Nations, Department of Economic and Social Affairs, Statistics Division: UN Guide on Privacy-Enhancing Technologies for Official Statistics"
+[28]: http://arxiv.org/pdf/2005.00010.pdf "G. Kamath, J. Ullman: A Primer on Private Statistics"
+[29]: https://programming-dp.com/ "J.P. Near, C. Abuah: Programming Differential Privacy"
+[32]: http://www.gautamkamath.com/courses/CS860-fa2022.html "Gautam Kamath: CS 860 - Algorithms for Private Data Analysis - Fall 2022"
