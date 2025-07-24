@@ -14,7 +14,7 @@ Since the noise is added very early in the pipeline, local differential privacy 
 In local differential privacy, each data subject applies randomization as a disclosure control locally before sharing their outputs with the central aggregator.
 
 {% include image.html
-    url="/images/local-dp.png"
+    url="/assets/images/local-dp.png"
     alt="Coin flips on the left are separated from the aggregator on the right by a privacy barrier."
     caption="In local differential privacy, each data subject applies randomization as a disclosure control locally before sharing their outputs with the central aggregator."
 %}
@@ -24,7 +24,7 @@ In local differential privacy, each data subject applies randomization as a disc
 Opposite from the previous section, the central model refers to the model where the privacy mechanisms are applied centrally, after data collection. In this model, individuals provide raw data and place their trust in the curator, which is intended to add privacy protections in a downstream task. This is often referred to as the global model or the server model, as defined in the ISO/IEC ([34]).
 
 {% include image.html
-    url="/images/central-dp.png"
+    url="/assets/images/central-dp.png"
     alt="Data subjects on the left are directly connected to aggregator on the right. Coin flip and privacy barrier follow."
     caption="In central differential privacy, each data subject shares their private information with the trusted aggregator. Randomization is applied as a disclosure control prior to broader dissemination."
 %}
