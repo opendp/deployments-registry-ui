@@ -87,9 +87,15 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
             <td>{{ d.publication_date }}</td>
             <td>{{ d.dp_flavor.name }}</td>
             <td>
-                ε:&nbsp;{{ d.privacy_loss.privacy_parameters.epsilon }}<br>
-                δ:&nbsp;{{ d.privacy_loss.privacy_parameters.delta }}<br>
-                ρ:&nbsp;{{ d.privacy_loss.privacy_parameters.rho }}
+                {% if d.privacy_loss.privacy_parameters.epsilon %}
+                    ε:&nbsp;{{ d.privacy_loss.privacy_parameters.epsilon }}<br>
+                {% endif %}
+                {% if d.privacy_loss.privacy_parameters.delta %}
+                    δ:&nbsp;{{ d.privacy_loss.privacy_parameters.delta }}<br>
+                {% endif %}
+                {% if d.privacy_loss.privacy_parameters.rho %}
+                    ρ:&nbsp;{{ d.privacy_loss.privacy_parameters.rho }}<br>
+                {% endif %}
             </td>
             <td>{{ d.model.model_type }}</td>
         </tr>

@@ -25,12 +25,9 @@ navigation:
       - path: /concepts/trust-model/
         title: Defining the Trust Model
         order: 1
-      - path: /concepts/standardization/
-        title: Standardization
-        order: 2
       - path: /concepts/advanced-topics/
         title: Advanced Topics
-        order: 3
+        order: 2
 
   - section: deployments-registry
     title: Deployments Registry
