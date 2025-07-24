@@ -76,8 +76,7 @@ CI in the data repo is responsible for validating the deployment records,
 but if there are changes to the schema, corresponding changes may be needed here.
 After making any necessary updates, commit your changes and make a PR.
 
-<<<<<<< Updated upstream
-=======
+
 ## Site Structure
 
 The site is organized with documentation pages in the `pages/` directory, but served at clean URLs:
@@ -87,4 +86,3 @@ The site is organized with documentation pages in the `pages/` directory, but se
 - Concept pages: `/concepts/trust-model`, `/concepts/standardization` (from `pages/concepts/`)
 
 This is achieved through Jekyll's permalink configuration, allowing clean URLs without moving files around.
->>>>>>> Stashed changes

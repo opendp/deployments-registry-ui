@@ -127,11 +127,13 @@
 
 .side-panel table {
     width: 100%;
+    /* eslint-disable css/no-important */
     border: none !important;
     border-collapse: collapse !important;
     background-color: transparent !important;
     box-shadow: none !important;
     margin: 0 !important;
+    /* eslint-enable css/no-important */
 }
 
 .side-panel table th:hover,
@@ -142,8 +144,10 @@
 .side-panel table tr:hover,
 .side-panel table td:hover {
     background-color: transparent;
+    /* eslint-disable css/no-important */
     border: none !important;
     box-shadow: none !important;
+    /* eslint-enable css/no-important */
 }
 
 .side-panel table tbody tr {
@@ -160,6 +164,7 @@
 
 .side-panel table td {
     font-weight: 600;
+    /* eslint-disable-next-line css/no-important */
     border: none !important;
     text-align: right;
 }
@@ -173,6 +178,7 @@
         left: 0;
         right: 0;
         top: auto;
+        /* eslint-disable-next-line css/no-important */
         width: 100% !important;
         border-radius: 12px 12px 0 0;
         height: 0;

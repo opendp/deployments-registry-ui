@@ -1,7 +1,4 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
 layout: main
 title: Deployments Registry
 order: 1
@@ -93,55 +90,14 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
         </div>
     </div>
 </div>
-</div>
 
-
-{% assign pages = site.pages | where_exp: 'page', 'page.title' | sort: 'order' %}
-{% for page in pages %}
-- [{{page.title}}]({{page.url}})
-{% endfor %}
 
 <!-- Hidden deployment data for JavaScript -->
 <script type="application/json" id="deployments-data">
 [
 {% for deployment in site.data.deployments %}
     {% assign d = deployment[1].deployment %}
-    {
-        "name": {{ d.name | jsonify }},
-        "data_curator": {{ d.data_curator | jsonify }},
-        "intended_use": {{ d.intended_use | jsonify }},
-        "data_product_type": {{ d.data_product_type | jsonify }},
-        "data_product_region": {{ d.data_product_region | jsonify }},
-        "data_product_description": {{ d.data_product_description | jsonify }},
-        "publication_date": {{ d.publication_date | jsonify }},
-        "dp_flavor": {
-            "name": {{ d.dp_flavor.name | jsonify }},
-            "data_domain": {{ d.dp_flavor.data_domain | jsonify }},
-            "unprotected_quantities": {{ d.dp_flavor.unprotected_quantities | jsonify }}
-        },
-        "privacy_loss": {
-            "privacy_unit": {{ d.privacy_loss.privacy_unit | jsonify }},
-            "privacy_unit_description": {{ d.privacy_loss.privacy_unit_description | jsonify }},
-            "privacy_parameters": {{ d.privacy_loss.privacy_parameters | jsonify }},
-            "privacy_parameters_description": {{ d.privacy_loss.privacy_parameters_description | jsonify }}
-        },
-        "model": {
-            "model_type": {{ d.model.model_type | jsonify }},
-            "model_type_description": {{ d.model.model_type_description | jsonify }},
-            "release_type": {{ d.model.release_type | jsonify }},
-            "release_type_description": {{ d.model.release_type_description | jsonify }},
-            "interactivity": {{ d.model.interactivity | jsonify }}
-        },
-        "additional_dp_information": {
-            "post_processing": {{ d.additional_dp_information.post_processing | jsonify }},
-            "composition": {{ d.additional_dp_information.composition | jsonify }}
-        },
-        "implementation": {
-            "pre_processing_eda_hyperparameter_tuning": {{ d.implementation.pre_processing_eda_hyperparameter_tuning | jsonify }},
-            "mechanisms": {{ d.implementation.mechanisms | jsonify }},
-            "justification": {{ d.implementation.justification | jsonify }}
-        }
-    }{% unless forloop.last %},{% endunless %}
+    {{ d | jsonify }}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]
 </script>

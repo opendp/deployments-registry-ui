@@ -87,6 +87,8 @@ button:active {
 
 /* Firefox */
 * {
+    /* eslint-disable css/use-baseline */
     scrollbar-width: thin;
     scrollbar-color: #5c5c5c45 #f1f1f1;
+    /* eslint-enable css/use-baseline */
 }

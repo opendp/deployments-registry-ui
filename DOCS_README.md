@@ -10,7 +10,7 @@ To add new documentation pages:
 
 Create your new `.md` file in the appropriate folder under `pages/`:
 
-```
+```text
 pages/
 ├── background/
 │   ├── overview.md
@@ -96,7 +96,7 @@ The sidebar navigation reads from `_navigation/main.md`, which contains a YAML f
 
 ## File Structure
 
-```
+```text
 ├── _navigation/
 │   └── main.md                # Sidebar navigation structure
 ├── _layouts/

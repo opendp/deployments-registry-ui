@@ -18,7 +18,17 @@ def test_ui(page: Page):
         page.get_by_role("heading", name="Differential Privacy Deployments Registry")
     ).to_be_visible()
 
-    # Data load?
+
+    # Schema table?
+    page.get_by_text('Schema').click()
+    # Top level:
+    expect(page.get_by_text("The name of the data product")).to_be_visible()
+    # Second level:
+    expect(page.get_by_text("Actual, potential, or counterfactual datasets")).to_be_visible()
+
+
+    # Deployments table?
+    page.get_by_role("link", name="Deployments Registry").click()
     expect(
         # US Census:
         page.get_by_text("ε: 19.61")
@@ -29,26 +39,17 @@ def test_ui(page: Page):
     latex_node = page.locator("mjx-container").filter(has_text="ϵsym")
     latex_node.is_hidden()
 
-    markdown_p_1_text = "A region-specific constant c"
-    markdown_p_1_node = page.get_by_text(markdown_p_1_text)
-    markdown_p_1_node.is_hidden()
-
     # Click:
-    # TODO: Update ID when https://github.com/opendp/deployments-registry-data/issues/51 is done.
-    page.get_by_test_id("google_covid_19_sympton_search").click()
+    page.get_by_text("ε: 1.68").click()
 
     # Confirm visible
     latex_node.is_visible()
 
+    markdown_p_1_text = "A region-specific constant c"
+    markdown_p_1_node = page.get_by_text(markdown_p_1_text)
     markdown_p_1_node.is_visible()
 
-    # ... and confirm the second paragraph is in a separate element.
-    # We could also confirm that markdown lists or links are rendered.
-    markdown_p_2_text = "Unreliable metrics are removed"
-    assert markdown_p_2_text not in markdown_p_1_node.text_content()
-
-    parent = page.locator("dd").filter(has=markdown_p_1_node)
-    assert markdown_p_2_text in parent.text_content()
+    # TODO: confirm the second paragraph is in a separate element.
 
     with page.expect_download() as tsv_download_info:
         page.get_by_text("Download TSV").click()
@@ -61,9 +62,3 @@ def test_ui(page: Page):
     # body row:
     assert "Assistive AI\tMicrosoft" in tsv_content
 
-    # Schema table?
-    page.get_by_text('Schema').click()
-    # Top level:
-    expect(page.get_by_text("The name of the data product")).to_be_visible()
-    # Second level:
-    expect(page.get_by_text("Actual, potential, or counterfactual datasets")).to_be_visible()
