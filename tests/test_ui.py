@@ -18,11 +18,6 @@ def test_ui(page: Page):
         page.get_by_role("heading", name="Differential Privacy Deployments Registry")
     ).to_be_visible()
 
-    # Schema load?
-    expect(
-        page.get_by_text("The name of the entity publishing the data product.")
-    ).to_be_visible()
-
     # Data load?
     expect(
         # US Census:
@@ -54,6 +49,17 @@ def test_ui(page: Page):
 
     parent = page.locator("dd").filter(has=markdown_p_1_node)
     assert markdown_p_2_text in parent.text_content()
+
+    with page.expect_download() as tsv_download_info:
+        page.get_by_text("Download TSV").click()
+
+    tsv_content = tsv_download_info.value.path().read_text()
+    # header row:
+    assert "name\tdata_curator" in tsv_content
+    # dotted keys:
+    assert "accounting.composition" in tsv_content
+    # body row:
+    assert "Assistive AI\tMicrosoft" in tsv_content
 
     # Schema table?
     page.get_by_text('Schema').click()
