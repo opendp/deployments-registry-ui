@@ -33,7 +33,7 @@ const deployments = {{ site.data.deployments | jsonify }};
                 {% assign id = deployment[0] %}
                 {% assign d = deployment[1].deployment %}
                 <tr>
-                    <td><input type="checkbox" onchange="toggleDetails('{{id}}');"></td>
+                    <td><input type="checkbox" data-testid="{{id}}" onchange="toggleDetails('{{id}}');"></td>
                     <td>{{ deployment[1].tier }}</td>
                     <td>{{ d.data_curator }}</td>
                     <td>{{ d.data_product_type }}</td>
