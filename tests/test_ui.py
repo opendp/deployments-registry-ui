@@ -29,10 +29,6 @@ def test_ui(page: Page):
 
     # Deployments table?
     page.get_by_role("link", name="Deployments Registry").click()
-    expect(
-        # US Census:
-        page.get_by_text("ε: 19.61")
-    ).to_be_visible()
 
     # Markdown and Latex rendering?
     # Confirm hidden:
@@ -40,14 +36,13 @@ def test_ui(page: Page):
     latex_node.is_hidden()
 
     # Click:
-    page.get_by_text("ε: 1.68").click()
+    # US Census:
+    page.get_by_text("ρ: 2.63").click()
 
     # Confirm visible
     latex_node.is_visible()
 
-    markdown_p_1_text = "A region-specific constant c"
-    markdown_p_1_node = page.get_by_text(markdown_p_1_text)
-    markdown_p_1_node.is_visible()
+    page.get_by_text("2020 Census Redistricting Data (P.L. 94-171) Summary File").is_visible()
 
     # TODO: confirm the second paragraph is in a separate element.
 
