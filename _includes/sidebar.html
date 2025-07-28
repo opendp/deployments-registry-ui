@@ -11,16 +11,7 @@
     <nav class="docs-nav">
         <div class="sidebar-section">
             <a href="/" class="sidebar-toggle {% if page.url == '/' %}active{% endif %}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <mask id="mask0_488_809" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
-                        <rect width="16" height="16" fill="#D9D9D9" />
-                    </mask>
-                    <g mask="url(#mask0_488_809)">
-                        <path
-                            d="M2.66675 12.6667V6.66671C2.66675 6.4556 2.71397 6.2556 2.80841 6.06671C2.90286 5.87782 3.03341 5.72226 3.20008 5.60004L7.20008 2.60004C7.43341 2.42226 7.70008 2.33337 8.00008 2.33337C8.30008 2.33337 8.56675 2.42226 8.80008 2.60004L12.8001 5.60004C12.9667 5.72226 13.0973 5.87782 13.1917 6.06671C13.2862 6.2556 13.3334 6.4556 13.3334 6.66671V12.6667C13.3334 13.0334 13.2029 13.3473 12.9417 13.6084C12.6806 13.8695 12.3667 14 12.0001 14H10.0001C9.81119 14 9.65286 13.9362 9.52508 13.8084C9.3973 13.6806 9.33341 13.5223 9.33341 13.3334V10C9.33341 9.81115 9.26953 9.65282 9.14175 9.52504C9.01397 9.39726 8.85564 9.33337 8.66675 9.33337H7.33341C7.14453 9.33337 6.98619 9.39726 6.85841 9.52504C6.73064 9.65282 6.66675 9.81115 6.66675 10V13.3334C6.66675 13.5223 6.60286 13.6806 6.47508 13.8084C6.3473 13.9362 6.18897 14 6.00008 14H4.00008C3.63341 14 3.31953 13.8695 3.05841 13.6084C2.7973 13.3473 2.66675 13.0334 2.66675 12.6667Z"
-                            fill="currentColor" />
-                    </g>
-                </svg>
+                <i class="fa-solid fa-house fa-1x"></i>
                 <span class="sidebar-section-title">Home</span>
             </a>
         </div>
@@ -47,14 +38,14 @@
             {% if section.path %}
                 <a href="{{ section.path | relative_url }}" class="sidebar-toggle {% if section_is_active %}active{% endif %}">
                     {% if page.title %}
-                    {{ section.icon }}
+                    <i class="fa-solid fa-1x {{ section.icon }}"></i>
                     {% endif %}
                     <span class="sidebar-section-title">{{ section.title }}</span>
                 </a>
             {% else %}
                 <button class="sidebar-toggle {% if section_is_active %}active{% endif %}" onclick="toggleSection('{{ section.section }}')">
                     {% if page.title %}
-                    {{ section.icon }}
+                    <i class="fa-solid fa-1x {{ section.icon }}"></i>
                     {% endif %}
                     <span class="sidebar-section-title">{{ section.title }}</span>
                 </button>

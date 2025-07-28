@@ -36,7 +36,9 @@
             
             <div class="docs-content">
                 <article class="post">
-
+                    {% if page.icon %}
+                        <i class="fa-solid fa-2xl {{ page.icon }}"></i>
+                    {% endif %}
                     {% if page.title %}
                     <header class="wrapper">
                         <h1 class="post-title">{{ page.title | escape }}</h1>

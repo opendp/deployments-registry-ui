@@ -76,18 +76,8 @@
     margin: 1rem 0;
 }
 
-/* Page Icons */
-.page-icon {
-    margin-bottom: 24px;
-    margin-right: auto;
-}
-
-.page-icon svg {
-    vertical-align: middle;
-    color: #181818;
-}
-
 .post-title {
+    margin-top: 24px;
     display: flex;
     align-items: center;
 }
