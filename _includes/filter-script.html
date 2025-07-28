@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Get unique values from filtered data
         const curators = [...new Set(deploymentsData.filter(d => {
-            const matchesModel = selectedModels.length === 0 || selectedModels.includes(d.model.model_type);
+            const matchesModel = selectedModels.length === 0 || selectedModels.includes(d.model?.model_type);
             const matchesYear = selectedYears.length === 0 || selectedYears.includes(new Date(d.publication_date).getFullYear().toString());
             return matchesModel && matchesYear;
         }).map(d => d.data_curator))].sort();
@@ -304,11 +304,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const matchesCurator = !selectedCurator || d.data_curator === selectedCurator;
             const matchesYear = selectedYears.length === 0 || selectedYears.includes(new Date(d.publication_date).getFullYear().toString());
             return matchesCurator && matchesYear;
-        }).map(d => d.model.model_type))].sort();
+        }).map(d => d.model?.model_type))].sort();
         
         const years = [...new Set(deploymentsData.filter(d => {
             const matchesCurator = !selectedCurator || d.data_curator === selectedCurator;
-            const matchesModel = selectedModels.length === 0 || selectedModels.includes(d.model.model_type);
+            const matchesModel = selectedModels.length === 0 || selectedModels.includes(d.model?.model_type);
             return matchesCurator && matchesModel;
         }).map(d => {
             const date = new Date(d.publication_date);

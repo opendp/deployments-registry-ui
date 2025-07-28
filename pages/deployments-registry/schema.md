@@ -1,5 +1,6 @@
 ---
 title: Schema
+layout: docs
 order: 5
 ---
 
