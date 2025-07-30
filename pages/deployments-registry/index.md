@@ -50,6 +50,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 <table id="deployments-table">
     <thead>
         <tr>
+            <th style="text-align: center">Tier</th>
             <th>Curator</th>
             <th>Product</th>
             <th>Date</th>
@@ -62,11 +63,31 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     {% for deployment in site.data.deployments %}
         {% assign d = deployment[1].deployment %}
         <tr class="deployment-row" data-index="{{ forloop.index0 }}">
+            <td style="text-align: center">
+                {% if deployment[1].tier == 1 %}
+                    <i class="fa-solid fa-circle tier-mark"></i>
+                    <i class="fa-regular fa-circle tier-mark"></i>
+                    <i class="fa-regular fa-circle tier-mark"></i>
+                {% elsif deployment[1].tier == 2 %}
+                    <i class="fa-solid fa-circle tier-mark"></i>
+                    <i class="fa-solid fa-circle tier-mark"></i>
+                    <i class="fa-regular fa-circle tier-mark"></i>
+                {% elsif deployment[1].tier == 3 %}
+                    <i class="fa-solid fa-circle tier-mark"></i>
+                    <i class="fa-solid fa-circle tier-mark"></i>
+                    <i class="fa-solid fa-circle tier-mark"></i>
+                {% else %}
+                    {{ deployment[1].tier }}
+                {% endif %}
+            </td>
             <td>{{ d.data_curator }}</td>
             <td>{{ d.data_product_type }}</td>
             <td>{{ d.publication_date }}</td>
             <td>{{ d.dp_flavor.name }}</td>
             <td>
+                {% if d.privacy_loss.privacy_unit %}
+                    <div style="font-weight: 600; margin-bottom: 4px; font-size: 12px">{{ d.privacy_loss.privacy_unit }}</div>
+                {% endif %}
                 {% if d.privacy_loss.privacy_parameters.epsilon %}
                     ε:&nbsp;{{ d.privacy_loss.privacy_parameters.epsilon }}<br>
                 {% endif %}
@@ -77,7 +98,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
                     ρ:&nbsp;{{ d.privacy_loss.privacy_parameters.rho }}<br>
                 {% endif %}
             </td>
-            <td>{{ d.model.model_type }}</td>
+            <td>{{ d.model.model_name }}</td>
         </tr>
     {% endfor %}
     </tbody>

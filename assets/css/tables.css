@@ -30,6 +30,7 @@
 .docs-content th,
 .docs-content td {
     padding: 8px;
+    max-width: 120px;
     font-size: 14px;
     line-height: 20px;
     text-align: left;
@@ -54,23 +55,19 @@
 }
 
 /* Table Corner Radius */
-.docs-content table tr:first-child th:first-child,
-.docs-content table tr:first-child td:first-child {
+.docs-content table tr:first-child th:first-child {
     border-top-left-radius: 8px;
 }
 
-.docs-content table tr:first-child th:last-child,
-.docs-content table tr:first-child td:last-child {
+.docs-content table tr:first-child th:last-child {
     border-top-right-radius: 8px;
 }
 
-.docs-content table tr:last-child td:first-child,
-.docs-content table tr:last-child th:first-child {
+.docs-content table tr:last-child td:first-child {
     border-bottom-left-radius: 8px;
 }
 
-.docs-content table tr:last-child td:last-child,
-.docs-content table tr:last-child th:last-child {
+.docs-content table tr:last-child td:last-child {
     border-bottom-right-radius: 8px;
 }
 
@@ -113,3 +110,67 @@
 .deployment-row.selected:hover {
     background-color: #d4d4d4;
 }
+
+
+.tier-mark{
+    font-size: 6px;
+    line-height: 10px;
+}
+
+/* Datatables classes */
+/* .dt-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    margin-bottom: 1rem;
+    width: fit-content;
+    margin: 8px 0 8px auto;
+}
+
+.dt-container .dt-search input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 12px !important;
+    background: white;
+    border: 1px solid #DADADA !important;
+    border-radius: 8px !important;
+    height: 32px;
+    transition: border-color 0.2s ease;
+}
+
+.dt-container .dt-search input:focus {
+    outline: none !important;
+}
+
+.dt-info {
+    width: fit-content;
+    display: inline-block;
+    font-size: 14px;
+    margin-top: 0.5rem;
+    margin-right: auto;
+}
+
+.dt-paging{
+    display: flex;
+    font-size: 14px;
+    width: 100%;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.dt-container .dt-paging .dt-paging-button {
+    border-radius: 8px !important;
+}
+.dt-container .dt-paging .dt-paging-button.current {
+    background: transparent !important;
+    border: 1px solid #DADADA;
+}
+div.dt-container .dt-paging .dt-paging-button:hover,
+div.dt-container .dt-paging .dt-paging-button:active {
+    background: transparent !important;
+    color: #181818 !important;
+    border: 1px solid #c0c0c0;
+    box-shadow: none !important;
+} */

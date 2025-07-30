@@ -35,8 +35,8 @@
 
 /* Collapsed Sidebar State */
 .docs-sidebar.collapsed {
-    width: 90px;
-    min-width: 30px;
+    width: 82px;
+    min-width: 82px;
     margin-right: 5vw;
 }
 
