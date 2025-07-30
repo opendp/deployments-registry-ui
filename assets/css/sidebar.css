@@ -15,6 +15,7 @@
 /* Sidebar Toggle Button */
 .docs-sidebar .toggler {
     position: absolute;
+    cursor: pointer;
     z-index: 99;
     right: -12px;
     top: 32px;
@@ -35,8 +36,8 @@
 
 /* Collapsed Sidebar State */
 .docs-sidebar.collapsed {
-    width: 90px;
-    min-width: 30px;
+    width: 82px;
+    min-width: 82px;
     margin-right: 5vw;
 }
 
@@ -48,10 +49,21 @@
     width: 100%;
 }
 
-.docs-sidebar.collapsed .sidebar-section-title,
-.docs-sidebar.collapsed .sidebar-links {
-    /* eslint-disable-next-line css/no-important */
-    display: none !important;
+.docs-sidebar.collapsed .sidebar-toggle{
+    gap: 0;
+}
+
+.docs-sidebar.collapsed .sidebar-links{
+    height: 0;
+    transition: height 0.2s ease;
+    overflow: hidden;
+    margin: 0;
+}
+
+.docs-sidebar.collapsed .sidebar-section-title {
+    width: 0;
+    transition: height 0.2s ease;
+    overflow: hidden;
 }
 
 .docs-sidebar.collapsed .toggler {

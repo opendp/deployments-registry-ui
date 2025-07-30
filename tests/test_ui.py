@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 bp = "BREAKPOINT()".lower()
-if bp in Path(__file__).read_text():
+if bp in Path(__file__).read_text(encoding='utf-8'):
     raise Exception(
         f"Instead of `{bp}`, use `page.pause()` in playwright tests. "
         "See https://playwright.dev/python/docs/debug"
@@ -49,7 +49,7 @@ def test_ui(page: Page):
     with page.expect_download() as tsv_download_info:
         page.get_by_text("Download TSV").click()
 
-    tsv_content = tsv_download_info.value.path().read_text()
+    tsv_content = tsv_download_info.value.path().read_text(encoding='utf-8')
     # header row:
     assert "name\tdata_curator" in tsv_content
     # dotted keys:

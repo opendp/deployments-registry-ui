@@ -30,6 +30,7 @@
 .docs-content th,
 .docs-content td {
     padding: 8px;
+    max-width: 120px;
     font-size: 14px;
     line-height: 20px;
     text-align: left;
@@ -54,23 +55,19 @@
 }
 
 /* Table Corner Radius */
-.docs-content table tr:first-child th:first-child,
-.docs-content table tr:first-child td:first-child {
+.docs-content table tr:first-child th:first-child {
     border-top-left-radius: 8px;
 }
 
-.docs-content table tr:first-child th:last-child,
-.docs-content table tr:first-child td:last-child {
+.docs-content table tr:first-child th:last-child {
     border-top-right-radius: 8px;
 }
 
-.docs-content table tr:last-child td:first-child,
-.docs-content table tr:last-child th:first-child {
+.docs-content table tr:last-child td:first-child {
     border-bottom-left-radius: 8px;
 }
 
-.docs-content table tr:last-child td:last-child,
-.docs-content table tr:last-child th:last-child {
+.docs-content table tr:last-child td:last-child {
     border-bottom-right-radius: 8px;
 }
 
@@ -112,4 +109,18 @@
 
 .deployment-row.selected:hover {
     background-color: #d4d4d4;
+}
+
+.tier-column {
+    text-align: center;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    gap: 2px;
+}
+.tier-column i {
+    font-size: 6px;
+    line-height: 10px;
 }

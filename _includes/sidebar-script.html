@@ -47,6 +47,9 @@
     }
   }
 
+  // Expose functions to global scope
+  window.toggleSection = toggleSection;
+
   function expandSection(sectionId) {
     const links = document.getElementById(sectionId + '-links');
     links.style.display = 'block';
@@ -66,6 +69,9 @@
       sidebar.classList.add('collapsed');
     }
   }
+
+  // Expose function to global scope
+  window.toggleSidebar = toggleSidebar;
 
   function selectDeploymentRow(index) {
     const sidebar = document.querySelector('.docs-sidebar');
@@ -223,6 +229,9 @@
       alert('Error downloading deployment file. Please try again.');
     }
   }
+
+  // Expose function to global scope
+  window.downloadDeployment = downloadDeployment;
 
   function convertToYAML(data) {
     // Simple YAML converter - handles basic data structures
