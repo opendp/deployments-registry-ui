@@ -63,19 +63,19 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     {% for deployment in site.data.deployments %}
         {% assign d = deployment[1].deployment %}
         <tr class="deployment-row" data-index="{{ forloop.index0 }}">
-            <td style="text-align: center">
+            <td class='tier-column'>
                 {% if deployment[1].tier == 1 %}
-                    <i class="fa-solid fa-circle tier-mark"></i>
-                    <i class="fa-regular fa-circle tier-mark"></i>
-                    <i class="fa-regular fa-circle tier-mark"></i>
+                    <i class="fa-solid fa-circle"></i>
+                    <i class="fa-regular fa-circle"></i>
+                    <i class="fa-regular fa-circle"></i>
                 {% elsif deployment[1].tier == 2 %}
-                    <i class="fa-solid fa-circle tier-mark"></i>
-                    <i class="fa-solid fa-circle tier-mark"></i>
-                    <i class="fa-regular fa-circle tier-mark"></i>
+                    <i class="fa-solid fa-circle"></i>
+                    <i class="fa-solid fa-circle"></i>
+                    <i class="fa-regular fa-circle"></i>
                 {% elsif deployment[1].tier == 3 %}
-                    <i class="fa-solid fa-circle tier-mark"></i>
-                    <i class="fa-solid fa-circle tier-mark"></i>
-                    <i class="fa-solid fa-circle tier-mark"></i>
+                    <i class="fa-solid fa-circle"></i>
+                    <i class="fa-solid fa-circle"></i>
+                    <i class="fa-solid fa-circle"></i>
                 {% else %}
                     {{ deployment[1].tier }}
                 {% endif %}

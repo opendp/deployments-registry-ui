@@ -3,7 +3,6 @@ title: Official Standards and Guidance
 order: 1
 class: standards-and-guidance
 layout: docs
-icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>'
 ---
 
 Before diving into the main document, it is important to note that the two prominent standardization bodies, NIST and ISO/IEC, have been active in providing guidance and standardization in the space of data anonymization, and in particular differential privacy.
