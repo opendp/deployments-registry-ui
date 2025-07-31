@@ -48,18 +48,6 @@
     transition: all 0.3s ease;
 }
 
-.filter-icon-trigger{
-    cursor: pointer;
-    display: flex;
-    width: fit-content;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: white;
-}
-
 /* Custom Select Styles */
 .custom-select {
     position: relative;
