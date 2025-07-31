@@ -49,8 +49,7 @@ button:active {
 
 a {
     color: #181818;
-    /* eslint-disable-next-line css/no-important */
-    font-size: 0.95em !important;
+    font-size: 0.95em;
     font-weight: 600;
     line-height: 24px;
     text-decoration-line: underline;

@@ -283,20 +283,43 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize custom components
     const searchFilterElement = document.querySelector('#search-filter');
-    const visibleFiltersElement = document.querySelector('#visible-filters');
-    const curatorFilterElement = document.querySelector('#curator-filter');
-    const modelFilterElement = document.querySelector('#model-filter');
-    const productFilterElement = document.querySelector('#product-filter');
-    const flavorFilterElement = document.querySelector('#flavor-filter');
-    const privacyUnitFilterElement = document.querySelector('#privacy-unit-filter');
-    const tierFilterElement = document.querySelector('#tier-filter');
-    const yearFilterElement = document.querySelector('#year-filter');
+    const filterElements = {
+        visibleFilters: document.querySelector('#visible-filters'),
+        curator: document.querySelector('#curator-filter'),
+        model: document.querySelector('#model-filter'),
+        product: document.querySelector('#product-filter'),
+        flavor: document.querySelector('#flavor-filter'),
+        privacyUnit: document.querySelector('#privacy-unit-filter'),
+        tier: document.querySelector('#tier-filter'),
+        year: document.querySelector('#year-filter')
+    };
     
-    if (!searchFilterElement || !visibleFiltersElement || !curatorFilterElement || !modelFilterElement || !productFilterElement || 
-        !flavorFilterElement || !privacyUnitFilterElement || !tierFilterElement || !yearFilterElement) {
-        console.error('One or more filter elements not found!');
+    // Validate all required elements exist
+    const missingElements = Object.entries(filterElements)
+        .filter(([key, element]) => !element)
+        .map(([key]) => key);
+    
+    if (!searchFilterElement) {
+        console.error('Search filter element not found!');
         return;
     }
+    
+    if (missingElements.length > 0) {
+        console.error(`Filter elements not found: ${missingElements.join(', ')}`);
+        return;
+    }
+    
+    // Extract elements for easier access
+    const {
+        visibleFilters: visibleFiltersElement,
+        curator: curatorFilterElement,
+        model: modelFilterElement,
+        product: productFilterElement,
+        flavor: flavorFilterElement,
+        privacyUnit: privacyUnitFilterElement,
+        tier: tierFilterElement,
+        year: yearFilterElement
+    } = filterElements;
     
     const visibleFiltersGroup = visibleFiltersElement.parentElement;
     const curatorFilterGroup = curatorFilterElement.parentElement;
@@ -316,15 +339,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const tierMultiSelect = new CustomMultiSelect(tierFilterGroup, 'Tiers');
     const yearMultiSelect = new CustomMultiSelect(yearFilterGroup, 'Years');
     
-    // Hide original selects
-    visibleFiltersElement.style.display = 'none';
-    curatorFilterElement.style.display = 'none';
-    modelFilterElement.style.display = 'none';
-    productFilterElement.style.display = 'none';
-    flavorFilterElement.style.display = 'none';
-    privacyUnitFilterElement.style.display = 'none';
-    tierFilterElement.style.display = 'none';
-    yearFilterElement.style.display = 'none';
+    // Hide original dropdown filter elements (but keep search visible)
+    Object.values(filterElements).forEach(element => {
+        element.style.display = 'none';
+    });
+    
     
     // Helper function to get tier from deployment data
     function getTierFromData(deployment) {
@@ -334,17 +353,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const rows = document.querySelectorAll('.deployment-row');
             if (rows[deploymentIndex]) {
                 const tierColumn = rows[deploymentIndex].querySelector('.tier-column');
-                if (tierColumn) {
-                    const solidCircles = tierColumn.querySelectorAll('.fa-solid.fa-circle').length;
-                    if (solidCircles > 0) {
-                        return solidCircles.toString();
-                    }
-                    
-                    // Fallback: check if there's a direct tier value displayed
-                    const tierText = tierColumn.textContent.trim();
-                    if (tierText && !isNaN(tierText)) {
-                        return tierText;
-                    }
+                if (tierColumn && tierColumn.dataset.tier) {
+                    return tierColumn.dataset.tier;
                 }
             }
         }
@@ -379,16 +389,39 @@ document.addEventListener('DOMContentLoaded', function() {
             'Year': document.getElementById('year-filter-group')
         };
         
-        // Hide all filter groups first
-        Object.values(filterGroups).forEach(group => {
-            if (group) group.style.display = 'none';
+        const filterComponents = {
+            'Curator': curatorSelect,
+            'Model': modelMultiSelect,
+            'Product': productMultiSelect,
+            'Flavor': flavorMultiSelect,
+            'Privacy Unit': privacyUnitMultiSelect,
+            'Tier': tierMultiSelect,
+            'Year': yearMultiSelect
+        };
+        
+        // Hide all filter groups first and clear selections for hidden filters
+        Object.entries(filterGroups).forEach(([filterName, group]) => {
+            if (group) {
+                if (visibleFilters.includes(filterName)) {
+                    group.style.display = '';
+                } else {
+                    group.style.display = 'none';
+                    // Clear the filter selection when hiding
+                    const component = filterComponents[filterName];
+                    if (component) {
+                        if (component.clearSelection) {
+                            component.clearSelection(); // For multi-select components
+                        } else if (component.setValue) {
+                            component.setValue(''); // For single-select components
+                        }
+                    }
+                }
+            }
         });
         
-        // Show selected filter groups
-        visibleFilters.forEach(filterName => {
-            const group = filterGroups[filterName];
-            if (group) group.style.display = '';
-        });
+        // Trigger filter update after clearing hidden filters
+        populateFilters();
+        filterTable();
     }
     
     // Search function
@@ -407,6 +440,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 deployment.dp_flavor?.name,
                 deployment.model?.model_name,
                 deployment.privacy_loss?.privacy_unit,
+                deployment.privacy_loss?.privacy_parameters?.epsilon,
+                deployment.privacy_loss?.privacy_parameters?.delta,
+                deployment.privacy_loss?.privacy_parameters?.rho,
                 deployment.publication_date
             ];
             

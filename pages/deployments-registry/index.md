@@ -100,7 +100,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     {% for deployment in site.data.deployments %}
         {% assign d = deployment[1].deployment %}
         <tr class="deployment-row" data-index="{{ forloop.index0 }}">
-            <td class='tier-column'>
+            <td class='tier-column' data-tier="{{ deployment[1].tier }}">
                 {% if deployment[1].tier == 1 %}
                     <i class="fa-solid fa-circle"></i>
                     <i class="fa-regular fa-circle"></i>
