@@ -80,6 +80,7 @@ a:visited {
 /* Scrollbar Styles */
 /* Webkit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
+    /* eslint-disable css/no-important */
     width: 4px !important;
     height: 4px !important;
 }
@@ -97,6 +98,7 @@ a:visited {
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(92, 92, 92, 0.4) !important;
+    /* eslint-enable css/no-important */
 }
 
 ::-webkit-scrollbar-corner {
