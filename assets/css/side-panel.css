@@ -12,8 +12,8 @@
 }
 
 .side-panel-container.expanded {
-    width: calc(min(30vw, 444px) + 2rem);
-    min-width: calc(min(30vw, 444px) + 2rem);
+    width: calc(min(30vw, 480px) + 2rem);
+    min-width: calc(min(30vw, 480px) + 2rem);
 }
 
 /* Side Panel */
@@ -23,7 +23,7 @@
     right: 2rem;
     z-index: 1000;
     box-sizing: border-box;
-    width: min(30vw, 444px);
+    width: min(30vw, 480px);
     border-radius: 8px;
     border: 1px solid #E7E7E7;
     background: #FFF;
@@ -99,6 +99,9 @@
     margin-top: 12px;
 }
 
+.side-panel .deployment-section a {
+    word-wrap: break-word
+}
 .side-panel .deployment-section p {
     margin-bottom: 0;
 }

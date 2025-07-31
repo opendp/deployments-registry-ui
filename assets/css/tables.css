@@ -39,6 +39,8 @@
     border: 1px solid #E7E7E7;
     border-right: 0;
     border-bottom: 0;
+    text-overflow: ellipsis;
+    font-weight: 400;
 }
 
 /* Table Border Management */
@@ -88,10 +90,6 @@
     background: #F3F3F3;
 }
 
-.docs-content tr:hover {
-    background-color: #F3F3F3;
-}
-
 /* Clickable Row Styling */
 .deployment-row {
     cursor: pointer;
@@ -103,12 +101,12 @@
 }
 
 .deployment-row.selected {
-    background-color: #d4d4d4;
+    background-color: #DADADA;
     color: white;
 }
 
 .deployment-row.selected:hover {
-    background-color: #d4d4d4;
+    background-color: #DADADA;
 }
 
 .tier-column {

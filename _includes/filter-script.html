@@ -4,6 +4,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const table = document.getElementById('deployments-table');
     const tbody = table.querySelector('tbody');
     
+    // Helper function to normalize values for comparison and storage
+    function normalizeValue(value) {
+        if (value === null || value === undefined) {
+            return '';
+        }
+        return value.toString().trim().toLowerCase();
+    }
+    
+    // Helper function to get display value from normalized value
+    function getDisplayValue(normalizedValue, originalValues) {
+        if (!normalizedValue) return '';
+        const trimmedNormalized = normalizedValue.trim().toLowerCase();
+        const found = originalValues.find(val => 
+            val && normalizeValue(val) === trimmedNormalized
+        );
+        return found || normalizedValue;
+    }
+    
     // Custom Select Component
     class CustomSelect {
         constructor(container, placeholder = 'Select...') {
@@ -264,66 +282,343 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initialize custom components
-    const curatorFilterElement = document.querySelector('#curator-filter');
-    const modelFilterElement = document.querySelector('#model-filter');
-    const yearFilterElement = document.querySelector('#year-filter');
+    const searchFilterElement = document.querySelector('#search-filter');
+    const filterElements = {
+        visibleFilters: document.querySelector('#visible-filters'),
+        curator: document.querySelector('#curator-filter'),
+        model: document.querySelector('#model-filter'),
+        product: document.querySelector('#product-filter'),
+        flavor: document.querySelector('#flavor-filter'),
+        privacyUnit: document.querySelector('#privacy-unit-filter'),
+        tier: document.querySelector('#tier-filter'),
+        year: document.querySelector('#year-filter')
+    };
     
-    if (!curatorFilterElement || !modelFilterElement || !yearFilterElement) {
-        console.error('One or more filter elements not found!');
+    // Validate all required elements exist
+    const missingElements = Object.entries(filterElements)
+        .filter(([key, element]) => !element)
+        .map(([key]) => key);
+    
+    if (!searchFilterElement) {
+        console.error('Search filter element not found!');
         return;
     }
     
+    if (missingElements.length > 0) {
+        console.error(`Filter elements not found: ${missingElements.join(', ')}`);
+        return;
+    }
+    
+    // Extract elements for easier access
+    const {
+        visibleFilters: visibleFiltersElement,
+        curator: curatorFilterElement,
+        model: modelFilterElement,
+        product: productFilterElement,
+        flavor: flavorFilterElement,
+        privacyUnit: privacyUnitFilterElement,
+        tier: tierFilterElement,
+        year: yearFilterElement
+    } = filterElements;
+    
+    const visibleFiltersGroup = visibleFiltersElement.parentElement;
     const curatorFilterGroup = curatorFilterElement.parentElement;
     const modelFilterGroup = modelFilterElement.parentElement;
+    const productFilterGroup = productFilterElement.parentElement;
+    const flavorFilterGroup = flavorFilterElement.parentElement;
+    const privacyUnitFilterGroup = privacyUnitFilterElement.parentElement;
+    const tierFilterGroup = tierFilterElement.parentElement;
     const yearFilterGroup = yearFilterElement.parentElement;
     
+    const visibleFiltersMultiSelect = new CustomMultiSelect(visibleFiltersGroup, 'Filters');
     const curatorSelect = new CustomSelect(curatorFilterGroup, 'Curators');
     const modelMultiSelect = new CustomMultiSelect(modelFilterGroup, 'Models');
+    const productMultiSelect = new CustomMultiSelect(productFilterGroup, 'Products');
+    const flavorMultiSelect = new CustomMultiSelect(flavorFilterGroup, 'Flavors');
+    const privacyUnitMultiSelect = new CustomMultiSelect(privacyUnitFilterGroup, 'Privacy Units');
+    const tierMultiSelect = new CustomMultiSelect(tierFilterGroup, 'Tiers');
     const yearMultiSelect = new CustomMultiSelect(yearFilterGroup, 'Years');
     
-    // Hide original selects
-    curatorFilterElement.style.display = 'none';
-    modelFilterElement.style.display = 'none';
-    yearFilterElement.style.display = 'none';
+    // Hide original dropdown filter elements (but keep search visible)
+    Object.values(filterElements).forEach(element => {
+        element.style.display = 'none';
+    });
+    
+    
+    // Helper function to get tier from deployment data
+    function getTierFromData(deployment) {
+        // Try to find tier in the DOM by matching the deployment index
+        const deploymentIndex = deploymentsData.indexOf(deployment);
+        if (deploymentIndex !== -1) {
+            const rows = document.querySelectorAll('.deployment-row');
+            if (rows[deploymentIndex]) {
+                const tierColumn = rows[deploymentIndex].querySelector('.tier-column');
+                if (tierColumn && tierColumn.dataset.tier) {
+                    return tierColumn.dataset.tier;
+                }
+            }
+        }
+        
+        return undefined;
+    }
+    
+    // Initialize filter visibility options
+    function initializeFilterVisibilityOptions() {
+        const filterOptions = [
+            'Curator',
+            'Model', 
+            'Product',
+            'Flavor',
+            'Privacy Unit',
+            'Tier',
+            'Year'
+        ];
+        
+        visibleFiltersMultiSelect.updateOptions(filterOptions);
+    }
+    
+    // Handle filter visibility changes
+    function handleFilterVisibilityChange(visibleFilters) {
+        const filterGroups = {
+            'Curator': document.getElementById('curator-filter-group'),
+            'Model': document.getElementById('model-filter-group'),
+            'Product': document.getElementById('product-filter-group'),
+            'Flavor': document.getElementById('flavor-filter-group'),
+            'Privacy Unit': document.getElementById('privacy-unit-filter-group'),
+            'Tier': document.getElementById('tier-filter-group'),
+            'Year': document.getElementById('year-filter-group')
+        };
+        
+        const filterComponents = {
+            'Curator': curatorSelect,
+            'Model': modelMultiSelect,
+            'Product': productMultiSelect,
+            'Flavor': flavorMultiSelect,
+            'Privacy Unit': privacyUnitMultiSelect,
+            'Tier': tierMultiSelect,
+            'Year': yearMultiSelect
+        };
+        
+        // Hide all filter groups first and clear selections for hidden filters
+        Object.entries(filterGroups).forEach(([filterName, group]) => {
+            if (group) {
+                if (visibleFilters.includes(filterName)) {
+                    group.style.display = '';
+                } else {
+                    group.style.display = 'none';
+                    // Clear the filter selection when hiding
+                    const component = filterComponents[filterName];
+                    if (component) {
+                        if (component.clearSelection) {
+                            component.clearSelection(); // For multi-select components
+                        } else if (component.setValue) {
+                            component.setValue(''); // For single-select components
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Trigger filter update after clearing hidden filters
+        populateFilters();
+        filterTable();
+    }
+    
+    // Search function
+    function performSearch(searchTerm) {
+        if (!searchTerm || searchTerm.trim() === '') {
+            return true; // Show all if no search term
+        }
+        
+        searchTerm = searchTerm.toLowerCase();
+        
+        return function(deployment) {
+            // Search in various fields
+            const searchableFields = [
+                deployment.data_curator,
+                deployment.data_product_type,
+                deployment.dp_flavor?.name,
+                deployment.model?.model_name,
+                deployment.privacy_loss?.privacy_unit,
+                deployment.privacy_loss?.privacy_parameters?.epsilon,
+                deployment.privacy_loss?.privacy_parameters?.delta,
+                deployment.privacy_loss?.privacy_parameters?.rho,
+                deployment.publication_date
+            ];
+            
+            return searchableFields.some(field => 
+                field && field.toString().toLowerCase().includes(searchTerm)
+            );
+        };
+    }
     
     // Populate filter options
     function populateFilters() {
         const selectedCurator = curatorSelect.value;
         const selectedModels = modelMultiSelect.getValues();
+        const selectedProducts = productMultiSelect.getValues();
+        const selectedFlavors = flavorMultiSelect.getValues();
+        const selectedPrivacyUnits = privacyUnitMultiSelect.getValues();
+        const selectedTiers = tierMultiSelect.getValues();
         const selectedYears = yearMultiSelect.getValues();
         
-        // Get unique values from filtered data
-        const curators = [...new Set(deploymentsData.filter(d => {
-            const matchesModel = selectedModels.length === 0 || selectedModels.includes(d.model?.model_name);
-            const matchesYear = selectedYears.length === 0 || selectedYears.includes(new Date(d.publication_date).getFullYear().toString());
-            return matchesModel && matchesYear;
-        }).map(d => d.data_curator))].sort();
+        // Get unique values from filtered data using normalized comparison
+        const curatorMap = new Map();
+        deploymentsData.filter(d => {
+            const matchesModel = selectedModels.length === 0 || selectedModels.some(model => normalizeValue(model) === normalizeValue(d.model?.model_name));
+            const matchesProduct = selectedProducts.length === 0 || selectedProducts.some(product => normalizeValue(product) === normalizeValue(d.data_product_type));
+            const matchesFlavor = selectedFlavors.length === 0 || selectedFlavors.some(flavor => normalizeValue(flavor) === normalizeValue(d.dp_flavor?.name));
+            const matchesPrivacyUnit = selectedPrivacyUnits.length === 0 || selectedPrivacyUnits.some(unit => normalizeValue(unit) === normalizeValue(d.privacy_loss?.privacy_unit));
+            const matchesTier = selectedTiers.length === 0 || selectedTiers.some(tier => normalizeValue(tier) === normalizeValue(getTierFromData(d)));
+            const matchesYear = selectedYears.length === 0 || selectedYears.some(year => normalizeValue(year) === normalizeValue(new Date(d.publication_date).getFullYear().toString()));
+            return matchesModel && matchesProduct && matchesFlavor && matchesPrivacyUnit && matchesTier && matchesYear;
+        }).forEach(d => {
+            if (d.data_curator) {
+                const normalized = normalizeValue(d.data_curator);
+                if (!curatorMap.has(normalized)) {
+                    curatorMap.set(normalized, d.data_curator);
+                }
+            }
+        });
+        const curators = Array.from(curatorMap.values()).sort();
         
-        const models = [...new Set(deploymentsData.filter(d => {
-            const matchesCurator = !selectedCurator || d.data_curator === selectedCurator;
-            const matchesYear = selectedYears.length === 0 || selectedYears.includes(new Date(d.publication_date).getFullYear().toString());
-            return matchesCurator && matchesYear;
-        }).map(d => d.model?.model_name))].sort();
+        const modelMap = new Map();
+        deploymentsData.filter(d => {
+            const matchesCurator = !selectedCurator || normalizeValue(d.data_curator) === normalizeValue(selectedCurator);
+            const matchesProduct = selectedProducts.length === 0 || selectedProducts.some(product => normalizeValue(product) === normalizeValue(d.data_product_type));
+            const matchesFlavor = selectedFlavors.length === 0 || selectedFlavors.some(flavor => normalizeValue(flavor) === normalizeValue(d.dp_flavor?.name));
+            const matchesPrivacyUnit = selectedPrivacyUnits.length === 0 || selectedPrivacyUnits.some(unit => normalizeValue(unit) === normalizeValue(d.privacy_loss?.privacy_unit));
+            const matchesTier = selectedTiers.length === 0 || selectedTiers.some(tier => normalizeValue(tier) === normalizeValue(getTierFromData(d)));
+            const matchesYear = selectedYears.length === 0 || selectedYears.some(year => normalizeValue(year) === normalizeValue(new Date(d.publication_date).getFullYear().toString()));
+            return matchesCurator && matchesProduct && matchesFlavor && matchesPrivacyUnit && matchesTier && matchesYear;
+        }).forEach(d => {
+            if (d.model?.model_name) {
+                const normalized = normalizeValue(d.model.model_name);
+                if (!modelMap.has(normalized)) {
+                    modelMap.set(normalized, d.model.model_name);
+                }
+            }
+        });
+        const models = Array.from(modelMap.values()).sort();
         
-        const years = [...new Set(deploymentsData.filter(d => {
-            const matchesCurator = !selectedCurator || d.data_curator === selectedCurator;
-            const matchesModel = selectedModels.length === 0 || selectedModels.includes(d.model?.model_name);
-            return matchesCurator && matchesModel;
-        }).map(d => {
+        const productMap = new Map();
+        deploymentsData.filter(d => {
+            const matchesCurator = !selectedCurator || normalizeValue(d.data_curator) === normalizeValue(selectedCurator);
+            const matchesModel = selectedModels.length === 0 || selectedModels.some(model => normalizeValue(model) === normalizeValue(d.model?.model_name));
+            const matchesFlavor = selectedFlavors.length === 0 || selectedFlavors.some(flavor => normalizeValue(flavor) === normalizeValue(d.dp_flavor?.name));
+            const matchesPrivacyUnit = selectedPrivacyUnits.length === 0 || selectedPrivacyUnits.some(unit => normalizeValue(unit) === normalizeValue(d.privacy_loss?.privacy_unit));
+            const matchesTier = selectedTiers.length === 0 || selectedTiers.some(tier => normalizeValue(tier) === normalizeValue(getTierFromData(d)));
+            const matchesYear = selectedYears.length === 0 || selectedYears.some(year => normalizeValue(year) === normalizeValue(new Date(d.publication_date).getFullYear().toString()));
+            return matchesCurator && matchesModel && matchesFlavor && matchesPrivacyUnit && matchesTier && matchesYear;
+        }).forEach(d => {
+            if (d.data_product_type) {
+                const normalized = normalizeValue(d.data_product_type);
+                if (!productMap.has(normalized)) {
+                    productMap.set(normalized, d.data_product_type);
+                }
+            }
+        });
+        const products = Array.from(productMap.values()).sort();
+        
+        const flavorMap = new Map();
+        deploymentsData.filter(d => {
+            const matchesCurator = !selectedCurator || normalizeValue(d.data_curator) === normalizeValue(selectedCurator);
+            const matchesModel = selectedModels.length === 0 || selectedModels.some(model => normalizeValue(model) === normalizeValue(d.model?.model_name));
+            const matchesProduct = selectedProducts.length === 0 || selectedProducts.some(product => normalizeValue(product) === normalizeValue(d.data_product_type));
+            const matchesPrivacyUnit = selectedPrivacyUnits.length === 0 || selectedPrivacyUnits.some(unit => normalizeValue(unit) === normalizeValue(d.privacy_loss?.privacy_unit));
+            const matchesTier = selectedTiers.length === 0 || selectedTiers.some(tier => normalizeValue(tier) === normalizeValue(getTierFromData(d)));
+            const matchesYear = selectedYears.length === 0 || selectedYears.some(year => normalizeValue(year) === normalizeValue(new Date(d.publication_date).getFullYear().toString()));
+            return matchesCurator && matchesModel && matchesProduct && matchesPrivacyUnit && matchesTier && matchesYear;
+        }).forEach(d => {
+            if (d.dp_flavor?.name) {
+                const normalized = normalizeValue(d.dp_flavor.name);
+                if (!flavorMap.has(normalized)) {
+                    flavorMap.set(normalized, d.dp_flavor.name);
+                }
+            }
+        });
+        const flavors = Array.from(flavorMap.values()).sort();
+        
+        const privacyUnitMap = new Map();
+        deploymentsData.filter(d => {
+            const matchesCurator = !selectedCurator || normalizeValue(d.data_curator) === normalizeValue(selectedCurator);
+            const matchesModel = selectedModels.length === 0 || selectedModels.some(model => normalizeValue(model) === normalizeValue(d.model?.model_name));
+            const matchesProduct = selectedProducts.length === 0 || selectedProducts.some(product => normalizeValue(product) === normalizeValue(d.data_product_type));
+            const matchesFlavor = selectedFlavors.length === 0 || selectedFlavors.some(flavor => normalizeValue(flavor) === normalizeValue(d.dp_flavor?.name));
+            const matchesTier = selectedTiers.length === 0 || selectedTiers.some(tier => normalizeValue(tier) === normalizeValue(getTierFromData(d)));
+            const matchesYear = selectedYears.length === 0 || selectedYears.some(year => normalizeValue(year) === normalizeValue(new Date(d.publication_date).getFullYear().toString()));
+            return matchesCurator && matchesModel && matchesProduct && matchesFlavor && matchesTier && matchesYear;
+        }).forEach(d => {
+            if (d.privacy_loss?.privacy_unit) {
+                const normalized = normalizeValue(d.privacy_loss.privacy_unit);
+                if (!privacyUnitMap.has(normalized)) {
+                    privacyUnitMap.set(normalized, d.privacy_loss.privacy_unit);
+                }
+            }
+        });
+        const privacyUnits = Array.from(privacyUnitMap.values()).sort();
+        
+        const tierMap = new Map();
+        deploymentsData.filter(d => {
+            const matchesCurator = !selectedCurator || normalizeValue(d.data_curator) === normalizeValue(selectedCurator);
+            const matchesModel = selectedModels.length === 0 || selectedModels.some(model => normalizeValue(model) === normalizeValue(d.model?.model_name));
+            const matchesProduct = selectedProducts.length === 0 || selectedProducts.some(product => normalizeValue(product) === normalizeValue(d.data_product_type));
+            const matchesFlavor = selectedFlavors.length === 0 || selectedFlavors.some(flavor => normalizeValue(flavor) === normalizeValue(d.dp_flavor?.name));
+            const matchesPrivacyUnit = selectedPrivacyUnits.length === 0 || selectedPrivacyUnits.some(unit => normalizeValue(unit) === normalizeValue(d.privacy_loss?.privacy_unit));
+            const matchesYear = selectedYears.length === 0 || selectedYears.some(year => normalizeValue(year) === normalizeValue(new Date(d.publication_date).getFullYear().toString()));
+            return matchesCurator && matchesModel && matchesProduct && matchesFlavor && matchesPrivacyUnit && matchesYear;
+        }).forEach(d => {
+            const tierValue = getTierFromData(d);
+            if (tierValue) {
+                const normalized = normalizeValue(tierValue);
+                if (!tierMap.has(normalized)) {
+                    tierMap.set(normalized, tierValue);
+                }
+            }
+        });
+        const tiers = Array.from(tierMap.values()).sort((a, b) => a - b);
+        
+        const yearMap = new Map();
+        deploymentsData.filter(d => {
+            const matchesCurator = !selectedCurator || normalizeValue(d.data_curator) === normalizeValue(selectedCurator);
+            const matchesModel = selectedModels.length === 0 || selectedModels.some(model => normalizeValue(model) === normalizeValue(d.model?.model_name));
+            const matchesProduct = selectedProducts.length === 0 || selectedProducts.some(product => normalizeValue(product) === normalizeValue(d.data_product_type));
+            const matchesFlavor = selectedFlavors.length === 0 || selectedFlavors.some(flavor => normalizeValue(flavor) === normalizeValue(d.dp_flavor?.name));
+            const matchesPrivacyUnit = selectedPrivacyUnits.length === 0 || selectedPrivacyUnits.some(unit => normalizeValue(unit) === normalizeValue(d.privacy_loss?.privacy_unit));
+            const matchesTier = selectedTiers.length === 0 || selectedTiers.some(tier => normalizeValue(tier) === normalizeValue(getTierFromData(d)));
+            return matchesCurator && matchesModel && matchesProduct && matchesFlavor && matchesPrivacyUnit && matchesTier;
+        }).forEach(d => {
             const date = new Date(d.publication_date);
-            return date.getFullYear().toString();
-        }))].sort((a, b) => b - a);
+            const yearValue = date.getFullYear().toString();
+            if (yearValue) {
+                const normalized = normalizeValue(yearValue);
+                if (!yearMap.has(normalized)) {
+                    yearMap.set(normalized, yearValue);
+                }
+            }
+        });
+        const years = Array.from(yearMap.values()).sort((a, b) => b - a);
         
         // Update custom components
         curatorSelect.updateOptions(curators);
         modelMultiSelect.updateOptions(models);
+        productMultiSelect.updateOptions(products);
+        flavorMultiSelect.updateOptions(flavors);
+        privacyUnitMultiSelect.updateOptions(privacyUnits);
+        tierMultiSelect.updateOptions(tiers);
         yearMultiSelect.updateOptions(years);
     }
     
     // Filter function
     function filterTable() {
+        const searchTerm = searchFilterElement.value;
+        const searchFunction = performSearch(searchTerm);
         const selectedCurator = curatorSelect.value;
         const selectedModels = modelMultiSelect.getValues();
+        const selectedProducts = productMultiSelect.getValues();
+        const selectedFlavors = flavorMultiSelect.getValues();
+        const selectedPrivacyUnits = privacyUnitMultiSelect.getValues();
+        const selectedTiers = tierMultiSelect.getValues();
         const selectedYears = yearMultiSelect.getValues();
         
         const rows = tbody.querySelectorAll('.deployment-row');
@@ -331,12 +626,18 @@ document.addEventListener('DOMContentLoaded', function() {
         rows.forEach((row, index) => {
             const deployment = deploymentsData[index];
             const deploymentYear = new Date(deployment.publication_date).getFullYear().toString();
+            const deploymentTier = getTierFromData(deployment);
             
-            const matchesCurator = selectedCurator === '' || deployment.data_curator === selectedCurator;
-            const matchesModel = selectedModels.length === 0 || selectedModels.includes(deployment.model?.model_name);
-            const matchesYear = selectedYears.length === 0 || selectedYears.includes(deploymentYear);
+            const matchesSearch = searchFunction === true || searchFunction(deployment);
+            const matchesCurator = selectedCurator === '' || normalizeValue(deployment.data_curator) === normalizeValue(selectedCurator);
+            const matchesModel = selectedModels.length === 0 || selectedModels.some(model => normalizeValue(model) === normalizeValue(deployment.model?.model_name));
+            const matchesProduct = selectedProducts.length === 0 || selectedProducts.some(product => normalizeValue(product) === normalizeValue(deployment.data_product_type));
+            const matchesFlavor = selectedFlavors.length === 0 || selectedFlavors.some(flavor => normalizeValue(flavor) === normalizeValue(deployment.dp_flavor?.name));
+            const matchesPrivacyUnit = selectedPrivacyUnits.length === 0 || selectedPrivacyUnits.some(unit => normalizeValue(unit) === normalizeValue(deployment.privacy_loss?.privacy_unit));
+            const matchesTier = selectedTiers.length === 0 || selectedTiers.some(tier => normalizeValue(tier) === normalizeValue(deploymentTier));
+            const matchesYear = selectedYears.length === 0 || selectedYears.some(year => normalizeValue(year) === normalizeValue(deploymentYear));
             
-            if (matchesCurator && matchesModel && matchesYear) {
+            if (matchesSearch && matchesCurator && matchesModel && matchesProduct && matchesFlavor && matchesPrivacyUnit && matchesTier && matchesYear) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
@@ -346,9 +647,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Clear filters function
     function clearFilters() {
+        searchFilterElement.value = '';
+        visibleFiltersMultiSelect.clearSelection();
         curatorSelect.setValue('');
         modelMultiSelect.clearSelection();
+        productMultiSelect.clearSelection();
+        flavorMultiSelect.clearSelection();
+        privacyUnitMultiSelect.clearSelection();
+        tierMultiSelect.clearSelection();
         yearMultiSelect.clearSelection();
+        
+        // Hide all filter groups
+        handleFilterVisibilityChange([]);
+        
         populateFilters();
         filterTable();
     }
@@ -360,14 +671,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Set up change handlers
+    searchFilterElement.addEventListener('input', filterTable);
+    visibleFiltersMultiSelect.onChange = handleFilterVisibilityChange;
     curatorSelect.onChange = handleFilterChange;
     modelMultiSelect.onChange = handleFilterChange;
+    productMultiSelect.onChange = handleFilterChange;
+    flavorMultiSelect.onChange = handleFilterChange;
+    privacyUnitMultiSelect.onChange = handleFilterChange;
+    tierMultiSelect.onChange = handleFilterChange;
     yearMultiSelect.onChange = handleFilterChange;
     
     // Event listeners
     document.getElementById('clear-filters').addEventListener('click', clearFilters);
     
-    // Initialize - populate filters after components are set up
+    // Initialize filter visibility options and populate filters
+    initializeFilterVisibilityOptions();
     populateFilters();
 });
 </script>
