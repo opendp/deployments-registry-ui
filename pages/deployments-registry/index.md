@@ -21,28 +21,65 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 
 <!-- Filters Section -->
 <div class="filters-container">
-    <div>Deployments Registry</div>
-    <div class="filter-row">
+    <div style="white-space: nowrap">Deployments Registry</div>
+    <div class="filter-row" style="justify-content: right">
         <div class="filter-group">
+            <input type="text" id="search-filter" placeholder="Search">
+        </div>
+        <div class="filter-group">
+            <select id="visible-filters">
+                <option value="">Select Filters to Show</option>
+            </select>
+        </div>
+        <div class="filter-actions">
+            <button id="clear-filters" title="Clear all filters">Clear</button>
+        </div>
+    </div>
+</div>
+
+<div class="filters-container" style="margin-top: 0.5rem">
+    <div class="filter-row">
+        <div class="filter-group" id="curator-filter-group" style="display: none;">
             <label for="curator-filter">Curator:</label>
             <select id="curator-filter">
                 <option value="">All Curators</option>
             </select>
         </div>
-        <div class="filter-group">
+        <div class="filter-group" id="model-filter-group" style="display: none;">
             <label for="model-filter">Model:</label>
             <select id="model-filter">
                 <option value="">All Models</option>
             </select>
         </div>
-        <div class="filter-group">
+        <div class="filter-group" id="product-filter-group" style="display: none;">
+            <label for="product-filter">Product:</label>
+            <select id="product-filter">
+                <option value="">All Products</option>
+            </select>
+        </div>
+        <div class="filter-group" id="flavor-filter-group" style="display: none;">
+            <label for="flavor-filter">Flavor:</label>
+            <select id="flavor-filter">
+                <option value="">All Flavors</option>
+            </select>
+        </div>
+        <div class="filter-group" id="privacy-unit-filter-group" style="display: none;">
+            <label for="privacy-unit-filter">Privacy Unit:</label>
+            <select id="privacy-unit-filter">
+                <option value="">All Privacy Units</option>
+            </select>
+        </div>
+        <div class="filter-group" id="tier-filter-group" style="display: none;">
+            <label for="tier-filter">Tier:</label>
+            <select id="tier-filter">
+                <option value="">All Tiers</option>
+            </select>
+        </div>
+        <div class="filter-group" id="year-filter-group" style="display: none;">
             <label for="year-filter">Year:</label>
             <select id="year-filter">
                 <option value="">All Years</option>
             </select>
-        </div>
-        <div class="filter-actions">
-            <button id="clear-filters" title="Clear all filters">Clear</button>
         </div>
     </div>
 </div>

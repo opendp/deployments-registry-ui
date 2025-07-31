@@ -47,9 +47,30 @@ button:active {
     background-color: #F3F3F3;
 }
 
+a {
+    color: #181818;
+    /* eslint-disable-next-line css/no-important */
+    font-size: 0.95em !important;
+    font-weight: 600;
+    line-height: 24px;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+}
+a:hover {
+    color: #181818;
+    font-size: 0.95em;
+}
+a:visited {
+    color: #181818;
+}
+
 /* Base wrapper for content containers */
 .wrapper {
-    max-width: 940px;
+    max-width: 1080px;
     margin-right: auto;
     margin-left: 0;
     padding-right: 32px;
@@ -59,36 +80,38 @@ button:active {
 /* Scrollbar Styles */
 /* Webkit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 4px !important;
+    height: 4px !important;
 }
 
 ::-webkit-scrollbar-track {
-    background: #4f4f4f0f;
-    border-radius: 12px;
-    width: 16px;
-    padding: 24px 4px;
+    background: rgba(79, 79, 79, 0.06) !important;
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #5c5c5c45;
-    width: 8px;
-    border-radius: 12px;
+    background: rgba(92, 92, 92, 0.27) !important;
+    border-radius: 4px;
     transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: rgba(92, 92, 92, 0.4) !important;
 }
 
 ::-webkit-scrollbar-corner {
-    background: #f1f1f1;
+    background: transparent;
+}
+
+/* Hide scrollbar arrows */
+::-webkit-scrollbar-button {
+    display: none;
 }
 
 /* Firefox */
 * {
     /* eslint-disable css/use-baseline */
     scrollbar-width: thin;
-    scrollbar-color: #5c5c5c45 #f1f1f1;
+    scrollbar-color: rgba(92, 92, 92, 0.27) rgba(79, 79, 79, 0.06);
     /* eslint-enable css/use-baseline */
 }

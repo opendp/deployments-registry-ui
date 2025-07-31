@@ -38,7 +38,6 @@
 .docs-sidebar.collapsed {
     width: 82px;
     min-width: 82px;
-    margin-right: 5vw;
 }
 
 .docs-sidebar.collapsed .site-logo svg {

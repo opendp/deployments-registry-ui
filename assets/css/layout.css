@@ -13,7 +13,7 @@
 
 .docs-wrapper {
     display: flex;
-    max-width: 1200px;
+    max-width: 1080px;
     margin: 0;
     margin-right: auto;
     gap: 2rem;
@@ -38,7 +38,7 @@
 
 .home-page .main-content {
     flex: 1;
-    max-width: 940px;
+    max-width: 1080px;
     margin-right: auto;
     margin-left: 0;
 }

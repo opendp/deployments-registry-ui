@@ -5,12 +5,16 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 1.5rem;
     color: #181818;
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
+}
+
+.filters-container button {
+    height: 34px;
 }
 
 .filter-row {
@@ -32,11 +36,28 @@
 }
 
 .filter-group input,
+.filter-group input:active,
 .filter-group select {
+    padding: 0px 12px;
+    background: white;
+    border: 1px solid #DADADA;
+    border-radius: 8px;
+    outline: none;
+    color: #5F5F5F;
+    height: 32px;
+    transition: all 0.3s ease;
+}
+
+.filter-icon-trigger{
+    cursor: pointer;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
     padding: 8px;
-    border: 1px solid #ced4da;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
+    background: white;
 }
 
 /* Custom Select Styles */
@@ -129,6 +150,7 @@
     background: white;
     border: 1px solid #DADADA;
     border-radius: 8px;
+    overflow: auto;
     height: 32px;
     transition: border-color 0.2s ease;
 }
@@ -139,6 +161,7 @@
     flex-wrap: wrap;
     gap: 4px;
     min-height: 20px;
+    max-height: 20px;
     align-items: center;
 }
 
@@ -179,7 +202,7 @@
     background: white;
     border-radius: 8px;
     padding: 8px;
-    max-height: 240px;
+    max-height: 260px;
     overflow-y: auto;
     z-index: 1000;
     display: none;
@@ -213,14 +236,6 @@
     background-color: #d4d4d4;
 }
 
-.custom-multiselect-checkbox {
-    width: 16px;
-    height: 16px;
-    border: 2px solid #ddd;
-    border-radius: 3px;
-    position: relative;
-    transition: all 0.2s ease;
-}
 
 .custom-multiselect-text {
     flex: 1;
