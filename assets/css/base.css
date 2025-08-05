@@ -78,7 +78,6 @@ a:visited {
 /* Scrollbar Styles */
 /* Webkit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-    /* eslint-disable css/no-important */
     width: 4px;
     height: 4px;
 }
@@ -109,7 +108,6 @@ a:visited {
     width: 0;
     display: none;
 }
-/* eslint-enable css/no-important */
 
 /* Base Responsive Design */
 @media (max-width: 768px) {

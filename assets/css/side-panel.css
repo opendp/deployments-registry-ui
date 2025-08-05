@@ -223,7 +223,6 @@
         top: 10vh;
         left: 2.5vw;
         right: 2.5vw;
-        /* eslint-disable-next-line css/no-important */
         width: 100vw;
         border-radius: 12px 12px;
         height: 100%;

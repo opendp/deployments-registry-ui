@@ -4,6 +4,7 @@
 .docs-sidebar {
     box-sizing: border-box;
     width: 280px;
+    z-index: 9999;
     min-width: 280px;
     border-right: 1px solid #F3F3F3;
     padding: 2rem 0 2rem 1rem;
