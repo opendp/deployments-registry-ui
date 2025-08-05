@@ -45,7 +45,7 @@
     outline: none;
     color: #5F5F5F;
     height: 32px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 /* Custom Select Styles */
@@ -67,7 +67,7 @@
     border: 1px solid #DADADA;
     border-radius: 8px;
     height: 32px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .custom-select-value {
@@ -103,7 +103,7 @@
     align-items: center;
     padding: 6px 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -207,7 +207,7 @@
     align-items: center;
     padding: 6px 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     font-size: 14px;
     border-radius: 4px;
     gap: 8px;
@@ -237,5 +237,19 @@
     
     .filter-group {
         min-width: 100%;
+    }
+
+    /* Filter Container */
+    .filters-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: end;
+        width: 100%;
     }
 }

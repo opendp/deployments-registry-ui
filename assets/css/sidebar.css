@@ -6,10 +6,12 @@
     width: 280px;
     min-width: 280px;
     border-right: 1px solid #F3F3F3;
-    padding: 2rem 1rem;
+    padding: 2rem 0 2rem 1rem;
     transition: all 0.2s ease;
-    height: auto;
-    position: relative;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    left: 0;
 }
 
 /* Sidebar Toggle Button */
@@ -31,7 +33,7 @@
 
     /* eslint-disable-next-line css/no-invalid-properties */
     background: var(--Neutral-900, #2E2E2E);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 /* Collapsed Sidebar State */
@@ -53,15 +55,15 @@
 }
 
 .docs-sidebar.collapsed .sidebar-links{
-    height: 0;
-    transition: height 0.2s ease;
+    max-height: 0;
+    opacity: 0;
     overflow: hidden;
     margin: 0;
 }
 
 .docs-sidebar.collapsed .sidebar-section-title {
-    width: 0;
-    transition: height 0.2s ease;
+    max-width: 0;
+    opacity: 0;
     overflow: hidden;
 }
 
@@ -85,8 +87,15 @@
 
 /* Navigation Container */
 .docs-nav {
-    width: 248px;
+    width: calc(280px - 1rem);
+    box-sizing: border-box;
+    height: 100%;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: all 0.2s ease;
     padding: 0;
+    padding-right: 1rem;
 }
 
 /* Sidebar Sections */
@@ -112,7 +121,7 @@
     font-style: normal;
     font-weight: 600;
     line-height: 24px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     text-decoration: none;
 }
 
@@ -140,17 +149,23 @@
 /* Sidebar Section Titles */
 .sidebar-section-title {
     font-size: 1rem;
+    opacity: 1;
     width: 100%;
+    max-width: 300px;
     text-align: left;
     text-transform: capitalize;
+    transition: all 0.2s ease;
 }
 
 /* Sidebar Links List */
 .sidebar-links {
+    transition: all 0.2s ease;
+    opacity: 1;
     list-style: none;
     padding: 0;
     margin: 0.5rem 0 0 0;
     display: block; /* Initially expanded */
+    max-height: 500px; /* Set a reasonable max-height for content */
 }
 
 .sidebar-links li {
@@ -202,8 +217,52 @@
 /* Sidebar Responsive Design */
 @media (max-width: 768px) {
     .docs-sidebar {
+        width: 100vw;
+        max-width: 768px;
+        padding: 0;
+        background-color: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 72px;
+        transition: all 0.2s ease;
+        max-height: 0px;
+        overflow-y: hidden;
+    }
+    .docs-sidebar .toggler{
+        display: none;
+    }
+    .docs-sidebar .docs-nav {
         width: 100%;
-        position: static;
-        order: 2;
+    }
+
+    .docs-sidebar.visible {
+        max-height: calc(100vh - 72px);
+        overflow-y: auto;
+        padding: 2rem 1rem;
+    }
+
+    /* Prevent body scroll when sidebar is visible */
+    body:has(.docs-sidebar.visible) {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+
+    /* Alternative approach if :has() is not supported */
+    body.sidebar-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+
+    .docs-sidebar .site-logo {
+        display: none;
+    }
+
+    .docs-nav {
+        width: 100%;
+        max-height: unset;
+        padding: 0;
+        padding-right: 0;
     }
 }

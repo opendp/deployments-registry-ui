@@ -87,10 +87,10 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 <table id="deployments-table">
     <thead>
         <tr>
-            <th style="text-align: center">Tier</th>
-            <th>Curator</th>
-            <th>Product</th>
-            <th>Date</th>
+            <th style="text-align: center; width: 35px;">Tier</th>
+            <th style="width: 15%; min-width: 100px">Curator</th>
+            <th style="width: 20%;">Product</th>
+            <th style="width: 85px; min-width: 85px;">Date</th>
             <th>Flavor</th>
             <th>Privacy Loss</th>
             <th>Model</th>
@@ -101,25 +101,34 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
         {% assign d = deployment[1].deployment %}
         <tr class="deployment-row" data-index="{{ forloop.index0 }}">
             <td class='tier-column' data-tier="{{ deployment[1].tier }}">
-                {% if deployment[1].tier == 1 %}
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-regular fa-circle"></i>
-                    <i class="fa-regular fa-circle"></i>
-                {% elsif deployment[1].tier == 2 %}
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-regular fa-circle"></i>
-                {% elsif deployment[1].tier == 3 %}
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-solid fa-circle"></i>
-                {% else %}
-                    {{ deployment[1].tier }}
+                <div class='tiers'>
+                    {% if deployment[1].tier == 1 %}
+                        <i class="fa-solid fa-circle"></i>
+                        <i class="fa-regular fa-circle"></i>
+                        <i class="fa-regular fa-circle"></i>
+                    {% elsif deployment[1].tier == 2 %}
+                        <i class="fa-solid fa-circle"></i>
+                        <i class="fa-solid fa-circle"></i>
+                        <i class="fa-regular fa-circle"></i>
+                    {% elsif deployment[1].tier == 3 %}
+                        <i class="fa-solid fa-circle"></i>
+                        <i class="fa-solid fa-circle"></i>
+                        <i class="fa-solid fa-circle"></i>
+                    {% else %}
+                        {{ deployment[1].tier }}
+                    {% endif %}
+                </div>
+            </td>
+            <td style="width: 15%;">{{ d.data_curator }}</td>
+            <td class="product-description">
+                <span class="description-text">{{ d.description }}</span>
+                {% if d.description.size > 0 %}
+                    <div class="description-window">
+                        {{ d.description }}
+                    </div>
                 {% endif %}
             </td>
-            <td>{{ d.data_curator }}</td>
-            <td>{{ d.data_product_type }}</td>
-            <td>{{ d.publication_date }}</td>
+            <td style="width: 85px;">{{ d.publication_date }}</td>
             <td>{{ d.dp_flavor.name }}</td>
             <td>
                 {% if d.privacy_loss.privacy_unit %}
