@@ -11,7 +11,7 @@ permalink: /deployments-registry/
 
 Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://journalprivacyconfidentiality.org/index.php/jpc/article/view/689) by Cynthia Dwork, Nitin Kohli, and Deirdre Mulligan, this registry provides: 
 
-> a publicly available communal body of knowledge about differential privacy implementations that can be used by various stakeholders to drive the identification and adoption of judicious differentially private implementations
+> A publicly available communal body of knowledge about differential privacy implementations that can be used by various stakeholders to drive the identification and adoption of judicious differentially private implementations -Dwork Kohli Mulligan 2019
 
 <a download="registry.tsv" id="download-tsv">Download TSV</a>
 <script>
@@ -132,7 +132,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
             <td>{{ d.dp_flavor.name }}</td>
             <td>
                 {% if d.privacy_loss.privacy_unit %}
-                    <div style="font-weight: 600; margin-bottom: 4px; font-size: 12px">{{ d.privacy_loss.privacy_unit }}</div>
+                    <div style="font-weight: 500; margin-bottom: 4px; font-size: 12px">{{ d.privacy_loss.privacy_unit }}</div>
                 {% endif %}
                 {% if d.privacy_loss.privacy_parameters.epsilon %}
                     ε:&nbsp;{{ d.privacy_loss.privacy_parameters.epsilon }}<br>

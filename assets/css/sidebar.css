@@ -119,7 +119,7 @@
     border-radius: 6px;
     font-size: 16px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 24px;
     transition: all 0.2s ease;
     text-decoration: none;
@@ -182,7 +182,7 @@
     transition: all 0.2s ease;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 20px;
 }
 
@@ -196,7 +196,7 @@
     color: #181818;
     font-size: 14px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 20px;
     text-decoration-line: underline;
     text-decoration-style: solid;

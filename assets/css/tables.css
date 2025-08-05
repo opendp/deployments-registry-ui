@@ -38,7 +38,7 @@
     border: 1px solid #E7E7E7;
     border-right: 0;
     border-bottom: 0;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 /* Table Border Management */
@@ -74,13 +74,13 @@
 /* Table Cell Content */
 .docs-content th {
     text-overflow: ellipsis;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .docs-content td {
     text-overflow: ellipsis;
     font-family: Inter;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 /* Table Hover Effects */

@@ -103,13 +103,13 @@
     font-size: 16px;
     gap: 6px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 24px;
 }
 
 .side-panel .deployment-header-container .deployment-header p {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 20px;
     margin-top: 6px;
     margin-bottom: 8px;
@@ -124,7 +124,7 @@
     gap: 6px;
     color: #181818;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 20px;
     margin-top: 12px;
     
@@ -160,7 +160,7 @@
 }
 
 .side-panel .deployment-section-header {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* Side Panel Tables */
@@ -204,12 +204,12 @@
     color: #646464;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 20px;
 }
 
 .side-panel table td {
-    font-weight: 600;
+    font-weight: 500;
     /* eslint-disable-next-line css/no-important */
     border: none !important;
     text-align: right;

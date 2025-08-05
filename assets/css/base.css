@@ -34,7 +34,7 @@ button {
     cursor: pointer;
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 20px;
     transition: background-color 0.2s ease;
 }
@@ -50,7 +50,7 @@ button:active {
 a {
     color: #181818;
     font-size: 0.95em;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 24px;
     text-decoration-line: underline;
     text-decoration-style: solid;
