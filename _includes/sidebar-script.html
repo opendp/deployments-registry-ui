@@ -31,35 +31,6 @@
     document.body.appendChild(overlay);
   }
 
-  function toggleSection(sectionId) {
-    const links = document.getElementById(sectionId + '-links');
-    const icon = document.querySelector(`button[onclick="toggleSection('${sectionId}')"] .sidebar-icon`);
-    
-    if (links.style.display === 'none') {
-      expandSection(sectionId);
-    } else {
-      collapseSection(sectionId);
-    }
-
-    const sidebar = document.querySelector('.docs-sidebar');
-    if(sidebar.classList.contains('collapsed')) {
-      sidebar.classList.remove('collapsed');
-    }
-  }
-
-  // Expose functions to global scope
-  window.toggleSection = toggleSection;
-
-  function expandSection(sectionId) {
-    const links = document.getElementById(sectionId + '-links');
-    links.style.display = 'block';
-  }
-
-  function collapseSection(sectionId) {
-    const links = document.getElementById(sectionId + '-links');
-    links.style.display = 'none';
-  }
-
   function toggleSidebar() {
     const sidebar = document.querySelector('.docs-sidebar');
     if(sidebar.classList.contains('collapsed')) {
@@ -72,6 +43,15 @@
 
   // Expose function to global scope
   window.toggleSidebar = toggleSidebar;
+
+  function toggleMobileSidebar() {
+    const sidebar = document.querySelector('.docs-sidebar');
+    const body = document.body;
+    body.classList.toggle('sidebar-open');
+    sidebar.classList.toggle('visible');
+  }
+
+  window.toggleMobileSidebar = toggleMobileSidebar;
 
   function selectDeploymentRow(index) {
     const sidebar = document.querySelector('.docs-sidebar');
@@ -154,10 +134,10 @@
       } else {
         const inner = objectToHTML(value);
         html += 
-          `<div class="deployment-section-header" style="text-transform: capitalize;">
+          `<div class="deployment-section-block"><div class="deployment-section-header" style="text-transform: capitalize;">
             ${label}
           </div>
-          ${inner}`
+          ${inner}</div>`
       }
     }
     return html;
@@ -190,6 +170,7 @@
     
     let deploymentSection = '<div class="deployment-section">';
     deploymentSection += objectToHTML(deployment);
+    deploymentSection += '</div>';
 
     return deploymentHeader + deploymentSection;
   }

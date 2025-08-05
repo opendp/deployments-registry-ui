@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     overflow: hidden;
 }
 
@@ -19,6 +19,8 @@
 /* Side Panel */
 .side-panel {
     position: fixed;
+    display: flex;
+    flex-direction: column;
     top: 104px;
     right: 2rem;
     z-index: 1000;
@@ -28,7 +30,7 @@
     border: 1px solid #E7E7E7;
     background: #FFF;
     padding: 0;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     height: fit-content;
     max-height: calc(100vh - 104px - 2rem);
     overflow: hidden;
@@ -37,9 +39,24 @@
     transform: translateX(100%);
 }
 
+.side-panel ::-webkit-scrollbar-track {
+    background-color: white;
+}
+
+.side-panel:hover ::-webkit-scrollbar-track {
+    background-color: rgba(79, 79, 79, 0.06);
+}
+
+.side-panel ::-webkit-scrollbar-thumb {
+    background-color: white;
+}
+
+.side-panel:hover ::-webkit-scrollbar-thumb {
+    background-color: rgba(92, 92, 92, 0.27);
+}
+
 .side-panel.expanded {
-    padding: 12px 8px 12px 12px;
-    overflow-y: auto;
+    padding: 12px 4px 12px 12px;
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
@@ -48,7 +65,12 @@
 /* Side Panel Content */
 .side-panel-content {
     opacity: 0;
-    transition: opacity 0.3s ease 0.1s;
+    transition: opacity 0.2s ease 0.1s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .side-panel.expanded .side-panel-content {
@@ -62,6 +84,16 @@
     padding-bottom: 0.5rem;
 }
 
+/* Deployment Header Container */
+.side-panel .deployment-header-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: fit-content;
+    max-height: fit-content;
+}
+
 /* Deployment Header */
 .side-panel .deployment-header-container .deployment-header {
     display: flex;
@@ -71,13 +103,13 @@
     font-size: 16px;
     gap: 6px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 24px;
 }
 
 .side-panel .deployment-header-container .deployment-header p {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 20px;
     margin-top: 6px;
     margin-bottom: 8px;
@@ -86,17 +118,28 @@
 /* Deployment Sections */
 .side-panel .deployment-section {
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    padding-right: 4px;
     display: flex;
     flex-direction: column;
     gap: 6px;
     color: #181818;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 20px;
+    margin-top: 12px;
+    
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+}
+
+.side-panel .deployment-section .deployment-section-block {
+    padding: 0.5rem;
     border: 1px solid #E7E7E7;
     background: #FAFAFA;
-    margin-top: 12px;
+    margin-bottom: 6px;
+    border-radius: 8px;
 }
 
 .side-panel .deployment-section a {
@@ -117,7 +160,7 @@
 }
 
 .side-panel .deployment-section-header {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* Side Panel Tables */
@@ -161,12 +204,12 @@
     color: #646464;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 20px;
 }
 
 .side-panel table td {
-    font-weight: 600;
+    font-weight: 500;
     /* eslint-disable-next-line css/no-important */
     border: none !important;
     text-align: right;
@@ -177,26 +220,35 @@
     /* Mobile Side Panel - Modal Style */
     .side-panel {
         position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        top: auto;
-        /* eslint-disable-next-line css/no-important */
-        width: 100% !important;
-        border-radius: 12px 12px 0 0;
-        height: 0;
-        max-height: 80vh;
+        top: 10vh;
+        left: 2.5vw;
+        right: 2.5vw;
+        width: 100vw;
+        border-radius: 12px 12px;
+        height: 100%;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
         transform: translateY(100%);
-        transition: transform 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+        transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
     .side-panel.expanded {
-        height: 80vh;
-        padding: 1.5rem;
+        max-height: 85vh;
+        max-width: 95vw;
+        padding: 1.5rem 1rem;
         overflow-y: auto;
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
+    }
+
+    .side-panel ::-webkit-scrollbar-track {
+        background-color: rgba(79, 79, 79, 0.06);
+    }
+
+    .side-panel ::-webkit-scrollbar-thumb {
+        background-color: rgba(92, 92, 92, 0.27);
     }
 
     /* Modal overlay for mobile side panel */
@@ -210,7 +262,7 @@
         z-index: 999;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
     }
 
     .modal-overlay.active {

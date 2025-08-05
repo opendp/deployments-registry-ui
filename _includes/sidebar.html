@@ -43,7 +43,7 @@
                     <span class="sidebar-section-title">{{ section.title }}</span>
                 </a>
             {% else %}
-                <button class="sidebar-toggle {% if section_is_active %}active{% endif %}" onclick="toggleSection('{{ section.section }}')">
+                <button class="sidebar-toggle {% if section_is_active %}active{% endif %}">
                     {% if section.icon %}
                         <i class="fa-solid fa-1x {{ section.icon }}"></i>
                     {% endif %}

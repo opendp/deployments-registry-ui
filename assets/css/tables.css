@@ -10,7 +10,7 @@
     border: none;
     margin: 1rem 0;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     border-bottom: 1px solid #E7E7E7;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -34,13 +34,11 @@
     font-size: 14px;
     line-height: 20px;
     text-align: left;
-    overflow: hidden;
     color: #181818;
     border: 1px solid #E7E7E7;
     border-right: 0;
     border-bottom: 0;
-    text-overflow: ellipsis;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 /* Table Border Management */
@@ -76,13 +74,13 @@
 /* Table Cell Content */
 .docs-content th {
     text-overflow: ellipsis;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .docs-content td {
     text-overflow: ellipsis;
     font-family: Inter;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 /* Table Hover Effects */
@@ -109,16 +107,56 @@
     background-color: #DADADA;
 }
 
-.tier-column {
+.tier-column .tiers {
     text-align: center;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     height: inherit;
+    width: 35px;
     gap: 2px;
 }
-.tier-column i {
+.tier-column .tiers i {
     font-size: 6px;
     line-height: 10px;
+}
+
+.product-description{
+    position: relative;
+    width: 20%;
+}
+.product-description .description-text {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.product-description .description-window {
+    position: absolute;
+    top: 100%;
+    z-index: 99999;
+    left: -50%;
+    width: 200%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 0.5px solid #DADADA;
+    background: #F3F3F3;
+    box-shadow: 0 1px 2px 0.5px rgba(0, 0, 0, 0.09);
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+.product-description:hover .description-window {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Table Responsive Design */
+@media (max-width: 768px) {
+    .docs-content table {
+        display: block;
+        overflow-x: auto;
+    }
 }
