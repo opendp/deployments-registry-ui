@@ -27,7 +27,7 @@
 .footer-col {
     padding: 0;    
     display: flex;
-    min-width: none;
+    min-width: 0;
     flex-direction: column;
 }
 
