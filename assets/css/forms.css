@@ -160,6 +160,13 @@
     line-height: 16px;
 }
 
+.custom-multiselect-count {
+    color: #181818;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+
 .custom-multiselect-tag {
     display: inline-flex;
     align-items: center;
@@ -221,7 +228,27 @@
 }
 
 .custom-multiselect-option.selected {
-    background-color: #d4d4d4;
+    background: #F3F3F3;
+}
+
+.custom-checkbox {
+    display: flex;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    border: 1px solid rgba(32, 9, 0, 0.20);
+    background: rgba(255, 255, 255, 0.90);
+}
+
+.custom-multiselect-option.selected .custom-checkbox {
+    background: #7F7F7F;
+}
+
+.checkbox-icon {
+    transition: all 0.2s ease;
 }
 
 

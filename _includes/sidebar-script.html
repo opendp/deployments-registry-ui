@@ -20,6 +20,14 @@
 
     // Create modal overlay for mobile
     createModalOverlay();
+
+    // Add window resize event listener
+    window.addEventListener('resize', function() {
+      const sidebar = document.querySelector('.docs-sidebar');
+      if (window.innerWidth > 1880 && sidebar && sidebar.classList.contains('collapsed')) {
+        sidebar.classList.remove('collapsed');
+      }
+    });
   });
 
   function createModalOverlay() {
@@ -88,7 +96,7 @@
       window.currentDeploymentIndex = index;
       
       // Collapse sidebar and expand side panel container
-      if (sidebar) {
+      if (sidebar && window.innerWidth < 1880) {
         sidebar.classList.add('collapsed');
       }
       
@@ -149,7 +157,6 @@
         <div class="deployment-header">
           <div>
             <div>${deployment.name || 'Deployment Details'}</div>
-            ${deployment.description ? `<p>${deployment.description}</p>` : ''}
           </div>
           <button class="download-btn" onClick="downloadDeployment()">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">

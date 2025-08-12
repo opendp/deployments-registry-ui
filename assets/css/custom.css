@@ -8,3 +8,5 @@
 @import url('tables.css');       /* Data tables and table interactions */
 @import url('side-panel.css');   /* Right-side panel for deployment details */
 @import url('forms.css');        /* Form components and custom selects */
+@import url('footer.css');       /* Footer component styling */
+@import url('bib-link.css');     /* Reusable UI components like bibliography tooltips */

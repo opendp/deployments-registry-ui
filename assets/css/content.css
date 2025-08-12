@@ -11,6 +11,10 @@
     font-family: "Inter", sans-serif;
 }
 
+.docs-content i {
+    color: #181818;
+}
+
 /* Page Titles and Headers */
 .docs-content .post-title {
     margin-top: 1.5rem;
@@ -100,5 +104,21 @@
     .docs-content {
         order: 1;
         padding: 1.5rem;
+    }
+}
+
+/* Content Responsive Design */
+@media (min-width: 1960px) {
+    .docs-page .wrapper {
+        margin-left: auto;
+        width: 1080px;
+    }
+    .docs-content .wrapper {
+        margin-left: 0;
+        width: 1080px;
+    }
+    .main .docs-content {
+        display: flex;
+        justify-content: center;
     }
 }

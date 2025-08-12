@@ -5,10 +5,9 @@ class: trust-models
 layout: docs
 ---
 
-
 ## The Local Model
 
-The local model in differential privacy, as defined in the ISO/IEC ([34]), is a threat model that provides strong privacy guarantees before data is collected by a central entity. In this model, each user adds noise to their own data locally (for example, on their own phone or laptop, before it is sent to a processing server). This ensures their privacy is protected even if the data is intercepted in transit or in the case they do not trust the central curator.
+<div style="margin-bottom: 0.5rem;">The local model in differential privacy, as defined in the ISO/IEC ({%- include bib-link.html key="ISO" -%}), is a threat model that provides strong privacy guarantees before data is collected by a central entity. In this model, each user adds noise to their own data locally (for example, on their own phone or laptop, before it is sent to a processing server). This ensures their privacy is protected even if the data is intercepted in transit or in the case they do not trust the central curator.</div>
 
 Since the noise is added very early in the pipeline, local differential privacy trades off usability and accuracy for stronger individual privacy guarantees. This means that while each user's data is protected even before it reaches the central server, the aggregated results might be less accurate compared to global differential privacy where noise is added after data aggregation.
 In local differential privacy, each data subject applies randomization as a disclosure control locally before sharing their outputs with the central aggregator.
@@ -21,7 +20,7 @@ In local differential privacy, each data subject applies randomization as a disc
 
 ## The Central Model
 
-Opposite from the previous section, the central model refers to the model where the privacy mechanisms are applied centrally, after data collection. In this model, individuals provide raw data and place their trust in the curator, which is intended to add privacy protections in a downstream task. This is often referred to as the global model or the server model, as defined in the ISO/IEC ([34]).
+<div style="margin-bottom: 0.5rem;">Opposite from the previous section, the central model refers to the model where the privacy mechanisms are applied centrally, after data collection. In this model, individuals provide raw data and place their trust in the curator, which is intended to add privacy protections in a downstream task. This is often referred to as the global model or the server model, as defined in the ISO/IEC ({%- include bib-link.html key="ISO" -%}).</div>
 
 {% include image.html
     url="/assets/images/central-dp.png"
@@ -43,7 +42,7 @@ These two concepts refer to how often we publish DP statistics. A static release
 
 An important aspect of differential privacy is defining what it is we are endeavoring to protect. Ultimately, we usually are trying to protect the atomic data subjects of a dataset: people, businesses, entities. However, depending on the dataset itself, rows of the data table may refer to different things and individual subjects may have a causal effect on more than one record.
 
-Event-level privacy, as described in ([35]), refers to a dataset where we are protecting the rows of a dataset. Each row might pertain to a single data subject in its whole, or a single event such as a credit card transaction.
+<div style="margin-bottom: 0.5rem;">Event-level privacy, as described in ({%- include bib-link.html key="NIST" -%}), refers to a dataset where we are protecting the rows of a dataset. Each row might pertain to a single data subject in its whole, or a single event such as a credit card transaction.</div>
 
 Group privacy refers to settings where we have multiple data subjects who are linked in some manner such that we care about hiding the contribution of the group. An example of this might be a household in the setting of a census. Finally, there is entity-level privacy. Similar to group-level privacy, this is when multiple records can be linked to a single entity. An example of this would be credit card transactions. One data subject may have zero or multiple transactions associated with them, thus in order to protect the privacy of the entity we need to limit the effect of all records associated with each entity.
 
@@ -59,5 +58,3 @@ As a more practical example, collusion typically refers to an environment where 
 
 This concept, often also related to the "continual observation" area of study, involves producing multiple differentially private releases for a dataset that is periodically changing. Achieving this can be challenging as each release must be carefully accounted for in the privacy budget, and organizations that allow for DP analysis of continually updated datasets, as some of the ones present in our table, are mindful of setting budgets for both the user and time level. 
 
-[34]: https://www.iso.org/standard/69373.html "Privacy enhancing data de-identification terminology and classification of techniques"
-[35]: https://doi.org/10.6028/NIST.SP.800-226.ipd "J.P. Near, D. Darais: Guidelines for Evaluating Differential Privacy Guarantees"
