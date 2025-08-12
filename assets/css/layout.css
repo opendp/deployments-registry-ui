@@ -65,6 +65,10 @@
 
 /* Layout Responsive Design */
 @media (max-width: 768px) {
+    .docs-page {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
     .docs-wrapper {
         flex-direction: column;
         gap: 1rem;

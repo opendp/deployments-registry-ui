@@ -175,9 +175,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             this.optionsContainer.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent closing when clicking inside options
                 if (e.target.classList.contains('custom-multiselect-option')) {
                     this.toggleOption(e.target.dataset.value);
                 } else if (e.target.parentElement.classList.contains('custom-multiselect-option')) {
+                    this.toggleOption(e.target.parentElement.dataset.value);
+                } else if (e.target.classList.contains('custom-checkbox')) {
                     this.toggleOption(e.target.parentElement.dataset.value);
                 }
             });
@@ -217,39 +220,23 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.values.length === 0) {
                 this.valuesContainer.innerHTML = `<span class="custom-multiselect-placeholder">${this.placeholder}</span>`;
             } else {
-                const tags = this.values.map(value => 
-                    `<span class="custom-multiselect-tag">
-                        ${value}
-                        <span class="custom-multiselect-remove" data-value="${value}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
-                                <mask id="mask0_515_4765" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="13" height="12">
-                                    <rect x="0.333313" width="12" height="12" fill="#D9D9D9"/>
-                                </mask>
-                                <g mask="url(#mask0_515_4765)">
-                                    <path d="M9.33331 3L3.33331 9M3.33331 3L9.33331 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                                </g>
-                            </svg>
-                        </span>
-                    </span>`
-                ).join('');
-                this.valuesContainer.innerHTML = tags;
-                
-                // Add remove event listeners
-                this.valuesContainer.querySelectorAll('.custom-multiselect-remove').forEach(removeBtn => {
-                    removeBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        this.toggleOption(removeBtn.dataset.value);
-                    });
-                });
+                this.valuesContainer.innerHTML = `<span class="custom-multiselect-count">${this.placeholder} ${this.values.length} selected</span>`;
             }
         }
         
         updateOptionStates() {
             this.optionsContainer.querySelectorAll('.custom-multiselect-option').forEach(option => {
+                const checkmark = option.querySelector('.checkmark');
+                const checkbox = option.querySelector('.checkbox-icon rect');
+                
                 if (this.values.includes(option.dataset.value)) {
                     option.classList.add('selected');
+                    if (checkmark) checkmark.style.display = 'block';
+                    if (checkbox) checkbox.setAttribute('fill', '#0066CC');
                 } else {
                     option.classList.remove('selected');
+                    if (checkmark) checkmark.style.display = 'none';
+                    if (checkbox) checkbox.setAttribute('fill', 'white');
                 }
             });
         }
@@ -263,7 +250,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 optionElement.className = 'custom-multiselect-option';
                 optionElement.dataset.value = option;
                 optionElement.id = `option-${option}`;
-                optionElement.innerHTML = `<span class="custom-multiselect-text">${option}</span>`;
+                optionElement.innerHTML = `
+                    <div class="custom-checkbox">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <rect width="16" height="16" fill="white" fill-opacity="0.01"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2314 3.97521C12.5395 4.17671 12.626 4.58987 12.4245 4.89803L7.8912 11.8314C7.78436 11.9948 7.61128 12.1031 7.41763 12.1278C7.22398 12.1526 7.02923 12.0911 6.88477 11.9598L3.95144 9.29315C3.679 9.04548 3.65892 8.62385 3.90659 8.35141C4.15426 8.07898 4.57589 8.05889 4.84833 8.30657L7.20313 10.4473L11.3086 4.16836C11.5101 3.8602 11.9232 3.77373 12.2314 3.97521Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <span class="custom-multiselect-text">${option}</span>
+                `;
                 this.optionsContainer.appendChild(optionElement);
             });
             

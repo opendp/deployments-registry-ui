@@ -16,6 +16,8 @@ plugins:
 collections:
   navigation:
     output: false
+  bibliography:
+    output: false
 
 # Include pages directory in processing
 include:

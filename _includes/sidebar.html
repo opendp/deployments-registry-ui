@@ -51,17 +51,17 @@
                 </button>
             {% endif %}
             {% if section.pages %}
-                <ul class="sidebar-links" id="{{ section.section }}-links">
+                <div class="sidebar-links" id="{{ section.section }}-links">
                     {% assign sorted_pages = section.pages | sort: "order" %}
                     {% for nav_page in sorted_pages %}
-                    <li>
+                    <div class="sidebar-link-wrapper">
                         <a href="{{ nav_page.path | relative_url }}"
                             class="sidebar-link {% if page.url contains nav_page.path %}active{% endif %}">
                             {{ nav_page.title }}
                         </a>
-                    </li>
+                    </div>
                     {% endfor %}
-                </ul>
+                </div>
             {% endif %}
         </div>
         {% endfor %}

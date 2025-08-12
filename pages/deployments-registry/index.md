@@ -28,7 +28,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
         </div>
         <div class="filter-group">
             <select id="visible-filters">
-                <option value="">Select Filters to Show</option>
+                <option value="">Filters</option>
             </select>
         </div>
         <div class="filter-actions">
