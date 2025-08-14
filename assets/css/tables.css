@@ -1,20 +1,35 @@
 /* Table Styles - Data tables styling including borders, hover effects, and clickable rows */
 
 /* Base Table Styling */
+.docs-content .table-container {
+    width: min(100%, fit-content);
+    overflow-x: auto;
+    overflow-y: visible;
+    position: relative;
+    border: 1px solid #E7E7E7;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
 .docs-content table {
-    width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+    width: fit-content;
+    margin: 1rem 0;
     border-radius: 8px;
     box-shadow: none;
     border: none;
-    margin: 1rem 0;
-    overflow: hidden;
     transition: all 0.2s ease;
     border-bottom: 1px solid #E7E7E7;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    max-width: 1440px;
+    width: max-content;
 }
+.main .docs-content table {
+    min-width: 800px;
+    margin: 0;
+}   
 
 /* Table Rows */
 .docs-content tbody tr {
@@ -30,7 +45,6 @@
 .docs-content th,
 .docs-content td {
     padding: 8px;
-    max-width: 120px;
     font-size: 14px;
     line-height: 20px;
     text-align: left;
@@ -39,6 +53,12 @@
     border-right: 0;
     border-bottom: 0;
     font-weight: 300;
+}
+
+.main .docs-content th,
+.main .docs-content td {
+    max-width: 300px;
+    width: fit-content;
 }
 
 /* Table Border Management */
@@ -78,8 +98,6 @@
 }
 
 .docs-content td {
-    text-overflow: ellipsis;
-    font-family: Inter;
     font-weight: 300;
 }
 
@@ -125,6 +143,7 @@
 .product-description{
     position: relative;
     width: 20%;
+    min-width: 150px;
 }
 .product-description .description-text {
     display: inline-block;
@@ -137,8 +156,9 @@
     position: absolute;
     top: 70%;
     z-index: 99999;
-    left: -50%;
+    left: 0;
     width: 200%;
+    max-width: 260px;
     padding: 8px;
     border-radius: 8px;
     border: 0.5px solid #DADADA;
@@ -153,10 +173,21 @@
     pointer-events: auto;
 }
 
+tr:has(.description-window):last-child .product-description .description-window,
+tr:nth-last-child(2):has(.description-window) .product-description .description-window {
+    top: unset;
+    bottom: 70%;
+}
+
 /* Table Responsive Design */
 @media (max-width: 768px) {
-    .docs-content table {
-        display: block;
+    .docs-content .table-container {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .docs-content table {
+        min-width: 600px;
+        width: max-content;
     }
 }

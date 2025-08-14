@@ -6,6 +6,7 @@ description: >-
   and case studies of privacy budgets used by organizations today.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://registry.opendp.org/"
+owner: OpenDP
 
 # Build settings
 theme: minima

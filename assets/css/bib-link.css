@@ -1,4 +1,8 @@
 /* Bibliography Link Components */
+div:has(.bib-link-wrapper) {
+  margin-bottom: 0.5rem;
+}
+
 .bib-link-wrapper {
   position: relative;
   display: inline-block;
