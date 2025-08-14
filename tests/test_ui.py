@@ -13,9 +13,9 @@ if bp in Path(__file__).read_text(encoding='utf-8'):
 
 def test_ui(page: Page):
     # Page load?
-    page.goto(f"http://localhost:4000/")
+    page.goto(f"http://localhost:4000/deployments-registry/")
     expect(
-        page.get_by_role("heading", name="Differential Privacy Deployments Registry")
+        page.get_by_role("heading", name="Deployments Registry")
     ).to_be_visible()
 
 
