@@ -9,6 +9,14 @@
 /* Documentation Layout Styles */
 .docs-layout {
     font-family: "Inter", sans-serif;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .docs-wrapper {
@@ -21,6 +29,9 @@
 
 .docs-page {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
 }
@@ -32,15 +43,21 @@
     gap: 0;
     padding: 0 2rem;
     box-sizing: border-box;
-    max-width: none;
+    max-width: 100%;
     width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .home-page .main-content {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     max-width: 1080px;
+    min-width: 100px;
     margin-right: auto;
     margin-left: 0;
+    transition: all 0.3s ease;
 }
 
 /* Header Layout for Documentation */
@@ -81,5 +98,11 @@
 
     .home-page .main-content {
         margin-right: 0;
+    }
+}
+
+@media (min-width: 1920px) {
+    .home-page .main-content {
+        margin-left: auto;
     }
 }

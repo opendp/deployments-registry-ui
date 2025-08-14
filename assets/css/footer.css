@@ -2,9 +2,7 @@
 
 .site-footer {
   border-top: 1px solid #F3F3F3;
-  padding: 32px;
-  color: #5F5F5F;
-  font-size: 0.9rem;
+  padding: 56px 120px;
 }
 
 .footer-heading {
@@ -17,6 +15,11 @@
   gap: 2rem;
   margin: 0 0 1rem;
   justify-content: space-between;
+  color: #181818;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px;
 }
 
 .wrapper:after,
@@ -29,6 +32,12 @@
     display: flex;
     min-width: 0;
     flex-direction: column;
+}
+
+.footer-col-1 .footer-logo {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
 .footer-col-1 .contact-list {
@@ -56,8 +65,6 @@
 }
 
 .footer-col-2 .social-media-list li a {
-  color: #6c757d;
-  font-size: 1.2rem;
   transition: color 0.3s ease, transform 0.2s ease;
   display: inline-block;
 }
@@ -78,15 +85,25 @@
   line-height: 1.6;
 }
 
+.company-name {
+  color: #181818;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .site-footer {
-    padding: 24px;
+    padding: 1rem 3rem;
     margin-top: 2rem;
   }
   
   .footer-col-wrapper {
     flex-direction: column;
+    gap: 1rem;
   }
   
   .footer-col-2 .social-media-list {

@@ -9,11 +9,22 @@ permalink: /deployments-registry/
 <div class="home-page">
 <div class="main-content" markdown="1">
 
+{% if page.icon %}
+    <i class="fa-solid fa-2xl {{ page.icon }} page-icon"></i>
+{% endif %}
+{% if page.title %}
+<header>
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+</header>
+{% endif %}
+
 Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://journalprivacyconfidentiality.org/index.php/jpc/article/view/689) by Cynthia Dwork, Nitin Kohli, and Deirdre Mulligan, this registry provides: 
 
 > A publicly available communal body of knowledge about differential privacy implementations that can be used by various stakeholders to drive the identification and adoption of judicious differentially private implementations -Dwork Kohli Mulligan 2019
 
-<a download="registry.tsv" id="download-tsv">Download TSV</a>
+<button>
+    <a download="registry.tsv" id="download-tsv">Download TSV</a>
+</button>
 <script>
     const deployments = {{ site.data.deployments | jsonify }};
 </script>
@@ -84,16 +95,19 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     </div>
 </div>
 
+<div class="table-container">
 <table id="deployments-table">
     <thead>
         <tr>
             <th style="text-align: center; width: 35px;">Tier</th>
-            <th style="width: 15%; min-width: 100px">Curator</th>
             <th style="width: 20%;">Product</th>
-            <th style="width: 85px; min-width: 85px;">Date</th>
-            <th>Flavor</th>
-            <th>Privacy Loss</th>
-            <th>Model</th>
+            <th style="width: 20%;">Description</th>
+            <th style="min-width: 60px;">Year</th>
+            <th style="width: 15%; min-width: 100px">Flavor name</th>
+            <th style="width: 15%; min-width: 100px">Privacy Loss</th>
+            <th style="min-width: 70px">Model</th>
+            <th style="width: 10%; min-width: 80px">Accounting</th>
+            <th style="width: 10%; min-width: 80px">Implementation</th>
         </tr>
     </thead>
     <tbody>
@@ -119,7 +133,10 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
                     {% endif %}
                 </div>
             </td>
-            <td style="width: 15%;">{{ d.data_curator }}</td>
+            <td style="width: 15%;">
+                <div style="color: #181818; font-weight: 500; margin-bottom: 4px">{{ d.name }}</div>
+                <div>by {{ d.data_curator }}</div>
+            </td>
             <td class="product-description">
                 <span class="description-text">{{ d.description }}</span>
                 {% if d.description.size > 0 %}
@@ -128,7 +145,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
                     </div>
                 {% endif %}
             </td>
-            <td style="width: 85px;">{{ d.publication_date }}</td>
+            <td style="min-width: 60px;">{{ d.publication_date | date: "%Y" }}</td>
             <td>{{ d.dp_flavor.name }}</td>
             <td>
                 {% if d.privacy_loss.privacy_unit %}
@@ -145,10 +162,14 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
                 {% endif %}
             </td>
             <td>{{ d.model.model_name }}</td>
+            <td> - </td>
+            <td> - </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+</div>
+
 </div>
 
 <div class="side-panel-container">
@@ -157,7 +178,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
         </div>
     </div>
 </div>
-
+</div>
 
 <!-- Hidden deployment data for JavaScript -->
 <script type="application/json" id="deployments-data">

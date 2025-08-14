@@ -3,9 +3,9 @@
 /* Sidebar Container */
 .docs-sidebar {
     box-sizing: border-box;
-    width: 280px;
+    width: 290px;
     z-index: 9999;
-    min-width: 280px;
+    min-width: 290px;
     border-right: 1px solid #F3F3F3;
     padding: 2rem 0 2rem 1rem;
     transition: all 0.2s ease;
@@ -104,7 +104,7 @@
 
 /* Navigation Container */
 .docs-nav {
-    width: calc(280px - 1rem);
+    width: calc(290px - 1rem);
     box-sizing: border-box;
     height: 100%;
     max-height: calc(100vh - 80px);
@@ -190,7 +190,7 @@
     display: flex;
     border-radius: 6px;
     transition: all 0.2s ease;
-    padding: 4px 1rem;
+    padding: 4px 12px;
 }
 
 .sidebar-link-wrapper:hover {
@@ -286,7 +286,7 @@
     }
 }
 
-@media (min-width: 1880px) {
+@media (min-width: 1920px) {
     .docs-sidebar .toggler {
         display: none;
     }

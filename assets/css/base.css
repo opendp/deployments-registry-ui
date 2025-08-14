@@ -73,6 +73,9 @@ a:visited {
 /* Base wrapper for content containers */
 .wrapper {
     max-width: 1080px;
+    width: 100%;
+    min-width: 100px;
+    box-sizing: border-box;
     margin-right: auto;
     margin-left: 0;
     padding-right: 32px;
