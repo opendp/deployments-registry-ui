@@ -16,6 +16,11 @@ function makeDescriptionCell(def, colSpan) {
     const descriptionCell = document.createElement("td");
     const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
     descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
+    if (def.description_long) {
+        const details = document.createElement("details");
+        details.innerHTML = marked.parse(def.description_long);
+        descriptionCell.appendChild(details);
+    }
     descriptionCell.colSpan = colSpan;
     return descriptionCell;
 }
