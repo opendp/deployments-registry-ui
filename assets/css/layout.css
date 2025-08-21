@@ -106,7 +106,7 @@
     width: 18px;
     height: 1.5px;
     border-radius: 2px;
-    background-color: var(--Black, #181818);
+    background-color: #181818;
 
     top: 50%;
     left: 50%;
@@ -139,6 +139,12 @@
 }
 
 /* Layout Responsive Design */
+@media (min-width: 768px) {
+    .docs-layout .header .site-title {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     .docs-page {
         overflow-x: hidden;

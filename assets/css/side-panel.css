@@ -130,7 +130,7 @@
     font-weight: 300;
     line-height: 20px;
     margin-top: 12px;
-    
+
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
@@ -148,6 +148,7 @@
 .side-panel .deployment-section a {
     word-wrap: break-word
 }
+
 .side-panel .deployment-section p {
     margin-bottom: 0;
 }
@@ -167,7 +168,7 @@
 }
 
 /* Side Panel Tables */
-.side-panel table th, 
+.side-panel table th,
 .side-panel table td {
     padding: 3px 0;
     background-color: transparent;
@@ -215,11 +216,13 @@
     font-weight: 500;
     /* eslint-disable-next-line css/no-important */
     border: none !important;
+    /* eslint-enable css/no-important */
     text-align: right;
 }
 
 /* Side Panel Responsive Design */
 @media (max-width: 768px) {
+
     /* Mobile Side Panel - Modal Style */
     .side-panel {
         position: fixed;

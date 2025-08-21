@@ -80,7 +80,7 @@
 }
 
 .deployments-registry-page .download-data-button a {
-    color: var(--Neutral-700, #5F5F5F);
+    color: #5F5F5F;
 
     font-size: 14px;
     font-style: normal;

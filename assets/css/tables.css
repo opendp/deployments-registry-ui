@@ -68,7 +68,9 @@
 }
 
 .table-container table {
+    /* eslint-disable css/no-important */
     margin-bottom: 0 !important;
+    /* eslint-enable css/no-important */
 }
 
 .table-container th:last-child,
@@ -184,7 +186,7 @@
     padding: 8px;
     border-radius: 8px;
     border: 0.5px solid #DADADA;
-    color: var(--Neutral-700, #5F5F5F);
+    color: #5F5F5F;
     background: #F3F3F3;
     box-shadow: 0 1px 2px 0.5px rgba(0, 0, 0, 0.09);
     opacity: 0;
