@@ -16,13 +16,15 @@
     font-family: "Inter", sans-serif;
     animation: fadeIn 0.2s ease-in;
 }
-.page-icon{
+
+.page-icon {
     height: 32px;
     width: 32px;
     margin-bottom: 24px;
     position: relative;
 }
-.page-icon::before{
+
+.page-icon::before {
     position: absolute;
     top: 16px;
     left: 0;
@@ -32,6 +34,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -42,6 +45,11 @@
 }
 
 /* Page Titles and Headers */
+.deployments-registry-page header {
+    display: flex;
+    gap: 20px;
+}
+
 .docs-content .post-title {
     display: flex;
     align-items: center;
@@ -53,18 +61,77 @@
     line-height: 40px;
 }
 
+
+.deployments-registry-page .download-data-button {
+    display: none;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Content Responsive Design */
+@media (min-width: 768px) {
+    .deployments-registry-page .post-title {
+        width: fit-content;
+    }
+
+    .deployments-registry-page .download-data-button {
+        display: flex;
+    }
+}
+
+.deployments-registry-page .download-data-button a {
+    color: #5F5F5F;
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+
+    text-decoration: none;
+}
+
 .docs-content h2 {
-    color: #34495e;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.5rem;
+
+    color: #34495e;
+
+    /* Heading/M/Medium */
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px;
+    /* 133.333% */
 }
 
 .docs-content h3 {
-    color: #34495e;
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
+
+    color: #34495e;
+
+    /* Heading/S/Semibold */
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    /* 150% */
+}
+
+.docs-content h4 {
+    color: #181818;
+
+    /* Heading/XS/Semibold */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    /* 142.857% */
 }
 
 /* Text Content */
@@ -125,7 +192,7 @@
 @media (max-width: 768px) {
     .docs-content {
         order: 1;
-        padding: 1rem;
+        padding: 20px;
     }
 }
 
@@ -135,6 +202,7 @@
         margin-left: auto;
         width: 1080px;
     }
+
     .main .docs-content {
         display: flex;
         justify-content: center;

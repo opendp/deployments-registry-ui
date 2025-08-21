@@ -62,13 +62,71 @@
 
 /* Header Layout for Documentation */
 .docs-layout .header {
-    border-bottom: 1px solid #E7E7E7;
-    display: flex;
-    height: 72px;
     box-sizing: border-box;
+    height: 72px;
+    width: 100vw;
+    padding: 16px 20px;
+
+    display: flex;
     justify-content: space-between;
-    margin: 0 32px;
-    padding: 16px 0;
+
+    position: relative;
+}
+
+.docs-layout .header .site-title {
+    text-decoration: none;
+}
+
+.docs-layout .site-nav {
+    border: none;
+
+    position: relative;
+    top: 0;
+    right: 0;
+}
+
+.docs-layout label[for="nav-trigger"] {
+    display: block;
+    width: 36px;
+    height: 36px;
+}
+
+.docs-layout .menu-icon {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    padding: 0;
+
+    position: relative;
+}
+
+.menu-icon .burger-line {
+    position: absolute;
+
+    width: 18px;
+    height: 1.5px;
+    border-radius: 2px;
+    background-color: #181818;
+
+    top: 50%;
+    left: 50%;
+    transition: all 0.3s ease;
+}
+
+.menu-icon .burger-line.line-1 {
+    transform: translate(-50%, calc(-50% - 3px));
+}
+
+.menu-icon .burger-line.line-2 {
+    transform: translate(-50%, calc(-50% + 3px));
+}
+
+.sidebar-open .menu-icon .burger-line.line-1 {
+    transform: translate(-50%, calc(-50%)) rotate(45deg);
+}
+
+.sidebar-open .menu-icon .burger-line.line-2 {
+    transform: translate(-50%, calc(-50%)) rotate(-45deg);
 }
 
 .docs-layout .site-nav .page-link {
@@ -81,14 +139,31 @@
 }
 
 /* Layout Responsive Design */
+@media (min-width: 768px) {
+    .docs-layout .header .site-title {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     .docs-page {
         overflow-x: hidden;
         overflow-y: auto;
     }
+
     .docs-wrapper {
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .site-nav .menu-icon {
+        display: block;
+        float: right;
+        height: 100%;
+        width: 100%;
+        line-height: 0;
+        padding-top: 0;
+        text-align: center;
     }
 
     .home-page {
