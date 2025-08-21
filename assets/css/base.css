@@ -45,7 +45,7 @@ button {
 }
 
 button:hover {
-    background-color: #bbbbbb;
+    background-color: #e8e8e8;
 }
 
 button:active {
@@ -64,9 +64,11 @@ a {
     text-underline-offset: auto;
     text-underline-position: from-font;
 }
+
 a:hover {
     color: #181818;
 }
+
 a:visited {
     color: #181818;
 }

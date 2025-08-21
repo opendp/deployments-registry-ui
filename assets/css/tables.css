@@ -37,6 +37,10 @@
     background-color: transparent;
 }
 
+table tr:nth-child(even) {
+    background-color: transparent;
+}
+
 .docs-content tr th {
     background-color: transparent;
 }
