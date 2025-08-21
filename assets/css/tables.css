@@ -28,7 +28,6 @@
 }
 
 .main .docs-content table {
-    min-width: 800px;
     margin: 0;
 }
 
@@ -213,7 +212,6 @@ tr:nth-last-child(2):has(.description-window) .product-description .description-
     }
 
     .docs-content table {
-        min-width: 600px;
         width: max-content;
     }
 }
