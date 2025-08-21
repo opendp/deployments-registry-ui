@@ -67,7 +67,7 @@
     height: 72px;
     box-sizing: border-box;
     justify-content: space-between;
-    margin: 0 32px;
+    margin: 0 20px;
     padding: 16px 0;
 }
 
@@ -86,6 +86,7 @@
         overflow-x: hidden;
         overflow-y: auto;
     }
+
     .docs-wrapper {
         flex-direction: column;
         gap: 1rem;

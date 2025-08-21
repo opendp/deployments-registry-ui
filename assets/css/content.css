@@ -16,13 +16,15 @@
     font-family: "Inter", sans-serif;
     animation: fadeIn 0.2s ease-in;
 }
-.page-icon{
+
+.page-icon {
     height: 32px;
     width: 32px;
     margin-bottom: 24px;
     position: relative;
 }
-.page-icon::before{
+
+.page-icon::before {
     position: absolute;
     top: 16px;
     left: 0;
@@ -32,6 +34,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -189,7 +192,7 @@
 @media (max-width: 768px) {
     .docs-content {
         order: 1;
-        padding: 1rem;
+        padding: 20px;
     }
 }
 
@@ -199,6 +202,7 @@
         margin-left: auto;
         width: 1080px;
     }
+
     .main .docs-content {
         display: flex;
         justify-content: center;
