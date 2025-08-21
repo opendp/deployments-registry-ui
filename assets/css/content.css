@@ -54,17 +54,47 @@
 }
 
 .docs-content h2 {
-    color: #34495e;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.5rem;
+
+    color: #34495e;
+
+    /* Heading/M/Medium */
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px;
+    /* 133.333% */
 }
 
 .docs-content h3 {
-    color: #34495e;
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
+
+    color: #34495e;
+
+    /* Heading/S/Semibold */
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    /* 150% */
+}
+
+.docs-content h4 {
+    color: #181818;
+
+    /* Heading/XS/Semibold */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    /* 142.857% */
 }
 
 /* Text Content */
