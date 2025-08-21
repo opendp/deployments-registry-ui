@@ -58,6 +58,7 @@ known in the literature as the binary mechanism.
 
 This mechanism is incredibly useful for building intuition among a non-technical audience. One of the simplest questions we can ask is: “Is Alice in this dataset?” Depending on the level of privacy, the probability of answering truthfully will vary. We illustrate this relationship below.
 
+<div class="table-container">
 <table>
     <thead>
         <tr>
@@ -68,6 +69,7 @@ This mechanism is incredibly useful for building intuition among a non-technical
     </thead>
     <tbody id="probability-table-body"></tbody>
 </table>
+</div>
 <script type="module" src="/assets/js/probability-table.js"></script>
 
 While the above odds are merely illustrative, they help convey the practical meaning of epsilon
