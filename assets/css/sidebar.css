@@ -147,7 +147,11 @@
     color: #181818;
 }
 
-.sidebar-toggle.active {
+.sidebar-toggle.active,
+.sidebar-link-wrapper.active,
+.sidebar-link-wrapper.active:hover,
+.sidebar-link.active,
+.sidebar-link.active:hover {
     color: white;
     background: #2E2E2E;
     text-decoration: none;
@@ -191,7 +195,7 @@
     display: flex;
     border-radius: 6px;
     transition: all 0.2s ease;
-    padding: 4px 12px;
+    padding: 6px 12px;
 }
 
 .sidebar-link-wrapper:hover {
@@ -210,22 +214,6 @@
 .sidebar-link:hover {
     color: #3A3A3A;
     text-decoration: none;
-}
-
-.sidebar-link.active {
-    color: #181818;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-underline-offset: 3px;
-}
-
-.sidebar-link.active:hover {
-    background-color: #e9ecef;
-    color: #181818;
 }
 
 /* Sidebar Spacer */
