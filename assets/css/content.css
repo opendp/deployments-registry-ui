@@ -42,6 +42,11 @@
 }
 
 /* Page Titles and Headers */
+.deployments-registry-page header {
+    display: flex;
+    gap: 20px;
+}
+
 .docs-content .post-title {
     display: flex;
     align-items: center;
@@ -51,6 +56,35 @@
     font-style: normal;
     font-weight: 400;
     line-height: 40px;
+}
+
+
+.deployments-registry-page .download-data-button {
+    display: none;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Content Responsive Design */
+@media (min-width: 768px) {
+    .deployments-registry-page .post-title {
+        width: fit-content;
+    }
+
+    .deployments-registry-page .download-data-button {
+        display: flex;
+    }
+}
+
+.deployments-registry-page .download-data-button a {
+    color: var(--Neutral-700, #5F5F5F);
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+
+    text-decoration: none;
 }
 
 .docs-content h2 {
