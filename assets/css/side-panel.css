@@ -242,7 +242,7 @@
     .side-panel.expanded {
         max-height: 85vh;
         max-width: 95vw;
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 4px 1.5rem 1rem;
         overflow-y: auto;
         opacity: 1;
         visibility: visible;
@@ -255,6 +255,11 @@
 
     .side-panel ::-webkit-scrollbar-thumb {
         background-color: rgba(92, 92, 92, 0.27);
+    }
+
+    .side-panel .deployment-header,
+    .side-panel .deployment-section {
+        padding-right: 12px;
     }
 
     /* Modal overlay for mobile side panel */
