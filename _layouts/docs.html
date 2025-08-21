@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang='{{ page.lang | default: site.lang | default: "en" }}'>
 
-  {%- include head.html -%}
+{%- include head.html -%}
 
-  <body class="docs-layout">    
+<body class="docs-layout">
     <main class="page" aria-label="Content">
 
         {%- include sidebar.html -%}
-        
+
         <div class="docs-page">
             <!-- Header -->
             <header class="header">
-                <!-- <a class="site-title" rel="author" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a> -->
-            
+                <div>
+                    <a class="site-title" rel="author" href="{{ '/' | relative_url }}">
+                        LOGO
+                        <!-- {{ site.title | escape }} -->
+                    </a>
+                </div>
+
                 <nav class="site-nav">
                     <input type="checkbox" id="nav-trigger" class="nav-trigger" />
                     <label for="nav-trigger">
                         <span class="menu-icon" onclick="toggleMobileSidebar()">
-                            <svg viewBox="0 0 18 15" width="18px" height="15px">
-                                <path
-                                    d="m18,1.484c0,0.82-0.665,1.484-1.484,1.484h-15.032c-0.82,0-1.484-0.665-1.484-1.484s0.665-1.484,1.484-1.484h15.032c0.82,0,1.484,0.665,1.484,1.484zm0,5.16c0,0.82-0.665,1.484-1.484,1.484h-15.032c-0.82,0-1.484-0.665-1.484-1.484s0.665-1.484,1.484-1.484h15.032c0.82,0,1.484,0.665,1.484,1.484zm0,5.16c0,0.82-0.665,1.484-1.484,1.484h-15.032c-0.82,0-1.484-0.665-1.484-1.484s0.665-1.484,1.484-1.484h15.032c0.82,0,1.484,0.665,1.484,1.484z" />
-                            </svg>
+                            <div class="burger-line line-1"></div>
+                            <div class="burger-line line-2"></div>
                         </span>
                     </label>
-            
+
                     <div class="trigger">
                         <!-- <a class="page-link" href="{{ '/' | relative_url }}">Home</a> -->
                         <!-- <a class="page-link" href="{{ "/overview" | relative_url }}">Documentation</a> -->
@@ -37,7 +40,7 @@
                     <div class="docs-content">
                         <article class="post">
                             {% if page.icon %}
-                                <i class="fa-solid fa-2xl {{ page.icon }} page-icon"></i>
+                            <i class="fa-solid fa-2xl {{ page.icon }} page-icon"></i>
                             {% endif %}
                             {% if page.title %}
                             <header class="post-header">
@@ -46,7 +49,7 @@
                                 </h1>
                             </header>
                             {% endif %}
-            
+
                             <div class="post-content">
                                 {{ content }}
                             </div>
@@ -61,6 +64,6 @@
 
     {%- include sidebar-script.html -%}
 
-  </body>
+</body>
 
 </html>

@@ -67,11 +67,11 @@
     width: 100%;
 }
 
-.docs-sidebar.collapsed .sidebar-toggle{
+.docs-sidebar.collapsed .sidebar-toggle {
     gap: 0;
 }
 
-.docs-sidebar.collapsed .sidebar-links{
+.docs-sidebar.collapsed .sidebar-links {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
@@ -182,7 +182,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    max-height: 500px; /* Set a reasonable max-height for content */
+    max-height: 500px;
+    /* Set a reasonable max-height for content */
 }
 
 /* Individual Sidebar Links */
@@ -240,16 +241,17 @@
         max-width: 768px;
         padding: 0;
         background-color: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         position: fixed;
         top: 72px;
         transition: all 0.2s ease;
         max-height: 0px;
         overflow-y: hidden;
     }
-    .docs-sidebar .toggler{
+
+    .docs-sidebar .toggler {
         display: none;
     }
+
     .docs-sidebar .docs-nav {
         width: 100%;
     }
