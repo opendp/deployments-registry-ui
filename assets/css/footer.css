@@ -26,6 +26,11 @@
   line-height: 20px;
 }
 
+.footer-col-wrapper .separator {
+  display: none;
+  border-top: 1px solid #E7E7E7;
+}
+
 .wrapper:after,
 .footer-col-wrapper:after {
   display: none;
@@ -104,13 +109,21 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .site-footer {
-    padding: 1rem 3rem;
+    padding: 1rem 20px 80px 20px;
     margin-top: 2rem;
   }
 
   .footer-col-wrapper {
     grid-auto-flow: row;
-    gap: 1rem;
+    gap: 40px;
+  }
+
+  .footer-col-wrapper .separator {
+    display: block;
+  }
+
+  .footer-col-wrapper a {
+    text-decoration: none;
   }
 
   .footer-col-2 .social-media-list {
@@ -118,7 +131,6 @@
   }
 
   .footer-col-3 {
-    text-align: center;
     padding: 0;
   }
 
