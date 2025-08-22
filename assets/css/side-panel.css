@@ -138,6 +138,10 @@
 }
 
 .side-panel .deployment-section .deployment-section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
     padding: 0.5rem;
     border: 1px solid #E7E7E7;
     background: #FAFAFA;
@@ -153,9 +157,28 @@
     margin-bottom: 0;
 }
 
+.side-panel .deployment-section .long-field:not(:last-child) {
+    border-bottom: 1px solid #E7E7E7;
+}
+
 .side-panel .section-sub-heading {
     color: #646464;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+}
+
+.side-panel .deployment-section .long-field:not(:last-child) .section-content {
+    padding-bottom: 8px;
+}
+
+.side-panel .deployment-section .long-field .section-content ul {
+    margin-bottom: 0;
+}
+
+
+
+.side-panel .deployment-section-block.object-field *.deployment-section-block.object-field {
+    padding: 0;
+    border: none;
 }
 
 .side-panel .section-spacer {
@@ -170,7 +193,7 @@
 /* Side Panel Tables */
 .side-panel table th,
 .side-panel table td {
-    padding: 3px 0;
+    padding: 0;
     background-color: transparent;
     border: none;
 }

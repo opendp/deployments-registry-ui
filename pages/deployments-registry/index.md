@@ -198,4 +198,9 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 ]
 </script>
 
+<!-- Hidden deployment/ui hints data for JavaScript -->
+<script type="application/json" id="deployment-hints">
+    {{ site.data.ui-hints['deployments-hints'] | jsonify }}
+</script>
+
 {% include filter-script.html %}

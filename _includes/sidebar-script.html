@@ -2,6 +2,8 @@
   import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
   let deploymentsData = [];
+  let deploymentHints = { short_fields: [], extra_columns: {} };
+
   // Initialize sidebar state
   document.addEventListener('DOMContentLoaded', function () {
     // Initialize all sections as expanded
@@ -9,6 +11,16 @@
     const dataScript = document.getElementById('deployments-data');
     if (dataScript) {
       deploymentsData = JSON.parse(dataScript.textContent);
+    }
+
+    // Load deployment hints
+    const hintsScript = document.getElementById('deployment-hints');
+    if (hintsScript) {
+      try {
+        deploymentHints = JSON.parse(hintsScript.textContent);
+      } catch (e) {
+        // console.warn('Could not parse deployment hints JSON', e);
+      }
     }
 
     // Initialize link prefetching for sidebar links
@@ -123,36 +135,76 @@
     MathJax.typeset();
   }
 
-  function objectToHTML(deploymentObject) {
+  // Helper to join JSON Pointer style paths
+  function joinPath(base, key) {
+    if (!base || base === '/') return '/' + key;
+    return base + '/' + key;
+  }
+
+  const shortFieldSet = new Set();
+  function initShortFields() {
+    if (deploymentHints?.short_fields) {
+      deploymentHints.short_fields.forEach(p => shortFieldSet.add(p));
+    }
+  }
+
+  function objectToHTML(deploymentObject, currentPath = '/deployment') {
+    if (!deploymentObject || typeof deploymentObject !== 'object') return '';
     let html = '';
     for (let [key, value] of Object.entries(deploymentObject)) {
-      if (value === null) {
+      if (value === null || value === undefined || value === '') continue;
+      const path = joinPath(currentPath, key);
+
+      // If current JSON pointer path matches any value in extra_columns, use its display name (the map key)
+      let overrideLabel;
+      if (deploymentHints && deploymentHints.extra_columns) {
+        for (const [displayName, pointer] of Object.entries(deploymentHints.extra_columns)) {
+          if (pointer === path) { overrideLabel = displayName; break; }
+        }
+      }
+      const label = overrideLabel || key.split('_').join(' ');
+
+      // If value is plain object
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        const inner = objectToHTML(value, path);
+        if (!inner) continue;
+        html += `
+          <div class="deployment-section-block object-field">
+            <div class="deployment-section-header" style="text-transform: capitalize;">${label}</div>
+            ${inner}
+          </div>`;
         continue;
       }
-      const label = key.split('_').join(' ');
-      if (value?.length < 40) {
-        html +=
-          `<table><tr>
-            <th style="text-transform: capitalize;">${label}</th>
-            <td>${marked.parse(String(value))}</td>
-          </tr></table>`
-      } else if (typeof value !== 'object') {
-        html +=
-          `<div>
-            <div class="section-sub-heading" style="text-transform: capitalize;">${label}</div>
-            <div>${marked.parse(String(value))}</div>
-          </div>`
+
+      // Normalize arrays -> comma separated string
+      let renderedValue;
+      if (Array.isArray(value)) {
+        renderedValue = value.join(', ');
       } else {
-        const inner = objectToHTML(value);
-        html +=
-          `<div class="deployment-section-block"><div class="deployment-section-header" style="text-transform: capitalize;">
-            ${label}
-          </div>
-          ${inner}</div>`
+        renderedValue = String(value);
+      }
+
+      const isShort = shortFieldSet.has(path) || renderedValue.length < 40;
+      if (isShort) {
+        html += `
+          <table class="short-field">
+            <tr>
+              <th style="text-transform: capitalize;">${label}</th>
+              <td>${marked.parse(renderedValue)}</td>
+            </tr>
+          </table>`;
+      } else {
+        html += `
+          <div class="long-field">
+            <div class="section-sub-heading" style="text-transform: capitalize;">${label}</div>
+            <div class="section-content">${marked.parse(renderedValue)}</div>
+          </div>`;
       }
     }
     return html;
   }
+
+  initShortFields();
 
   function generateDeploymentDetailsHTML(deployment) {
     let deploymentHeader = `
