@@ -13,9 +13,9 @@ if bp in Path(__file__).read_text(encoding='utf-8'):
 
 def test_ui(page: Page):
     # Page load?
-    page.goto(f"http://localhost:4000/")
+    page.goto(f"http://localhost:4000/deployments-registry/")
     expect(
-        page.get_by_role("heading", name="Differential Privacy Deployments Registry")
+        page.get_by_role("heading", name="Deployments Registry")
     ).to_be_visible()
 
 
@@ -47,7 +47,7 @@ def test_ui(page: Page):
     # TODO: confirm the second paragraph is in a separate element.
 
     with page.expect_download() as tsv_download_info:
-        page.get_by_text("Download TSV").click()
+        page.get_by_text("Download data").click()
 
     tsv_content = tsv_download_info.value.path().read_text(encoding='utf-8')
     # header row:

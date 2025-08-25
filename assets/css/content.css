@@ -3,12 +3,41 @@
 /* Main Content Container */
 .docs-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
     min-width: 0;
-    padding: 2rem;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 24px 28px;
     padding-right: 0;
     font-weight: 300;
     color: #5F5F5F;
     font-family: "Inter", sans-serif;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.page-icon {
+    height: 32px;
+    width: 32px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.page-icon::before {
+    position: absolute;
+    top: 16px;
+    left: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .docs-content i {
@@ -16,8 +45,12 @@
 }
 
 /* Page Titles and Headers */
+.deployments-registry-page header {
+    display: flex;
+    gap: 20px;
+}
+
 .docs-content .post-title {
-    margin-top: 1.5rem;
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
@@ -28,23 +61,82 @@
     line-height: 40px;
 }
 
+
+.deployments-registry-page .download-data-button {
+    display: none;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Content Responsive Design */
+@media (min-width: 768px) {
+    .deployments-registry-page .post-title {
+        width: fit-content;
+    }
+
+    .deployments-registry-page .download-data-button {
+        display: flex;
+    }
+}
+
+.deployments-registry-page .download-data-button a {
+    color: #5F5F5F;
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+
+    text-decoration: none;
+}
+
 .docs-content h2 {
-    color: #34495e;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.5rem;
+
+    color: #34495e;
+
+    /* Heading/M/Medium */
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px;
+    /* 133.333% */
 }
 
 .docs-content h3 {
-    color: #34495e;
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
+
+    color: #34495e;
+
+    /* Heading/S/Semibold */
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    /* 150% */
+}
+
+.docs-content h4 {
+    color: #181818;
+
+    /* Heading/XS/Semibold */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    /* 142.857% */
 }
 
 /* Text Content */
-.docs-content p {
-    line-height: 1.25;
+.post p {
+    line-height: 24px;
     margin-bottom: 0.5rem;
 }
 
@@ -82,10 +174,7 @@
 /* Images */
 .docs-content img {
     max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    margin: 1rem 0;
+    margin: 0.5rem 0;
 }
 
 /* Page Icons */
@@ -103,20 +192,17 @@
 @media (max-width: 768px) {
     .docs-content {
         order: 1;
-        padding: 1.5rem;
+        padding: 20px;
     }
 }
 
 /* Content Responsive Design */
-@media (min-width: 1960px) {
+@media (min-width: 1920px) {
     .docs-page .wrapper {
         margin-left: auto;
         width: 1080px;
     }
-    .docs-content .wrapper {
-        margin-left: 0;
-        width: 1080px;
-    }
+
     .main .docs-content {
         display: flex;
         justify-content: center;

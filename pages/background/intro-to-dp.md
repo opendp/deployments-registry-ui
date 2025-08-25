@@ -58,6 +58,7 @@ known in the literature as the binary mechanism.
 
 This mechanism is incredibly useful for building intuition among a non-technical audience. One of the simplest questions we can ask is: “Is Alice in this dataset?” Depending on the level of privacy, the probability of answering truthfully will vary. We illustrate this relationship below.
 
+<div class="table-container">
 <table>
     <thead>
         <tr>
@@ -68,6 +69,7 @@ This mechanism is incredibly useful for building intuition among a non-technical
     </thead>
     <tbody id="probability-table-body"></tbody>
 </table>
+</div>
 <script type="module" src="/assets/js/probability-table.js"></script>
 
 While the above odds are merely illustrative, they help convey the practical meaning of epsilon
@@ -94,7 +96,9 @@ Note that the error is additive and so we can make claims about the
 absolute error, but not the relative error of the final stochastic
 result.
 
+<div class="diagram-container">
 <div id="epsilon-expected-error"></div>
+</div>
 <script type="module" src="/assets/js/epsilon-expected-error.js"></script>
 
 ## (ε, δ)-Differential Privacy
@@ -113,7 +117,9 @@ $$
 
 The following widget describes the expected error for noise added under (ε, δ)-DP.
 
+<div class="diagram-container">
 <div id="laplace-to-gaussian"></div>
+</div>
 <script type="module" src="/assets/js/laplace-to-gaussian.js"></script>
 
 ## Zero-Concentrated Differential Privacy

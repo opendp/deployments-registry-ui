@@ -3,6 +3,7 @@
 /* Side Panel Container */
 .side-panel-container {
     width: 0;
+    max-width: 0;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -12,8 +13,9 @@
 }
 
 .side-panel-container.expanded {
-    width: calc(min(30vw, 480px) + 2rem);
-    min-width: calc(min(30vw, 480px) + 2rem);
+    width: 100%;
+    min-width: 0;
+    max-width: calc(min(30vw, 480px) + 2rem);
 }
 
 /* Side Panel */
@@ -65,7 +67,7 @@
 /* Side Panel Content */
 .side-panel-content {
     opacity: 0;
-    transition: opacity 0.2s ease 0.1s;
+    transition: opacity 0.2s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -128,7 +130,7 @@
     font-weight: 300;
     line-height: 20px;
     margin-top: 12px;
-    
+
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
@@ -146,6 +148,7 @@
 .side-panel .deployment-section a {
     word-wrap: break-word
 }
+
 .side-panel .deployment-section p {
     margin-bottom: 0;
 }
@@ -165,7 +168,7 @@
 }
 
 /* Side Panel Tables */
-.side-panel table th, 
+.side-panel table th,
 .side-panel table td {
     padding: 3px 0;
     background-color: transparent;
@@ -213,11 +216,13 @@
     font-weight: 500;
     /* eslint-disable-next-line css/no-important */
     border: none !important;
+    /* eslint-enable css/no-important */
     text-align: right;
 }
 
 /* Side Panel Responsive Design */
 @media (max-width: 768px) {
+
     /* Mobile Side Panel - Modal Style */
     .side-panel {
         position: fixed;
@@ -237,7 +242,7 @@
     .side-panel.expanded {
         max-height: 85vh;
         max-width: 95vw;
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 4px 1.5rem 1rem;
         overflow-y: auto;
         opacity: 1;
         visibility: visible;
@@ -250,6 +255,11 @@
 
     .side-panel ::-webkit-scrollbar-thumb {
         background-color: rgba(92, 92, 92, 0.27);
+    }
+
+    .side-panel .deployment-header,
+    .side-panel .deployment-section {
+        padding-right: 12px;
     }
 
     /* Modal overlay for mobile side panel */

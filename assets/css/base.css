@@ -36,6 +36,7 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -44,7 +45,7 @@ button {
 }
 
 button:hover {
-    background-color: #bbbbbb;
+    background-color: #e8e8e8;
 }
 
 button:active {
@@ -63,9 +64,11 @@ a {
     text-underline-offset: auto;
     text-underline-position: from-font;
 }
+
 a:hover {
     color: #181818;
 }
+
 a:visited {
     color: #181818;
 }
@@ -73,6 +76,9 @@ a:visited {
 /* Base wrapper for content containers */
 .wrapper {
     max-width: 1080px;
+    width: 100%;
+    min-width: 100px;
+    box-sizing: border-box;
     margin-right: auto;
     margin-left: 0;
     padding-right: 32px;

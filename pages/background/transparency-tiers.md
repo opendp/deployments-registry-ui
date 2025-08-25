@@ -5,5 +5,5 @@ class: transparency-tiers
 layout: docs
 ---
 
-Add details for the transparency tiers here
+{{ site.data.schemas.deployments-schema.properties.tier.description_long }}
 

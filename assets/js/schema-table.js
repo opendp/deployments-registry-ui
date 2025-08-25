@@ -16,6 +16,11 @@ function makeDescriptionCell(def, colSpan) {
     const descriptionCell = document.createElement("td");
     const enumMd = def?.enum ? def?.enum.map((value) => `\`${value}\``).join(" / ") : '';
     descriptionCell.innerHTML = marked.parse(`${def.description || ''}\n\n${enumMd}`);
+    if (def.description_long) {
+        const details = document.createElement("details");
+        details.innerHTML = marked.parse(def.description_long);
+        descriptionCell.appendChild(details);
+    }
     descriptionCell.colSpan = colSpan;
     return descriptionCell;
 }
@@ -25,10 +30,19 @@ function fillTable(table, properties, required, nameCells) {
     for (const [name, def] of Object.entries(properties)) {
         const row = document.createElement("tr");
 
+        if (nameCells.length > 0) {
+            const emptyCell = document.createElement("td");
+            emptyCell.className = "empty-cell";
+            row.appendChild(emptyCell);
+        }
+
         const nameCell = makeNameCell(name, def, required)
         row.appendChild(nameCell);
-        const descriptionCell = makeDescriptionCell(def, maxDepth - nameCells.length);
-        row.appendChild(descriptionCell);
+
+        if (!def.properties && def.description) {
+            const descriptionCell = makeDescriptionCell(def, maxDepth - nameCells.length);
+            row.appendChild(descriptionCell);
+        }
 
         table.appendChild(row);
 
@@ -46,7 +60,7 @@ function initTable(table, schema) {
     const cell = makeDescriptionCell(schema, maxDepth + 1);
     row.appendChild(cell);
     table.appendChild(row);
-    
+
     fillTable(table, schema.properties, schema.required, []);
 }
 

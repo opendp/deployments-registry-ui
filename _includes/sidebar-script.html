@@ -3,18 +3,21 @@
 
   let deploymentsData = [];
   // Initialize sidebar state
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     // Initialize all sections as expanded
     // Load deployments data
     const dataScript = document.getElementById('deployments-data');
     if (dataScript) {
       deploymentsData = JSON.parse(dataScript.textContent);
     }
+
+    // Initialize link prefetching for sidebar links
+    initializeLinkPrefetching();
     // Add click handlers to deployment rows
     const deploymentRows = document.querySelectorAll('.deployment-row');
-    deploymentRows.forEach(function(row, index) {
-      row.addEventListener('click', function() {
-        selectDeploymentRow(index); 
+    deploymentRows.forEach(function (row, index) {
+      row.addEventListener('click', function () {
+        selectDeploymentRow(index);
       });
     });
 
@@ -22,9 +25,9 @@
     createModalOverlay();
 
     // Add window resize event listener
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
       const sidebar = document.querySelector('.docs-sidebar');
-      if (window.innerWidth > 1880 && sidebar && sidebar.classList.contains('collapsed')) {
+      if (window.innerWidth > 1920 && sidebar && sidebar.classList.contains('collapsed')) {
         sidebar.classList.remove('collapsed');
       }
     });
@@ -33,7 +36,7 @@
   function createModalOverlay() {
     const overlay = document.createElement('div');
     overlay.className = 'modal-overlay';
-    overlay.addEventListener('click', function() {
+    overlay.addEventListener('click', function () {
       clearSelection();
     });
     document.body.appendChild(overlay);
@@ -41,7 +44,7 @@
 
   function toggleSidebar() {
     const sidebar = document.querySelector('.docs-sidebar');
-    if(sidebar.classList.contains('collapsed')) {
+    if (sidebar.classList.contains('collapsed')) {
       sidebar.classList.remove('collapsed');
       clearSelection();
     } else {
@@ -67,11 +70,11 @@
     const sidePanelContainer = document.querySelector('.side-panel-container');
     const deploymentDetailsDiv = document.getElementById('deployment-details');
     const modalOverlay = document.querySelector('.modal-overlay');
-    
+
     // Check if the clicked row is already selected
     const selectedRow = document.querySelector(`.deployment-row[data-index="${index}"]`);
     const isAlreadySelected = selectedRow && selectedRow.classList.contains('selected');
-    
+
     if (isAlreadySelected) {
       // If the same row is clicked again, close the side panel
       clearSelection();
@@ -80,7 +83,7 @@
 
     // Remove selected class from all rows
     const allRows = document.querySelectorAll('.deployment-row');
-    allRows.forEach(function(row) {
+    allRows.forEach(function (row) {
       row.classList.remove('selected');
     });
 
@@ -94,12 +97,12 @@
     if (deployment) {
       // Store current deployment index globally for download function
       window.currentDeploymentIndex = index;
-      
+
       // Collapse sidebar and expand side panel container
-      if (sidebar && window.innerWidth < 1880) {
+      if (sidebar && window.innerWidth < 1920) {
         sidebar.classList.add('collapsed');
       }
-      
+
       // Expand side panel container and panel
       if (sidePanelContainer) {
         sidePanelContainer.classList.add('expanded');
@@ -112,7 +115,7 @@
       if (modalOverlay && window.innerWidth <= 768) {
         modalOverlay.classList.add('active');
       }
-      
+
       // Generate details HTML
       const detailsHTML = generateDeploymentDetailsHTML(deployment);
       deploymentDetailsDiv.innerHTML = detailsHTML;
@@ -128,20 +131,20 @@
       }
       const label = key.split('_').join(' ');
       if (value?.length < 40) {
-        html += 
+        html +=
           `<table><tr>
             <th style="text-transform: capitalize;">${label}</th>
             <td>${marked.parse(String(value))}</td>
           </tr></table>`
       } else if (typeof value !== 'object') {
-        html += 
+        html +=
           `<div>
             <div class="section-sub-heading" style="text-transform: capitalize;">${label}</div>
             <div>${marked.parse(String(value))}</div>
           </div>`
       } else {
         const inner = objectToHTML(value);
-        html += 
+        html +=
           `<div class="deployment-section-block"><div class="deployment-section-header" style="text-transform: capitalize;">
             ${label}
           </div>
@@ -174,7 +177,7 @@
         </div>
         <div class="section-spacer"></div>
       </div>`;
-    
+
     let deploymentSection = '<div class="deployment-section">';
     deploymentSection += objectToHTML(deployment);
     deploymentSection += '</div>';
@@ -189,19 +192,19 @@
         alert('No deployment selected for download.');
         return;
       }
-      
+
       const deploymentData = deploymentsData[window.currentDeploymentIndex];
 
       // Convert deployment data to YAML format
       const yamlContent = convertToYAML(deploymentData);
-      
+
       // Create filename based on deployment name or curator
       const filename = `${(deploymentData.name || deploymentData.data_curator || 'deployment').replace(/[^a-z0-9]/gi, '_').toLowerCase()}.yaml`;
-      
+
       // Create blob and download
       const blob = new Blob([yamlContent], { type: 'text/yaml;charset=utf-8' });
       const url = URL.createObjectURL(blob);
-      
+
       // Create temporary link and trigger download
       const link = document.createElement('a');
       link.href = url;
@@ -209,7 +212,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
       // Clean up the URL object
       URL.revokeObjectURL(url);
     } catch (error) {
@@ -226,11 +229,11 @@
     function toYAML(obj, indent = 0) {
       const spaces = '  '.repeat(indent);
       let yaml = '';
-      
+
       if (obj === null || obj === undefined) {
         return 'null';
       }
-      
+
       if (typeof obj === 'string') {
         // Handle strings that need quoting or escaping
         if (obj.includes('\n')) {
@@ -249,11 +252,11 @@
           return obj;
         }
       }
-      
+
       if (typeof obj === 'number' || typeof obj === 'boolean') {
         return obj.toString();
       }
-      
+
       if (Array.isArray(obj)) {
         if (obj.length === 0) return '[]';
         yaml = '\n';
@@ -267,20 +270,20 @@
         });
         return yaml.slice(0, -1); // Remove last newline
       }
-      
+
       if (typeof obj === 'object') {
         const keys = Object.keys(obj).filter(key => {
           const value = obj[key];
           return value !== null && value !== undefined && value !== '';
         });
-        
+
         if (keys.length === 0) return '{}';
-        
+
         yaml = '\n';
         keys.forEach((key, index) => {
           const value = obj[key];
           const yamlValue = toYAML(value, indent + 1);
-          
+
           if (yamlValue.startsWith('\n')) {
             // Object or array value
             yaml += `${spaces}${key}:${yamlValue}\n`;
@@ -291,15 +294,15 @@
         });
         return yaml.slice(0, -1); // Remove last newline
       }
-      
+
       return String(obj);
     }
-    
+
     // Wrap the deployment in the expected structure
     const wrappedData = {
       ...data
     };
-    
+
     return toYAML(wrappedData);
   }
 
@@ -309,10 +312,10 @@
     const sidePanelContainer = document.querySelector('.side-panel-container');
     const deploymentDetailsDiv = document.getElementById('deployment-details');
     const modalOverlay = document.querySelector('.modal-overlay');
-    
+
     // Remove selected class from all rows
     const allRows = document.querySelectorAll('.deployment-row');
-    allRows.forEach(function(row) {
+    allRows.forEach(function (row) {
       row.classList.remove('selected');
     });
 
@@ -336,5 +339,67 @@
 
     // Reset side panel content
     deploymentDetailsDiv.innerHTML = '';
+  }
+
+  function initializeLinkPrefetching() {
+    const prefetchedLinks = new Set();
+    let prefetchTimeout;
+
+    // Select all sidebar navigation links
+    const sidebarLinks = document.querySelectorAll('.sidebar-link[href], .sidebar-toggle[href]');
+
+    sidebarLinks.forEach(link => {
+      link.addEventListener('mouseenter', function () {
+        // Clear any existing timeout
+        if (prefetchTimeout) {
+          clearTimeout(prefetchTimeout);
+        }
+
+        // Add a small delay to avoid prefetching on quick mouse movements
+        prefetchTimeout = setTimeout(() => {
+          const href = this.getAttribute('href');
+
+          // Skip if already prefetched, not a valid URL, or is an anchor link
+          if (!href ||
+            href.startsWith('#') ||
+            href.startsWith('javascript:') ||
+            href.startsWith('mailto:') ||
+            prefetchedLinks.has(href)) {
+            return;
+          }
+
+          // Create prefetch link element
+          const prefetchLink = document.createElement('link');
+          prefetchLink.rel = 'prefetch';
+          prefetchLink.href = href;
+          prefetchLink.as = 'document';
+
+          // Add error handling to prevent console errors
+          prefetchLink.addEventListener('error', function () {
+            // Silently handle prefetch errors
+          });
+
+          // Add to head
+          document.head.appendChild(prefetchLink);
+          prefetchedLinks.add(href);
+
+          // Optional: Remove prefetch link after a delay to keep DOM clean
+          setTimeout(() => {
+            if (prefetchLink.parentNode) {
+              prefetchLink.parentNode.removeChild(prefetchLink);
+            }
+          }, 60000); // Remove after 60 seconds
+
+        }, 150); // 150ms delay to avoid excessive prefetching
+      });
+
+      // Clear timeout on mouse leave to prevent unnecessary prefetching
+      link.addEventListener('mouseleave', function () {
+        if (prefetchTimeout) {
+          clearTimeout(prefetchTimeout);
+          prefetchTimeout = null;
+        }
+      });
+    });
   }
 </script>

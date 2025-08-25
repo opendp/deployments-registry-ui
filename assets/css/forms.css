@@ -4,9 +4,10 @@
 .filters-container {
     display: flex;
     width: 100%;
+    margin-top: 1.5rem;
     justify-content: space-between;
     align-items: flex-start;
-    margin-top: 1.5rem;
+    gap: 12px;
     color: #181818;
     font-size: 16px;
     font-weight: 500;
@@ -18,15 +19,19 @@
 }
 
 .filter-row {
+    width: 100%;
+    max-width: 750px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
 .filter-group {
+    flex-grow: 1;
+    min-width: 180px;
+    max-width: 200px;
     display: flex;
     flex-direction: column;
-    min-width: 200px;
     position: relative;
 }
 
@@ -257,13 +262,26 @@
 }
 
 /* Forms Responsive Design */
+@media (max-width: 1068px) {
+    .filters-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .filter-group {
+        max-width: unset;
+    }
+}
+
+/* Forms Responsive Design */
 @media (max-width: 768px) {
     .filter-row {
         flex-direction: column;
     }
-    
+
     .filter-group {
         min-width: 100%;
+        max-width: unset;
     }
 
     /* Filter Container */
@@ -277,6 +295,11 @@
         flex-wrap: wrap;
         gap: 8px;
         align-items: end;
+        width: 100%;
+    }
+
+    .filter-actions,
+    #clear-filters {
         width: 100%;
     }
 }
