@@ -88,6 +88,7 @@
 
 /* Deployment Header Container */
 .side-panel .deployment-header-container {
+    padding-right: 8px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -99,23 +100,45 @@
 /* Deployment Header */
 .side-panel .deployment-header-container .deployment-header {
     display: flex;
+    gap: 6px;
+    padding-bottom: 6px;
+
+    color: #181818;
+}
+
+.side-panel .deployment-header-container .deployment-header .info {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    color: #181818;
-    padding-bottom: 6px;
-    font-size: 16px;
     gap: 6px;
+}
+
+.side-panel .deployment-header-container .deployment-header .title {
+    font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
 }
 
+
+.side-panel .deployment-header .description {
+    /* Body/S/Regular */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 20px;
+    /* 142.857% */
+}
+
 .side-panel .deployment-header-container .deployment-header p {
+    margin-bottom: 0;
     font-size: 14px;
     font-weight: 300;
     line-height: 20px;
-    margin-top: 6px;
-    margin-bottom: 8px;
 }
 
 /* Deployment Sections */

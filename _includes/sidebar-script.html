@@ -152,6 +152,7 @@
     if (!deploymentObject || typeof deploymentObject !== 'object') return '';
     let html = '';
     for (let [key, value] of Object.entries(deploymentObject)) {
+      if (key === 'name' || key === 'data_curator' || key === 'description') continue; // These are all rendered in side-panel header
       if (value === null || value === undefined || value === '') continue;
       const path = joinPath(currentPath, key);
 
@@ -210,8 +211,9 @@
     let deploymentHeader = `
       <div class="deployment-header-container">
         <div class="deployment-header">
-          <div>
-            <div>${deployment.name || 'Deployment Details'}</div>
+          <div class="info">
+            <div class="title">${deployment.name || 'Deployment Details'}${deployment.data_curator ? ` by ${deployment.data_curator}` : ''}</div>
+            ${deployment.description ? `<div class="description">${marked.parse(deployment.description)}</div>` : ''}
           </div>
           <button class="download-btn" onClick="downloadDeployment()">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
