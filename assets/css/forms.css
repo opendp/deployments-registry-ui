@@ -77,7 +77,8 @@
 
 .custom-select-value {
     flex: 1;
-    color: #5F5F5F;
+    color: #181818;
+
     font-size: 12px;
     line-height: 16px;
     font-weight: 400;
@@ -121,7 +122,7 @@
     background: #F3F3F3;
 }
 
-.custom-select-option:first-child {
+.custom-select-option.placeholder {
     color: #666;
     font-style: italic;
 }
