@@ -119,8 +119,8 @@
         sidePanel.classList.add('expanded');
       }
 
-      // Show modal overlay on mobile
-      if (modalOverlay && window.innerWidth <= 768) {
+      // Show modal overlay [CSS configured to only be visible on mobile UI]
+      if (modalOverlay) {
         modalOverlay.classList.add('active');
       }
 
