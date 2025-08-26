@@ -30,8 +30,10 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 4px;
     height: 40px;
     padding: 0 12px;
+    color: #181818;
     background-color: #F3F3F3;
     border: none;
     border-radius: 8px;
@@ -50,6 +52,11 @@ button:hover {
 
 button:active {
     background-color: #F3F3F3;
+}
+
+button.variant-secondary {
+    color: white;
+    background-color: #2E2E2E;
 }
 
 a {
