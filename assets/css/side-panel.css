@@ -88,7 +88,7 @@
 
 /* Deployment Header Container */
 .side-panel .deployment-header-container {
-    padding-right: 8px;
+    padding-right: 4px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -139,6 +139,12 @@
     font-size: 14px;
     font-weight: 300;
     line-height: 20px;
+}
+
+.side-panel .deployment-header-container .deployment-header .close-btn {
+    height: fit-content;
+    padding: 4px;
+    border-radius: 4px;
 }
 
 /* Deployment Sections */
@@ -287,7 +293,7 @@
     .side-panel.expanded {
         max-height: 85vh;
         max-width: 95vw;
-        padding: 1.5rem 4px 1.5rem 1rem;
+        padding: 12px 4px 24px 16px;
         overflow-y: auto;
         opacity: 1;
         visibility: visible;
@@ -302,9 +308,8 @@
         background-color: rgba(92, 92, 92, 0.27);
     }
 
-    .side-panel .deployment-header,
     .side-panel .deployment-section {
-        padding-right: 12px;
+        padding-right: 8px;
     }
 
     /* Modal overlay for mobile side panel */

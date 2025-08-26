@@ -208,10 +208,16 @@
       <div class="deployment-header-container">
         <div class="deployment-header">
           <div class="info">
-            <div class="title">${deployment.name || 'Deployment Details'}${deployment.data_curator ? ` by ${deployment.data_curator}` : ''}</div>
+            <div class="title">
+              ${deployment.name || 'Deployment Details'}${deployment.data_curator ? ` by ${deployment.data_curator}` : ''}
+            </div>
+
             ${deployment.description ? `<div class="description">${marked.parse(deployment.description)}</div>` : ''}
-          </div>
-          <button class="download-btn" onClick="downloadDeployment()">
+
+            <!-- This will be replaced by link button that redirects user to original deployment file in opendp/deployments-registry-data repo -->
+            <!-- Will be resolved in Issue #72: https://github.com/opendp/deployments-registry-ui/issues/72 -->
+            <button class="download-btn" onClick="downloadDeployment()">
+              <span>Download</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <mask id="mask0_509_4001" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16"
                       height="16">
@@ -223,6 +229,18 @@
                           fill="#181818" />
                   </g>
               </svg>
+            </button>
+          </div>
+
+          <button class="close-btn variant-ghost" onClick="clearSelection()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <mask id="mask0_1238_9006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+                <rect width="16" height="16" fill="#D9D9D9"/>
+              </mask>
+              <g mask="url(#mask0_1238_9006)">
+                <path d="M12 4L4 12M4 4L12 12" stroke="#181818" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </svg>
           </button>
         </div>
         <div class="section-spacer"></div>
