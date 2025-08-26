@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* global d3, CustomSelect */
 // =============================================================================================
 // HIGH-LEVEL OVERVIEW:
 // ---------------------------------------------------------------------------------------------
@@ -215,10 +217,24 @@ function initDeploymentsVis() {
 
 
   // -----------------------------------------------------------------------
-  // DATA
+  // DATA: Load & prepare deployments data
   // -----------------------------------------------------------------------
-  // Load & prepare data (expects deployments injected globally)
-  const rawDeployments = (typeof window !== 'undefined' && (window.deployments || (typeof deployments !== 'undefined' ? deployments : null)));
+  // Attempt sources in order:
+  // 1. window.deployments (if previously cached)
+  // 2. <script id="deployments-data" type="application/json"> embedded in page
+  let rawDeployments = (typeof window !== 'undefined' && window.deployments) ? window.deployments : null;
+  if (!rawDeployments) {
+    const dataEl = document.getElementById('deployments-data');
+    if (dataEl) {
+      try {
+        rawDeployments = JSON.parse(dataEl.textContent.trim());
+        // Cache globally to avoid reparsing if visualization re-inits
+        window.deployments = rawDeployments;
+      } catch (e) {
+        console.warn('[deployments-vis] Failed to parse deployments-data JSON:', e);
+      }
+    }
+  }
   const data = buildDataFromDeployments(rawDeployments);
   if (!data.length) console.warn('[deployments-vis] No deployment records found for visualization.');
   data.forEach(d => { d.tier = d.tier.toString(); }); // normalize tier to string
@@ -249,9 +265,8 @@ function initDeploymentsVis() {
     .attr('text-anchor', 'middle')
     .text('Number of deployments');
 
-  // Filter label (kept global intentionally to mirror legacy behavior)
-  // eslint-disable-next-line no-undef, no-global-assign
-  filter_text = filteredBy.append('text')
+  // Filter label
+  const filter_text = filteredBy.append('text')
     .attr('class', 'filterText visText')
     .attr('x', 0)
     .attr('y', -10)
@@ -336,9 +351,8 @@ function initDeploymentsVis() {
   const right_plot = svg.append('g')
     .attr('transform', `translate(${margin.left + plotSpacing + PLOT_WIDTH}, ${margin.top})`);
 
-  // Preserve global-like variable for compatibility with any external code relying on it
-  // eslint-disable-next-line no-undef
-  x_scale_right = d3.scaleBand().padding(0.2).range([0, PLOT_WIDTH]);
+  // Right chart x scale
+  const x_scale_right = d3.scaleBand().padding(0.2).range([0, PLOT_WIDTH]);
   const y_scale_right = d3.scaleLinear().range([PLOT_HEIGHT, 0]);
 
   const x_axis_group_right = right_plot.append('g').attr('transform', `translate(0, ${PLOT_HEIGHT})`);  // <g> container for right plot x‑axis (years)
@@ -478,7 +492,7 @@ function initDeploymentsVis() {
       .attr('role', 'img')
       .attr('aria-label', d => `${getDisplayLabel(selected_variable)} ${d.category}: ${d.count}`)
       .style('fill', d => color(d.category)) // opacity via CSS
-      .on('mousemove', (event, d) => {
+      .on('mousemove', (event) => {
         // Update tooltip position
         tooltip
           .style('left', (event.pageX + 12) + 'px')
@@ -646,9 +660,7 @@ function initDeploymentsVis() {
         return bandEnd >= x0 && bandStart <= x1;
       });
 
-      // Keep the same global-like semantics for backward compatibility
-      // eslint-disable-next-line no-undef, no-global-assign
-      brushed_values_numeric = brushed_values.map(d => +d);
+      const brushed_values_numeric = brushed_values.map(v => +v);
 
       // Determine first and last year inside the brush to show as an inclusive range in the UI label.
       const minYear = brushed_values_numeric[0];
@@ -705,7 +717,7 @@ function initDeploymentsVis() {
         .attr('aria-label', d => `${getDisplayLabel(selected_variable)} ${d.category}: ${d.count}`)
         .style('fill', d => color(d.category))
         .style('opacity', 0.9)
-        .on('mousemove', (event, d) => {
+        .on('mousemove', (event) => {
           // Update tooltip position based on mouse movement
           tooltip
             .style('left', (event.pageX + 12) + 'px')
