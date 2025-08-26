@@ -216,7 +216,6 @@
     font-weight: 500;
     /* eslint-disable-next-line css/no-important */
     border: none !important;
-    /* eslint-enable css/no-important */
     text-align: right;
 }
 
