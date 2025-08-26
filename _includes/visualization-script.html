@@ -28,7 +28,7 @@
                 try { await loadScript('/assets/js/custom-select.js'); } catch (e) { console.warn('Failed to load custom-select.js', e); }
             }
             // Load the visualization logic (depends optionally on CustomSelect)
-            await loadScript('/visualizations.js');
+            await loadScript('/assets/js/visualizations.js');
             if (window.initDeploymentsVis) {
                 window.initDeploymentsVis();
             }
