@@ -182,10 +182,10 @@ table tr:nth-child(even) {
 
 .product-description .description-window {
     position: absolute;
-    top: calc(50% - 1.5em);
+    top: calc(50% - 1.6em - 0.5px);
     z-index: 99999;
-    left: 0;
-    width: 100%;
+    left: -0.5px;
+    right: -0.5px;
     max-width: 320px;
     padding: 8px;
     border-radius: 8px;
@@ -207,7 +207,7 @@ table tr:nth-child(even) {
 tr:has(.description-window):last-child .product-description .description-window,
 tr:nth-last-child(2):has(.description-window) .product-description .description-window {
     top: unset;
-    bottom: calc(50% - 1.1em);
+    bottom: calc(50% - 1.9em);
 }
 
 /* Table Responsive Design */
