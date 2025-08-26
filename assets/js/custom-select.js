@@ -20,22 +20,17 @@
         }
         _render() {
             this.container.innerHTML = `
-        <div class="custom-select">
-          <div class="custom-select-trigger">
-            <span class="custom-select-value">${this.placeholder}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-              <mask id="mask0_cs" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="20">
-                <rect x="0.666626" width="20" height="20" fill="#D9D9D9"/>
-              </mask>
-              <g mask="url(#mask0_cs)">
-                <path d="M8.62927 8.72917L11.3626 5.99583C11.4848 5.87361 11.6265 5.8125 11.7876 5.8125C11.9487 5.8125 12.0904 5.87361 12.2126 5.99583C12.3348 6.11806 12.3959 6.25972 12.3959 6.42083C12.3959 6.58194 12.3329 6.7255 12.2069 6.8515L9.04593 10.0125C8.98593 10.0681 8.92093 10.1097 8.85093 10.1375C8.78093 10.1653 8.70593 10.1792 8.62593 10.1792C8.54593 10.1792 8.47093 10.1653 8.40093 10.1375C8.33093 10.1097 8.26816 10.0681 8.2126 10.0125L5.0516 6.8515C4.9256 6.7255 4.86538 6.58472 4.87093 6.42917C4.87649 6.27361 4.94038 6.13472 5.0626 6.0125C5.18482 5.89028 5.32649 5.82917 5.4876 5.82917C5.64871 5.82917 5.79038 5.89028 5.9126 6.0125L8.62927 8.72917Z" fill="#3A3A3A"/>
-              </g>
-            </svg>
-          </div>
-          <div class="custom-select-options">
-            ${this.placeholder.length > 0 ? `<div class="custom-select-option placeholder" data-value="">${this.placeholder}</div>` : ``}
-          </div>
-        </div>`;
+                <div class="custom-select">
+                    <div class="custom-select-trigger">
+                    <span class="custom-select-value">${this.placeholder}</span>
+                    <svg class="chevron-down-icon" width="17" height="16" viewBox="0 0 17 16" aria-hidden="true">
+                        <use href="/assets/icons.svg#chevron-down"></use>
+                    </svg>
+                    </div>
+                    <div class="custom-select-options">
+                    ${this.placeholder.length > 0 ? `<div class="custom-select-option placeholder" data-value="">${this.placeholder}</div>` : ``}
+                    </div>
+                </div>`;
             this.trigger = this.container.querySelector('.custom-select-trigger');
             this.valueElement = this.container.querySelector('.custom-select-value');
             this.optionsContainer = this.container.querySelector('.custom-select-options');

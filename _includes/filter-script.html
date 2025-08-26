@@ -38,24 +38,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         createMultiSelect() {
             this.container.innerHTML = `
-            <div class="custom-multiselect">
-                <div class="custom-multiselect-trigger">
-                    <div class="custom-multiselect-values">
-                        <span class="custom-multiselect-placeholder">${this.placeholder}</span>
+                <div class="custom-multiselect">
+                    <div class="custom-multiselect-trigger">
+                        <div class="custom-multiselect-values">
+                            <span class="custom-multiselect-placeholder">${this.placeholder}</span>
+                        </div>
+                        <svg class="chevron-down-icon" width="17" height="16" viewBox="0 0 17 16" aria-hidden="true">
+                            <use href="/assets/icons.svg#chevron-down"></use>
+                        </svg>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-                        <mask id="mask0_515_4275" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="20">
-                            <rect x="0.333313" width="20" height="20" fill="#D9D9D9"/>
-                        </mask>
-                        <g mask="url(#mask0_515_4275)">
-                            <path d="M8.29595 8.72917L11.0293 5.99583C11.1515 5.87361 11.2932 5.8125 11.4543 5.8125C11.6154 5.8125 11.7571 5.87361 11.8793 5.99583C12.0015 6.11806 12.0626 6.25972 12.0626 6.42083C12.0626 6.58194 11.9996 6.7255 11.8736 6.8515L8.71262 10.0125C8.65262 10.0681 8.58762 10.1097 8.51762 10.1375C8.44762 10.1653 8.37262 10.1792 8.29262 10.1792C8.21262 10.1792 8.13762 10.1653 8.06762 10.1375C7.99762 10.1097 7.93484 10.0681 7.87929 10.0125L4.71829 6.8515C4.59229 6.7255 4.53207 6.58472 4.53762 6.42917C4.54318 6.27361 4.60707 6.13472 4.72929 6.0125C4.85151 5.89028 4.99318 5.82917 5.15429 5.82917C5.3154 5.82917 5.45707 5.89028 5.57929 6.0125L8.29595 8.72917Z" fill="#3A3A3A"/>
-                        </g>
-                    </svg>
+                    <div class="custom-multiselect-options">
+                    </div>
                 </div>
-                <div class="custom-multiselect-options">
-                </div>
-            </div>
-        `;
+            `;
 
             this.trigger = this.container.querySelector('.custom-multiselect-trigger');
             this.valuesContainer = this.container.querySelector('.custom-multiselect-values');
@@ -125,16 +120,16 @@ document.addEventListener('DOMContentLoaded', function () {
         updateOptionStates() {
             this.optionsContainer.querySelectorAll('.custom-multiselect-option').forEach(option => {
                 const checkmark = option.querySelector('.checkmark');
-                const checkbox = option.querySelector('.checkbox-icon rect');
+                const checkbox = option.querySelector('.checkbox-icon');
 
                 if (this.values.includes(option.dataset.value)) {
                     option.classList.add('selected');
                     if (checkmark) checkmark.style.display = 'block';
-                    if (checkbox) checkbox.setAttribute('fill', '#0066CC');
+                    if (checkbox) checkbox.style.color = '#0066CC';
                 } else {
                     option.classList.remove('selected');
                     if (checkmark) checkmark.style.display = 'none';
-                    if (checkbox) checkbox.setAttribute('fill', 'white');
+                    if (checkbox) checkbox.style.color = 'white';
                 }
             });
         }
@@ -149,14 +144,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 optionElement.dataset.value = option;
                 optionElement.id = `option-${option}`;
                 optionElement.innerHTML = `
-                <div class="custom-checkbox">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <rect width="16" height="16" fill="white" fill-opacity="0.01"/>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2314 3.97521C12.5395 4.17671 12.626 4.58987 12.4245 4.89803L7.8912 11.8314C7.78436 11.9948 7.61128 12.1031 7.41763 12.1278C7.22398 12.1526 7.02923 12.0911 6.88477 11.9598L3.95144 9.29315C3.679 9.04548 3.65892 8.62385 3.90659 8.35141C4.15426 8.07898 4.57589 8.05889 4.84833 8.30657L7.20313 10.4473L11.3086 4.16836C11.5101 3.8602 11.9232 3.77373 12.2314 3.97521Z" fill="white"/>
-                    </svg>
-                </div>
-                <span class="custom-multiselect-text">${option}</span>
-            `;
+                    <div class="custom-checkbox">
+                        <svg class="checkbox-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                            <use href="/assets/icons.svg#checkbox-check"></use>
+                        </svg>
+                    </div>
+                    <span class="custom-multiselect-text">${option}</span>
+                `;
                 this.optionsContainer.appendChild(optionElement);
             });
 
