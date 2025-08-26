@@ -58,15 +58,15 @@ const X_LABEL_GAP = 16;
 
 // Dropdown options: internal 'name' = data field; 'displayName' = user-facing label
 const VARIABLE_OPTIONS = [
-    { name: "flavor_vis", displayName: "Flavor" },
-    { name: "sector", displayName: "Sector" },
-    { name: "region", displayName: "Region" },
+    { name: "dp_flavor_name", displayName: "Flavor" },
+    { name: "data_product_sector", displayName: "Sector" },
+    { name: "data_product_region", displayName: "Region" },
     { name: "tier", displayName: "Tier" },
-    { name: "deployment_model_vis", displayName: "Deployment model" },
+    { name: "model_model_name", displayName: "Deployment model" },
     { name: "data_product_type", displayName: "Data product type" },
-    { name: "is_many_release", displayName: "Release type" },
-    { name: "is_interactive", displayName: "Access type" },
-    { name: "is_dynamic", displayName: "Data source" }
+    { name: "model_release_type", displayName: "Release type" },
+    { name: "model_access_type", displayName: "Access type" },
+    { name: "model_data_source_type", displayName: "Data source" }
 ];
 
 // ---------------------------------------------------------------------------
@@ -99,6 +99,23 @@ function computeContainerWidth() {
 }
 
 // ---------------------------------------------------------------------------
+// Helper: flatten a nested object into underscore-joined keys.
+// Example: { b: { c: 'v', d: { e: 'w' }}} -> { b_c: 'v', b_d_e: 'w' }
+// Only plain objects are traversed; arrays and other types are treated as leaf values.
+function flattenObject(obj, prefix = '', out = {}) {
+    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return out; // nothing to do / not a plain object
+    for (const [k, v] of Object.entries(obj)) {
+        const newKey = prefix ? `${prefix}_${k}` : k;
+        if (v && typeof v === 'object' && !Array.isArray(v)) {
+            flattenObject(v, newKey, out);
+        } else {
+            out[newKey] = v;
+        }
+    }
+    return out;
+}
+
+// ---------------------------------------------------------------------------
 // Data shaping: convert raw deployment objects into normalized array used by charts
 // ---------------------------------------------------------------------------
 function buildDataFromDeployments(raw) {
@@ -107,61 +124,48 @@ function buildDataFromDeployments(raw) {
     // Accept either array or object map
     const records = Array.isArray(raw) ? raw : Object.values(raw);
 
-    const out = records.map(r => {
-        const tier = r.tier ?? r.deployment?.tier;   // tier may live at different nesting levels
-        const dep = r.deployment || r;               // unify root
-        const model = dep.model || {};               // nested model details
+    // Helper constants & functions (scoped here to avoid polluting globals)
+    const UNKNOWN = 'Unknown';
+    const norm = (v) => {
+        if (v == null) return UNKNOWN;
+        if (typeof v === 'string') {
+            const t = v.trim();
+            return t ? t : UNKNOWN;
+        }
+        return v; // numbers / objects left as‑is
+    };
+    const extractYear = (pubDate) => {
+        if (!pubDate) return null;
+        const m = /(\d{4})/.exec(String(pubDate));
+        return m ? parseInt(m[1], 10) : null;
+    };
 
-        // Publication date may appear in multiple fields; we parse out a 4-digit year
-        const publication_date = (dep.publication_date || dep.date || '').toString().trim();
-        let year;
-        if (publication_date) {
-            let m = /^(\d{4})/.exec(publication_date);          // year at the start
-            if (!m) m = /(19|20)\d{2}/.exec(publication_date);  // fallback: any plausible year
-            if (m) year = parseInt(m[0]);
+    const out = records.map(d => {
+        const tierRaw = d.tier;
+        const dep = d.deployment || {};
+
+        const flattenedDeployment = flattenObject(dep);
+
+        // Normalize all values in flattenedDeployment
+        for (const key in flattenedDeployment) {
+            flattenedDeployment[key] = norm(flattenedDeployment[key]);
         }
 
-        // Derive friendly rollups for UI
-        const release_type = (model.release_type || '').toLowerCase();
-        const is_many_release = release_type.includes('many') ? 'Many releases' : (release_type ? 'Single release' : 'Unknown');
-
-        // Interpret the model's access_type string and derive a friendly label telling
-        // whether the data product is interactive or not. We lowercase for robust matching
-        // and treat any value containing the word 'interactive' (unless explicitly negated
-        // via 'non') as Interactive; otherwise Non-interactive.
-        const access_type = (model.access_type || '').toLowerCase();
-        const is_interactive = access_type.includes('interactive') && !access_type.includes('non') ? 'Interactive' : 'Non-interactive';
-
-        // Interpret the model's data_source_type string and derive a label indicating
-        // whether the underlying data updates over time (Dynamic) or is static. Unknown
-        // if the field is empty. This powers a dropdown category.
-        const data_source_type = (model.data_source_type || '').toLowerCase();
-        const is_dynamic = data_source_type.includes('dynamic') ? 'Dynamic' : (data_source_type ? 'Static' : 'Unknown');
-
         return {
-            flavor_vis: dep.dp_flavor?.name || 'Unknown',
-            sector: dep.data_product_sector || 'Unknown',
-            region: dep.data_product_region || 'Unknown',
-            tier: tier != null ? tier.toString() : 'Unknown',
-            deployment_model_vis: model.model_name || 'Unknown',
-            data_product_type: dep.data_product_type || 'Unknown',
-            is_many_release,
-            is_interactive,
-            is_dynamic,
-            year: year || null
+            ...flattenedDeployment,
+
+            tier: tierRaw != null ? tierRaw.toString() : UNKNOWN,
+            year: extractYear(dep.publication_date),
         };
     });
 
-    // Keep only rows with a plausible year
-    const withYear = out.filter(d => d.year && d.year >= 1900 && d.year <= 2100);
-
     // Warn if data has too little year variation (could indicate a parsing issue)
-    const uniqueYears = [...new Set(withYear.map(d => d.year))];
+    const uniqueYears = [...new Set(out.map(d => d.year))];
     if (uniqueYears.length <= 1) {
         console.warn('[deployments-vis] Year distribution suspicious:', uniqueYears, 'Sample raw years:', out.slice(0, 5).map(d => d.year));
     }
 
-    return withYear;
+    return out;
 }
 
 // Map internal variable name to dropdown / axis label
