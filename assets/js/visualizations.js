@@ -151,6 +151,11 @@ function buildDataFromDeployments(raw) {
             flattenedDeployment[key] = norm(flattenedDeployment[key]);
         }
 
+        // Normalize all variable values
+        for (const variable of VARIABLE_OPTIONS) {
+            flattenedDeployment[variable.name] = norm(flattenedDeployment[variable.name]);
+        }
+
         return {
             ...flattenedDeployment,
 
