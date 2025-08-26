@@ -6,7 +6,6 @@ let deploymentHints = { short_fields: [], extra_columns: {} };
 
 // Initialize sidebar state
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('deployments.js loaded');
   // Initialize all sections as expanded
   // Load deployments data
   const dataScript = document.getElementById('deployments-data');
@@ -29,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (e) {
       console.warn('Encountered error parsing deployment hints JSON', e);
     }
+    // Initialize short field hints after parsing
+    initShortFields();
   }
 
   // Add click handlers to deployment rows
@@ -160,14 +161,18 @@ function joinPath(base, key) {
 
 const shortFieldSet = new Set();
 function initShortFields() {
+  // Rebuild set from current deploymentHints
+  shortFieldSet.clear();
   if (deploymentHints?.short_fields) {
-    deploymentHints.short_fields.forEach(p => shortFieldSet.add(p));
+    for (const p of deploymentHints.short_fields) {
+      shortFieldSet.add(p);
+    }
   }
 }
 
 function objectToHTML(deploymentObject, currentPath = '/deployment') {
   if (!deploymentObject || typeof deploymentObject !== 'object') return '';
-  let html = '';
+  let html = [];
   for (let [key, value] of Object.entries(deploymentObject)) {
     if (key === 'name' || key === 'data_curator' || key === 'description') continue; // These are all rendered in side-panel header
     if (value === null || value === undefined || value === '') continue;
@@ -177,7 +182,10 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
     let overrideLabel;
     if (deploymentHints && deploymentHints.extra_columns) {
       for (const [displayName, pointer] of Object.entries(deploymentHints.extra_columns)) {
-        if (pointer === path) { overrideLabel = displayName; break; }
+        if (pointer === path) {
+          overrideLabel = displayName;
+          break;
+        }
       }
     }
     const label = overrideLabel || key.split('_').join(' ');
@@ -186,11 +194,12 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
     if (typeof value === 'object' && !Array.isArray(value)) {
       const inner = objectToHTML(value, path);
       if (!inner) continue;
-      html += `
+      html.push(`
           <div class="deployment-section-block object-field">
             <div class="deployment-section-header" style="text-transform: capitalize;">${label}</div>
             ${inner}
-          </div>`;
+          </div>`
+      );
       continue;
     }
 
@@ -202,27 +211,28 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
       renderedValue = String(value);
     }
 
-    const isShort = shortFieldSet.has(path) || renderedValue.length < 40;
+    const isShort = shortFieldSet.has(path);
     if (isShort) {
-      html += `
+      html.push(`
           <table class="short-field">
             <tr>
               <th style="text-transform: capitalize;">${label}</th>
               <td>${marked.parse(renderedValue)}</td>
             </tr>
-          </table>`;
+          </table>`
+      );
     } else {
-      html += `
+      html.push(`
           <div class="long-field">
             <div class="section-sub-heading" style="text-transform: capitalize;">${label}</div>
             <div class="section-content">${marked.parse(renderedValue)}</div>
-          </div>`;
+          </div>`
+      );
     }
   }
-  return html;
+  return html.join('');
 }
 
-initShortFields();
 
 function generateDeploymentDetailsHTML(deployment) {
   let deploymentHeader = `
@@ -267,9 +277,11 @@ function generateDeploymentDetailsHTML(deployment) {
         <div class="section-spacer"></div>
       </div>`;
 
-  let deploymentSection = '<div class="deployment-section">';
-  deploymentSection += objectToHTML(deployment);
-  deploymentSection += '</div>';
+  let deploymentSection = `
+    <div class="deployment-section">
+      ${objectToHTML(deployment)}
+    </div>
+  `;
 
   return deploymentHeader + deploymentSection;
 }
