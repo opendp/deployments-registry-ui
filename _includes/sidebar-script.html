@@ -42,14 +42,26 @@
     document.body.appendChild(overlay);
   }
 
+  function triggerResize() {
+    // Trigger visualization resize logic (initDeploymentsVis registers a window resize listener)
+    // wait for 50ms then fire
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 50);
+  }
+
   function toggleSidebar() {
     const sidebar = document.querySelector('.docs-sidebar');
+    if (!sidebar) return;
+
     if (sidebar.classList.contains('collapsed')) {
       sidebar.classList.remove('collapsed');
       clearSelection();
     } else {
       sidebar.classList.add('collapsed');
     }
+
+    triggerResize()
   }
 
   // Expose function to global scope
@@ -121,6 +133,8 @@
       deploymentDetailsDiv.innerHTML = detailsHTML;
     }
     MathJax.typeset();
+
+    triggerResize();
   }
 
   function objectToHTML(deploymentObject) {
@@ -339,6 +353,8 @@
 
     // Reset side panel content
     deploymentDetailsDiv.innerHTML = '';
+
+    triggerResize();
   }
 
   function initializeLinkPrefetching() {

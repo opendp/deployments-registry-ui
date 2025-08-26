@@ -7,6 +7,7 @@
 @import url('content.css');      /* Main content area and typography */
 @import url('tables.css');       /* Data tables and table interactions */
 @import url('diagram.css');      /* Diagram component styling */
+@import url('visualizations.css');       /* Data visualizations */
 @import url('side-panel.css');   /* Right-side panel for deployment details */
 @import url('forms.css');        /* Form components and custom selects */
 @import url('footer.css');       /* Footer component styling */
