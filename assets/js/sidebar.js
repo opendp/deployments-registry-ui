@@ -12,6 +12,19 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Double rAF: first frame applies class + layout changes, second runs after that paint.
+// Lets resize listeners read final dimensions without relying on an arbitrary timeout.
+function triggerResize() {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+  });
+}
+
+// Expose function to global scope
+window.triggerResize = triggerResize;
+
 function toggleSidebar() {
   const sidebar = document.querySelector('.docs-sidebar');
   if (sidebar.classList.contains('collapsed')) {
@@ -23,9 +36,8 @@ function toggleSidebar() {
     sidebar.classList.add('collapsed');
   }
 
-  setTimeout(() => {
-    window.dispatchEvent(new Event('resize'));
-  }, 50);
+  // Trigger resize to adjust visualizations width
+  triggerResize()
 }
 
 // Expose function to global scope

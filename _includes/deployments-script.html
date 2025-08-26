@@ -118,9 +118,10 @@
     }
     MathJax.typeset();
 
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 50);
+    // Trigger resize to adjust visualizations width
+    if (typeof window.triggerResize === 'function') {
+      window.triggerResize();
+    }
   }
 
   function objectToHTML(deploymentObject) {
@@ -340,9 +341,10 @@
     // Reset side panel content
     deploymentDetailsDiv.innerHTML = '';
 
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 50);
+    // Trigger resize to adjust visualizations width
+    if (typeof window.triggerResize === 'function') {
+      window.triggerResize();
+    }
   }
 
   // Expose clearSelection for non-module scripts (e.g., sidebar.js)
