@@ -219,22 +219,13 @@ function initDeploymentsVis() {
     // -----------------------------------------------------------------------
     // DATA: Load & prepare deployments data
     // -----------------------------------------------------------------------
-    // Attempt sources in order:
-    // 1. window.deployments (if previously cached)
-    // 2. <script id="deployments-data" type="application/json"> embedded in page
-    let rawDeployments = (typeof window !== 'undefined' && window.deployments) ? window.deployments : null;
+    // (injected on the page with full metadata: key -> { tier, deployment })
+    // If missing, we proceed with an empty dataset and warn.
+    let rawDeployments = (typeof window !== 'undefined') ? window.deploymentsFull : null;
     if (!rawDeployments) {
-        const dataEl = document.getElementById('deployments-data');
-        if (dataEl) {
-            try {
-                rawDeployments = JSON.parse(dataEl.textContent.trim());
-                // Cache globally to avoid reparsing if visualization re-inits
-                window.deployments = rawDeployments;
-            } catch (e) {
-                console.warn('[deployments-vis] Failed to parse deployments-data JSON:', e);
-            }
-        }
+        console.warn('[deployments-vis] No deployment records found for visualization.');
     }
+
     const data = buildDataFromDeployments(rawDeployments);
     if (!data.length) console.warn('[deployments-vis] No deployment records found for visualization.');
     data.forEach(d => { d.tier = d.tier.toString(); }); // normalize tier to string
