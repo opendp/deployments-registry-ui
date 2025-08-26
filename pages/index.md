@@ -14,4 +14,4 @@ The purpose of this registry is to support the responsible adoption of different
 
 This registry aims to make these choices transparent, particularly to practitioners deploying differential privacy. The goal is to support informed debate and decision-making, using existing deployments as a baseline. Overtime, the goal is to see an emergence of best practices.
 
-The registry provides space to describe important technical and sociotechnical dimensions of any given deployment. As applications of differential privacy grow and evolve over time, these dimensions may ENT also expand.
+The registry provides space to describe important technical and sociotechnical dimensions of any given deployment. As applications of differential privacy grow and evolve over time, these dimensions may also expand.
