@@ -108,12 +108,6 @@
     box-sizing: border-box;
 }
 
-.vis-header-right {
-    box-sizing: border-box;
-    padding-top: 4px;
-    padding-left: 20px;
-}
-
 .vis-controls {
     display: flex;
     flex-wrap: wrap;
@@ -150,6 +144,9 @@
 }
 
 .vis-header-right {
+    box-sizing: border-box;
+    padding-top: 4px;
+    padding-left: 32px;
     align-items: end;
 }
 
