@@ -260,4 +260,4 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 
 {% include deployments-script.html %}
 {% include filter-script.html %}
-{% include visualization-script.html %}
+<script src="{{ '/assets/js/visualization-toggle.js' | relative_url }}" defer></script>
