@@ -19,8 +19,15 @@ document.addEventListener('DOMContentLoaded', function () {
   if (hintsScript) {
     try {
       deploymentHints = JSON.parse(hintsScript.textContent);
+
+      if (!deploymentHints.short_fields) {
+        throw new Error('Missing short_fields in deployment hints');
+      }
+      if (!deploymentHints.extra_columns) {
+        throw new Error('Missing extra_columns in deployment hints');
+      }
     } catch (e) {
-      console.warn('Could not parse deployment hints JSON', e);
+      console.warn('Encountered error parsing deployment hints JSON', e);
     }
   }
 
