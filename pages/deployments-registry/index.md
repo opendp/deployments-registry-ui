@@ -203,5 +203,5 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     {{ site.data.ui-hints['deployments-hints'] | jsonify }}
 </script>
 
-{% include deployments-script.html %}
+<script type="module" src="{{ '/assets/js/deployments.js' | relative_url }}"></script>
 {% include filter-script.html %}
