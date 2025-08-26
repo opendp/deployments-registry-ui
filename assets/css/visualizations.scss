@@ -1,5 +1,7 @@
-/* Visualization layout & styling extracted from inline JS styles */
+---
+---
 
+/* Visualization layout & styling extracted from inline JS styles */
 .visualizations-section {
     margin-top: 1.5rem;
 }
@@ -11,9 +13,12 @@
 
 .visualizations-header {
     width: 100%;
+    padding: 8px 0;
+    border-top: 0.5px solid #E7E7E7;
+    border-bottom: 1px solid #E7E7E7;
 
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: 12px;
 
@@ -24,24 +29,17 @@
     line-height: 24px;
 }
 
-.visualizations-header {
-    padding: 8px 0;
-    border-top: 0.5px solid #E7E7E7;
-    border-bottom: 1px solid #E7E7E7;
-
-    align-items: center;
-}
-
 .visualizations-container {
     display: none;
-}
 
-.visualizations-container.visible {
-    display: flex
-}
+    &.visible {
+        display: flex
+    }
 
-.visualizations-container>div {
-    width: 100%;
+    >div {
+        width: 100%;
+    }
+
 }
 
 .visualizations-row {
@@ -52,23 +50,28 @@
     gap: 8px;
 }
 
-.toggle-visualizations-btn .btn-content {
-    display: none;
+.toggle-visualizations-btn {
 
-    align-items: center;
-    gap: 4px;
-}
+    .btn-content {
+        display: none;
 
-.toggle-visualizations-btn .show {
-    display: flex;
-}
+        align-items: center;
+        gap: 4px;
+    }
 
-.toggle-visualizations-btn.visible .hide {
-    display: flex;
-}
+    .show {
+        display: flex;
+    }
 
-.toggle-visualizations-btn.visible .show {
-    display: none;
+    &.visible {
+        .hide {
+            display: flex;
+        }
+
+        .show {
+            display: none;
+        }
+    }
 }
 
 #vis-container {
@@ -81,14 +84,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-}
 
-.vis-header .header-item {
-    width: 100%;
-    height: 100%;
+    .header-item {
+        width: 100%;
+        height: 100%;
 
-    display: flex;
-    flex-wrap: wrap;
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
 .vis-header-left {
@@ -97,51 +100,53 @@
     align-items: start;
 
     box-sizing: border-box;
+
+    .vis-header-left-content {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        gap: 12px 32px;
+        box-sizing: border-box;
+    }
+
+    .vis-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        font-size: 0.9rem;
+
+        label {
+            font-weight: 600;
+        }
+    }
+
+
+    .filtered-by {
+        display: none;
+
+        color: #A1A1A1;
+        text-align: left;
+        text-wrap: nowrap;
+
+        /* Heading/XS/Semibold */
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        line-height: 20px;
+        /* 142.857% */
+
+        .label {
+            font-weight: 600;
+        }
+
+        &.visible {
+            display: block;
+        }
+    }
 }
 
-.vis-header-left-content {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-
-    gap: 12px 32px;
-    box-sizing: border-box;
-}
-
-.vis-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-    font-size: 0.9rem;
-}
-
-.vis-controls label {
-    font-weight: 600;
-}
-
-.filtered-by {
-    display: none;
-
-    color: #A1A1A1;
-    text-align: left;
-    text-wrap: nowrap;
-
-    /* Heading/XS/Semibold */
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    line-height: 20px;
-    /* 142.857% */
-}
-
-.filtered-by .label {
-    font-weight: 600;
-}
-
-.filtered-by.visible {
-    display: block;
-}
 
 .vis-header-right {
     box-sizing: border-box;
@@ -155,20 +160,23 @@ rect.bar {
     opacity: 0.8;
     /* default; dynamic fill set in JS */
     transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
 }
 
-rect.bar:hover {
-    opacity: 1;
-}
 
 /* Stacked segments group (applied to parent g); keep rects consistent */
-g.stack-segment rect {
-    opacity: 0.8;
-    transition: opacity 0.2s ease-in-out;
-}
+g.stack-segment {
+    rect {
+        opacity: 0.8;
+        transition: opacity 0.2s ease-in-out;
 
-g.stack-segment rect:hover {
-    opacity: 1;
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 /* Filter text styling */
@@ -184,43 +192,45 @@ g.stack-segment rect:hover {
 /* External right plot legend (HTML-based) */
 #right-plot-legend-container {
     width: 100%;
+
+    .legend-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        align-items: start;
+        font-size: 11px;
+    }
+
+    .legend-item {
+        display: inline-flex;
+        align-items: start;
+        line-height: 1.1;
+    }
+
+    .legend-swatch {
+        flex-shrink: 0;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        margin-right: 6px;
+    }
+
+    .legend-label {
+        color: #474747;
+        /* text-align: center; */
+
+        /* Body */
+        font-family: "Inter";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
 }
 
-#right-plot-legend-container .legend-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 18px;
-    align-items: start;
-    font-size: 11px;
-}
 
-#right-plot-legend-container .legend-item {
-    display: inline-flex;
-    align-items: start;
-    line-height: 1.1;
-    /* white-space: nowrap; */
-}
-
-#right-plot-legend-container .legend-swatch {
-    flex-shrink: 0;
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border-radius: 2px;
-    margin-right: 6px;
-}
-
-#right-plot-legend-container .legend-label {
-    color: #474747;
-    /* text-align: center; */
-
-    /* Body */
-    font-family: "Inter";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
 
 .axis-label-x,
 .axis-label-y {
@@ -256,13 +266,14 @@ g.stack-segment rect:hover {
     font-weight: 500;
     line-height: 16px;
     /* 133.333% */
+
+    svg {
+        flex-shrink: 0;
+        height: 16px;
+        width: 16px;
+    }
 }
 
-.visualizations-not-supported-warning svg {
-    flex-shrink: 0;
-    height: 16px;
-    width: 16px;
-}
 
 .vis-tooltip {
     position: absolute;
