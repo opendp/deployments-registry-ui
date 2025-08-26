@@ -9,7 +9,7 @@
     // Load deployments data
     const dataScript = document.getElementById('deployments-data');
     if (dataScript) {
-      deploymentsData = JSON.parse(dataScript.textContent);
+      deploymentsData = JSON.parse(dataScript.textContent).map(d => d.deployment);
     }
 
     // Add click handlers to deployment rows

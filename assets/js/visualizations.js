@@ -221,7 +221,7 @@ function initDeploymentsVis() {
     // -----------------------------------------------------------------------
     // (injected on the page with full metadata: key -> { tier, deployment })
     // If missing, we proceed with an empty dataset and warn.
-    let rawDeployments = (typeof window !== 'undefined') ? window.deploymentsFull : null;
+    let rawDeployments = (typeof window !== 'undefined') ? window.deployments : null;
     if (!rawDeployments) {
         console.warn('[deployments-vis] No deployment records found for visualization.');
     }

@@ -1,6 +1,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const deploymentsData = JSON.parse(document.getElementById('deployments-data').textContent);
+    const deploymentsData = JSON.parse(document.getElementById('deployments-data').textContent).map(d => d.deployment);;
     const table = document.getElementById('deployments-table');
     const tbody = table.querySelector('tbody');
 

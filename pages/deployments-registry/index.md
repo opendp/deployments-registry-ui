@@ -30,10 +30,8 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 
 <script>
     const deployments = {{ site.data.deployments | jsonify }};
-</script>
-<script>
     // Provide full deployments object (with tier and metadata) to visualization code without altering existing data sources
-    window.deploymentsFull = {{ site.data.deployments | jsonify }};
+    window.deployments = deployments;
 </script>
 <script type="module" src="/assets/js/download-tsv.js"></script>
 
@@ -194,7 +192,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 <script type="application/json" id="deployments-data">
 [
 {% for deployment in site.data.deployments %}
-    {% assign d = deployment[1].deployment %}
+    {% assign d = deployment[1] %}
     {{ d | jsonify }}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]
