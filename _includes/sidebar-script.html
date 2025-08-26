@@ -21,9 +21,6 @@
       });
     });
 
-    // Render latex descriptions (assumes order of .product-description cells matches deploymentsData)
-    renderLatexDescriptionWindows();
-
     // Create modal overlay for mobile
     createModalOverlay();
 
@@ -35,30 +32,6 @@
       }
     });
   });
-
-  function renderLatexDescriptionWindows() {
-    const elements = document.querySelectorAll('.description-window');
-    if (!elements.length || !deploymentsData.length) return;
-
-    elements.forEach((element) => {
-      const deploymentIndex = element.dataset.index;
-      const d = deploymentsData[deploymentIndex];
-
-      // Skip if no corresponding deployment found
-      if (!d) return;
-
-      // Skip if already processed (heuristic: no child elements yet or data-md-processed flag)
-      if (element.dataset.mdProcessed === 'true') return;
-
-      if (typeof d.description === 'string' && d.description.trim().length) {
-        element.innerHTML = marked.parse(String(d.description));
-        element.dataset.mdProcessed = 'true';
-      }
-    });
-
-    // Typeset math only for the affected elements
-    try { MathJax.typeset?.(Array.from(document.querySelectorAll('.description-window'))); } catch (e) { /* ignore */ }
-  }
 
   function createModalOverlay() {
     const overlay = document.createElement('div');

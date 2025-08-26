@@ -148,7 +148,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
             <td class="product-description">
                 <span class="description-text">{{ d.description }}</span>
                 {% if d.description.size > 0 %}
-                    <div data-index="{{ forloop.index0 }}" class="description-window">
+                    <div class="description-window">
                         {{ d.description }}
                     </div>
                 {% endif %}
