@@ -1,4 +1,6 @@
-<script>
+/* eslint-env browser */
+/* global CustomSelect, CustomMultiSelect */
+
 document.addEventListener('DOMContentLoaded', function () {
     const deploymentsData = JSON.parse(document.getElementById('deployments-data').textContent).map(d => d.deployment);;
     const table = document.getElementById('deployments-table');
@@ -10,162 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return '';
         }
         return value.toString().trim().toLowerCase();
-    }
-
-    // Helper function to get display value from normalized value
-    function getDisplayValue(normalizedValue, originalValues) {
-        if (!normalizedValue) return '';
-        const trimmedNormalized = normalizedValue.trim().toLowerCase();
-        const found = originalValues.find(val =>
-            val && normalizeValue(val) === trimmedNormalized
-        );
-        return found || normalizedValue;
-    }
-
-    // Custom MultiSelect Component
-    class CustomMultiSelect {
-        constructor (container, placeholder = 'Select...') {
-            this.container = container;
-            this.placeholder = placeholder;
-            this.values = [];
-            this.options = [];
-            this.isOpen = false;
-            this.onChange = null;
-
-            this.createMultiSelect();
-            this.bindEvents();
-        }
-
-        createMultiSelect() {
-            this.container.innerHTML = `
-                <div class="custom-multiselect">
-                    <div class="custom-multiselect-trigger">
-                        <div class="custom-multiselect-values">
-                            <span class="custom-multiselect-placeholder">${this.placeholder}</span>
-                        </div>
-                        <svg class="chevron-down-icon" width="17" height="16" viewBox="0 0 17 16" aria-hidden="true">
-                            <use href="/assets/icons.svg#chevron-down"></use>
-                        </svg>
-                    </div>
-                    <div class="custom-multiselect-options">
-                    </div>
-                </div>
-            `;
-
-            this.trigger = this.container.querySelector('.custom-multiselect-trigger');
-            this.valuesContainer = this.container.querySelector('.custom-multiselect-values');
-            this.optionsContainer = this.container.querySelector('.custom-multiselect-options');
-            this.placeholder_element = this.container.querySelector('.custom-multiselect-placeholder');
-        }
-
-        bindEvents() {
-            this.trigger.addEventListener('click', () => this.toggle());
-
-            document.addEventListener('click', (e) => {
-                if (!this.container.contains(e.target)) {
-                    this.close();
-                }
-            });
-
-            this.optionsContainer.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent closing when clicking inside options
-                if (e.target.classList.contains('custom-multiselect-option')) {
-                    this.toggleOption(e.target.dataset.value);
-                } else if (e.target.parentElement.classList.contains('custom-multiselect-option')) {
-                    this.toggleOption(e.target.parentElement.dataset.value);
-                } else if (e.target.classList.contains('custom-checkbox')) {
-                    this.toggleOption(e.target.parentElement.dataset.value);
-                }
-            });
-        }
-
-        toggle() {
-            this.isOpen ? this.close() : this.open();
-        }
-
-        open() {
-            this.isOpen = true;
-            this.container.querySelector('.custom-multiselect').classList.add('open');
-        }
-
-        close() {
-            this.isOpen = false;
-            this.container.querySelector('.custom-multiselect').classList.remove('open');
-        }
-
-        toggleOption(value) {
-            const index = this.values.indexOf(value);
-            if (index > -1) {
-                this.values.splice(index, 1);
-            } else {
-                this.values.push(value);
-            }
-
-            this.updateDisplay();
-            this.updateOptionStates();
-
-            if (this.onChange) {
-                this.onChange(this.values);
-            }
-        }
-
-        updateDisplay() {
-            if (this.values.length === 0) {
-                this.valuesContainer.innerHTML = `<span class="custom-multiselect-placeholder">${this.placeholder}</span>`;
-            } else {
-                this.valuesContainer.innerHTML = `<span class="custom-multiselect-count">${this.placeholder} ${this.values.length} selected</span>`;
-            }
-        }
-
-        updateOptionStates() {
-            this.optionsContainer.querySelectorAll('.custom-multiselect-option').forEach(option => {
-                const checkmark = option.querySelector('.checkmark');
-                const checkbox = option.querySelector('.checkbox-icon');
-
-                if (this.values.includes(option.dataset.value)) {
-                    option.classList.add('selected');
-                    if (checkmark) checkmark.style.display = 'block';
-                    if (checkbox) checkbox.style.color = '#0066CC';
-                } else {
-                    option.classList.remove('selected');
-                    if (checkmark) checkmark.style.display = 'none';
-                    if (checkbox) checkbox.style.color = 'white';
-                }
-            });
-        }
-
-        updateOptions(options) {
-            this.options = options;
-            this.optionsContainer.innerHTML = '';
-
-            options.forEach(option => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'custom-multiselect-option';
-                optionElement.dataset.value = option;
-                optionElement.id = `option-${option}`;
-                optionElement.innerHTML = `
-                    <div class="custom-checkbox">
-                        <svg class="checkbox-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                            <use href="/assets/icons.svg#checkbox-check"></use>
-                        </svg>
-                    </div>
-                    <span class="custom-multiselect-text">${option}</span>
-                `;
-                this.optionsContainer.appendChild(optionElement);
-            });
-
-            this.updateOptionStates();
-        }
-
-        clearSelection() {
-            this.values = [];
-            this.updateDisplay();
-            this.updateOptionStates();
-        }
-
-        getValues() {
-            return this.values;
-        }
     }
 
     // Initialize custom components
@@ -183,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Validate all required elements exist
     const missingElements = Object.entries(filterElements)
-        .filter(([key, element]) => !element)
-        .map(([key]) => key);
+        .filter(([, element]) => !element)
+        .map(([name]) => name);
 
     if (!searchFilterElement) {
         console.error('Search filter element not found!');
@@ -575,4 +421,3 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeFilterVisibilityOptions();
     populateFilters();
 });
-</script>

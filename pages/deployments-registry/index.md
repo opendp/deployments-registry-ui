@@ -204,5 +204,6 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 </script>
 
 <script type="module" src="{{ '/assets/js/deployments.js' | relative_url }}"></script>
-{% include filter-script.html %}
+<script src="{{ '/assets/js/filter.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/visualization-toggle.js' | relative_url }}" defer></script>
+git c
