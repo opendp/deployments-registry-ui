@@ -198,6 +198,11 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 ]
 </script>
 
-{% include deployments-script.html %}
+<!-- Hidden deployment/ui hints data for JavaScript -->
+<script type="application/json" id="deployment-hints">
+    {{ site.data.ui-hints['deployments-hints'] | jsonify }}
+</script>
+
+<script type="module" src="{{ '/assets/js/deployments.js' | relative_url }}"></script>
 {% include filter-script.html %}
 <script src="{{ '/assets/js/visualization-toggle.js' | relative_url }}" defer></script>

@@ -88,6 +88,7 @@
 
 /* Deployment Header Container */
 .side-panel .deployment-header-container {
+    padding-right: 4px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -99,23 +100,51 @@
 /* Deployment Header */
 .side-panel .deployment-header-container .deployment-header {
     display: flex;
+    gap: 6px;
+    padding-bottom: 6px;
+
+    color: #181818;
+}
+
+.side-panel .deployment-header-container .deployment-header .info {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    color: #181818;
-    padding-bottom: 6px;
-    font-size: 16px;
     gap: 6px;
+}
+
+.side-panel .deployment-header-container .deployment-header .title {
+    font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
 }
 
+
+.side-panel .deployment-header .description {
+    /* Body/S/Regular */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 20px;
+    /* 142.857% */
+}
+
 .side-panel .deployment-header-container .deployment-header p {
+    margin-bottom: 0;
     font-size: 14px;
     font-weight: 300;
     line-height: 20px;
-    margin-top: 6px;
-    margin-bottom: 8px;
+}
+
+.side-panel .deployment-header-container .deployment-header .close-btn {
+    height: fit-content;
+    padding: 4px;
+    border-radius: 4px;
 }
 
 /* Deployment Sections */
@@ -138,6 +167,10 @@
 }
 
 .side-panel .deployment-section .deployment-section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
     padding: 0.5rem;
     border: 1px solid #E7E7E7;
     background: #FAFAFA;
@@ -153,9 +186,28 @@
     margin-bottom: 0;
 }
 
+.side-panel .deployment-section .long-field:not(:last-child) {
+    border-bottom: 1px solid #E7E7E7;
+}
+
 .side-panel .section-sub-heading {
     color: #646464;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+}
+
+.side-panel .deployment-section .long-field:not(:last-child) .section-content {
+    padding-bottom: 8px;
+}
+
+.side-panel .deployment-section .long-field .section-content ul {
+    margin-bottom: 0;
+}
+
+
+
+.side-panel .deployment-section-block.object-field *.deployment-section-block.object-field {
+    padding: 0;
+    border: none;
 }
 
 .side-panel .section-spacer {
@@ -170,7 +222,7 @@
 /* Side Panel Tables */
 .side-panel table th,
 .side-panel table td {
-    padding: 3px 0;
+    padding: 0;
     background-color: transparent;
     border: none;
 }
@@ -241,7 +293,7 @@
     .side-panel.expanded {
         max-height: 85vh;
         max-width: 95vw;
-        padding: 1.5rem 4px 1.5rem 1rem;
+        padding: 12px 4px 24px 16px;
         overflow-y: auto;
         opacity: 1;
         visibility: visible;
@@ -256,9 +308,8 @@
         background-color: rgba(92, 92, 92, 0.27);
     }
 
-    .side-panel .deployment-header,
     .side-panel .deployment-section {
-        padding-right: 12px;
+        padding-right: 8px;
     }
 
     /* Modal overlay for mobile side panel */
