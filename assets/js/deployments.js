@@ -46,10 +46,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // Create modal overlay for mobile
   createModalOverlay();
 
-  // One-time hash initialization: auto-select deployment if URL has #anchor
-  (function initFromHashOnce() {
-    if (window.__deploymentsHashInitRan) return; // defensive guard
-    window.__deploymentsHashInitRan = true;
+  // Auto-select deployment if URL has #deployment_anchor
+  // Runs only once on load
+  (function readAndAutoSelectDeploymentFromURLAnchor() {
+    if (window.__selectDeploymentFromAnchorRan) return; // defensive guard
+    window.__selectDeploymentFromAnchorRan = true;
 
     const rawHash = window.location.hash;
     if (!rawHash || rawHash.length <= 1) return;
