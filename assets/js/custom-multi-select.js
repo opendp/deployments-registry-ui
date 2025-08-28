@@ -27,9 +27,7 @@
 						<div class="custom-multiselect-values">
 							<span class="custom-multiselect-placeholder">${this.placeholder}</span>
 						</div>
-						<svg class="chevron-down-icon" width="17" height="16" viewBox="0 0 17 16" aria-hidden="true">
-							<use href="/assets/icons.svg#chevron-down"></use>
-						</svg>
+                        <i class="material-symbols-rounded icon chevron">keyboard_arrow_down</i>
 					</div>
 					<div class="custom-multiselect-options"></div>
 				</div>`;
@@ -74,7 +72,9 @@
 				const checkbox = option.querySelector('.checkbox-icon');
 				const selected = this.values.includes(option.dataset.value);
 				option.classList.toggle('selected', selected);
-				if (checkbox) checkbox.style.color = selected ? '#0066CC' : 'white';
+				if (checkbox) {
+					checkbox.classList.toggle('selected', selected);
+				}
 			});
 		}
 
@@ -88,9 +88,7 @@
 				optionEl.id = `option-${opt}`;
 				optionEl.innerHTML = `
 					<div class="custom-checkbox">
-						<svg class="checkbox-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-							<use href="/assets/icons.svg#checkbox-check"></use>
-						</svg>
+                        <i class="material-symbols-rounded icon checkbox-icon">check</i>
 					</div>
 					<span class="custom-multiselect-text">${opt}</span>`;
 				this.optionsContainer.appendChild(optionEl);

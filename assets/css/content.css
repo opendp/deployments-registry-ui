@@ -17,19 +17,6 @@
     animation: fadeIn 0.2s ease-in;
 }
 
-.page-icon {
-    height: 32px;
-    width: 32px;
-    margin-bottom: 24px;
-    position: relative;
-}
-
-.page-icon::before {
-    position: absolute;
-    top: 16px;
-    left: 0;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -179,8 +166,20 @@
 
 /* Page Icons */
 .page-icon {
+    height: 32px;
+    width: 32px;
     margin-bottom: 24px;
     margin-right: auto;
+
+    font-size: 32px;
+
+    position: relative;
+}
+
+.page-icon::before {
+    position: absolute;
+    top: 16px;
+    left: 0;
 }
 
 .page-icon svg {

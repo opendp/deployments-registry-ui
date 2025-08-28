@@ -59,6 +59,10 @@
         gap: 4px;
     }
 
+    .icon {
+        color: #fff;
+    }
+
     .show {
         display: flex;
     }
@@ -267,10 +271,8 @@ g.stack-segment {
     line-height: 16px;
     /* 133.333% */
 
-    svg {
-        flex-shrink: 0;
-        height: 16px;
-        width: 16px;
+    .icon {
+        color: #9D4C00;
     }
 }
 

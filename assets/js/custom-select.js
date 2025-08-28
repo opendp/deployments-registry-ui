@@ -22,13 +22,11 @@
             this.container.innerHTML = `
                 <div class="custom-select">
                     <div class="custom-select-trigger">
-                    <span class="custom-select-value">${this.placeholder}</span>
-                    <svg class="chevron-down-icon" width="17" height="16" viewBox="0 0 17 16" aria-hidden="true">
-                        <use href="/assets/icons.svg#chevron-down"></use>
-                    </svg>
+                        <span class="custom-select-value">${this.placeholder}</span>
+                        <i class="material-symbols-rounded icon chevron">keyboard_arrow_down</i>
                     </div>
                     <div class="custom-select-options">
-                    ${this.placeholder.length > 0 ? `<div class="custom-select-option placeholder" data-value="">${this.placeholder}</div>` : ``}
+                        ${this.placeholder.length > 0 ? `<div class="custom-select-option placeholder" data-value="">${this.placeholder}</div>` : ``}
                     </div>
                 </div>`;
             this.trigger = this.container.querySelector('.custom-select-trigger');

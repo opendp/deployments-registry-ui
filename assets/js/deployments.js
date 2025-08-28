@@ -254,16 +254,12 @@ function generateDeploymentDetailsHTML(deployment) {
             <!-- Will be resolved in Issue #72: https://github.com/opendp/deployments-registry-ui/issues/72 -->
             <button class="download-btn" onClick="downloadDeployment()">
               <span>Download</span>
-              <svg class="icon icon-download" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                <use href="/assets/icons.svg#download"></use>
-              </svg>
+              <i class="material-symbols-rounded icon">download</i>
             </button>
           </div>
 
           <button class="close-btn variant-ghost" onClick="clearSelection()">
-            <svg class="icon icon-close" width="16" height="16" aria-hidden="true">
-              <use href="/assets/icons.svg#close"></use>
-            </svg>
+            <i class="material-symbols-rounded icon">close</i>
           </button>
         </div>
         <div class="section-spacer"></div>

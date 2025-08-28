@@ -69,6 +69,22 @@ button.variant-ghost:active {
     background-color: #F3F3F3;
 }
 
+button .icon {
+    color: #181818;
+}
+
+.icon {
+    height: 16px;
+    width: 16px;
+
+    color: #fff;
+    font-size: 16px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+}
+
 a {
     color: #181818;
     font-size: 0.95em;

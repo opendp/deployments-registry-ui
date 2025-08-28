@@ -3,7 +3,7 @@ navigation:
   - section: background
     title: Background
     path: /background/
-    icon: 'fa-book'
+    icon: 'format_align_left'
     pages:
       - path: /intro-to-dp/
         title: Introduction to Differential Privacy
@@ -21,7 +21,7 @@ navigation:
   - section: deployments-registry
     title: Deployments Registry
     path: /deployments-registry/
-    icon: 'fa-table'
+    icon: 'assignment'
     pages:
       - path: /deployments-registry/schema/
         title: Schema
@@ -29,7 +29,7 @@ navigation:
 
   - section: further-information
     title: Further Information
-    icon: 'fa-book-bookmark'
+    icon: 'info'
     pages:
       - path: /further-information/contribution/
         title: Contributing
@@ -40,10 +40,10 @@ navigation:
       - path: /further-information/acknowledgements/
         title: Acknowledgements
         order: 3
-        
+
   - section: privacy
     title: Privacy
-    icon: 'fa-shield'
+    icon: 'shield'
     pages:
       - path: /privacy/privacy-policy/
         title: Privacy Policy

@@ -126,10 +126,9 @@
     background: #7F7F7F;
 }
 
-.checkbox-icon {
+i.checkbox-icon {
     transition: all 0.2s ease;
 }
-
 
 .custom-multiselect-text {
     flex: 1;

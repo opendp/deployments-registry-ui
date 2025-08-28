@@ -4,22 +4,21 @@ title: Deployments Registry
 order: 1
 class: deployments-registry
 permalink: /deployments-registry/
+icon: 'assignment'
 ---
 
 <div class="home-page deployments-registry-page">
 <div class="main-content" markdown="1">
 
 {% if page.icon %}
-    <i class="fa-solid fa-2xl {{ page.icon }} page-icon"></i>
+<i class="material-symbols-rounded icon page-icon">{{ page.icon }}</i>
 {% endif %}
 {% if page.title %}
 <header>
     <h1 class="post-title">{{ page.title | escape }}</h1>
     <button class="download-data-button">
         <a download="registry.tsv" id="download-tsv">Download data</a>
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="icon icon-download">
-            <use href="/assets/icons.svg#download"></use>
-        </svg>
+        <i class="material-symbols-rounded icon icon-download">download</i>
     </button>
 </header>
 {% endif %}
@@ -206,4 +205,3 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 <script type="module" src="{{ '/assets/js/deployments.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/filter.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/visualization-toggle.js' | relative_url }}" defer></script>
-git c

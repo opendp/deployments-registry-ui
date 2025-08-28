@@ -1,10 +1,7 @@
 <!-- Sidebar -->
 <div class="docs-sidebar">
     <button class="toggler" type="button" onclick="toggleSidebar()" aria-label="Toggle sidebar">
-        <svg class="sidebar-toggle-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"
-            style="color:#ffffff;">
-            <use href="/assets/icons.svg#arrow-left"></use>
-        </svg>
+        <i class="material-symbols-rounded icon sidebar-toggle-icon">chevron_backward</i>
     </button>
     <div class="site-logo">
         Logo goes here
@@ -12,7 +9,7 @@
     <nav class="docs-nav">
         <div class="sidebar-section">
             <a href="/" class="sidebar-toggle {% if page.url == '/' %}active{% endif %}">
-                <i class="fa-regular fa-house fa-1x"></i>
+                <i class="material-symbols-rounded icon">home</i>
                 <span class="sidebar-section-title">Home</span>
             </a>
         </div>
@@ -32,14 +29,14 @@
             <a href="{{ section.path | relative_url }}"
                 class="sidebar-toggle {% if section_is_active %}active{% endif %}">
                 {% if section.icon %}
-                <i class="fa-solid fa-1x {{ section.icon }}"></i>
+                <i class="material-symbols-rounded icon">{{ section.icon }}</i>
                 {% endif %}
                 <span class="sidebar-section-title">{{ section.title }}</span>
             </a>
             {% else %}
             <button class="sidebar-toggle {% if section_is_active %}active{% endif %}">
                 {% if section.icon %}
-                <i class="fa-solid fa-1x {{ section.icon }}"></i>
+                <i class="material-symbols-rounded icon">{{ section.icon }}</i>
                 {% endif %}
                 <span class="sidebar-section-title">{{ section.title }}</span>
             </button>
