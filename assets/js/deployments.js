@@ -45,6 +45,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Create modal overlay for mobile
   createModalOverlay();
+
+  // Auto-select deployment if URL has #deployment_anchor
+  // Runs only once on load
+  (function readAndAutoSelectDeploymentFromURLAnchor() {
+    if (window.__selectDeploymentFromAnchorRan) return; // defensive guard
+    window.__selectDeploymentFromAnchorRan = true;
+
+    const rawHash = window.location.hash;
+    if (!rawHash || rawHash.length <= 1) return;
+
+    const anchor = decodeURIComponent(rawHash.substring(1));
+
+    // Use CSS.escape if available to safely query
+    const esc = window.CSS && CSS.escape ? CSS.escape(anchor) : anchor.replace(/"/g, '\\"');
+
+    const targetRow = document.querySelector(`.deployment-row[data-anchor="${esc}"]`);
+    if (!targetRow) return;
+
+    const idx = parseInt(targetRow.getAttribute('data-index'), 10);
+    if (Number.isNaN(idx)) return;
+
+    // Defer selection slightly to ensure MathJax / layout stable
+    requestAnimationFrame(() => {
+      selectDeploymentRow(idx);
+      try {
+        targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (e) {
+        console.error('Failed to scroll into view: ', e);
+      }
+    });
+  })();
 });
 
 function renderLatexDescriptionWindows() {
@@ -109,6 +140,14 @@ function selectDeploymentRow(index) {
   allRows.forEach(function (row) {
     row.classList.remove('selected');
   });
+
+  // Append deployments anchor as hash to current url
+  const anchor = selectedRow?.dataset?.anchor;
+  if (anchor) {
+    const currentUrl = new URL(window.location.href);
+    currentUrl.hash = anchor;
+    window.history.pushState({}, '', currentUrl);
+  }
 
   // Add selected class to clicked row
   if (selectedRow) {
@@ -407,6 +446,11 @@ function clearSelection() {
   allRows.forEach(function (row) {
     row.classList.remove('selected');
   });
+
+  // Remove anchor to current url
+  const currentUrl = new URL(window.location.href);
+  currentUrl.hash = '';
+  window.history.pushState({}, '', currentUrl);
 
   // Expand sidebar
   if (sidebar) {
