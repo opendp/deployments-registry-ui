@@ -162,8 +162,13 @@ table tr:nth-child(even) {
 }
 
 .tier-column .tiers i {
+    color: #8A8A8A;
+
     font-size: 6px;
     line-height: 10px;
+}
+.tier-column .tiers i.fa-solid {
+    color: #5BB98B;
 }
 
 .product-description {

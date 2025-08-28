@@ -1,18 +1,15 @@
 <!-- Sidebar -->
 <div class="docs-sidebar">
-    <div class="toggler" onclick="toggleSidebar()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M10 12L6 8L10 4" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-        </svg>
-    </div>
+    <button class="toggler" type="button" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+        <i class="material-symbols-rounded icon sidebar-toggle-icon">chevron_backward</i>
+    </button>
     <div class="site-logo">
         Logo goes here
     </div>
     <nav class="docs-nav">
         <div class="sidebar-section">
             <a href="/" class="sidebar-toggle {% if page.url == '/' %}active{% endif %}">
-                <i class="fa-regular fa-house fa-1x"></i>
+                <i class="material-symbols-rounded icon">home</i>
                 <span class="sidebar-section-title">Home</span>
             </a>
         </div>
@@ -32,14 +29,14 @@
             <a href="{{ section.path | relative_url }}"
                 class="sidebar-toggle {% if section_is_active %}active{% endif %}">
                 {% if section.icon %}
-                <i class="fa-solid fa-1x {{ section.icon }}"></i>
+                <i class="material-symbols-rounded icon">{{ section.icon }}</i>
                 {% endif %}
                 <span class="sidebar-section-title">{{ section.title }}</span>
             </a>
             {% else %}
             <button class="sidebar-toggle {% if section_is_active %}active{% endif %}">
                 {% if section.icon %}
-                <i class="fa-solid fa-1x {{ section.icon }}"></i>
+                <i class="material-symbols-rounded icon">{{ section.icon }}</i>
                 {% endif %}
                 <span class="sidebar-section-title">{{ section.title }}</span>
             </button>
