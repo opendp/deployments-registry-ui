@@ -124,7 +124,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
         <tr
             class="deployment-row"
             data-index="{{ forloop.index0 }}"
-            data-anchor="{% if deployment[1].slug %}{{ deployment[1].slug }}{% else %}{{ deployment[0] }}{% endif %}"
+            data-anchor="{% if deployment[1].url_slug %}{{ deployment[1].url_slug }}{% else %}{{ deployment[0] }}{% endif %}"
         >
             <td class='tier-column' data-tier="{{ deployment[1].tier }}">
                 <div class='tiers'>
