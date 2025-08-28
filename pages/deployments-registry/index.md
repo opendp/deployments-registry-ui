@@ -121,7 +121,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     <tbody>
     {% for deployment in site.data.deployments %}
         {% assign d = deployment[1].deployment %}
-        <tr class="deployment-row" data-index="{{ forloop.index0 }}">
+        <tr class="deployment-row" data-index="{{ forloop.index0 }}" data-file-name="{{ deployment[0] }}">
             <td class='tier-column' data-tier="{{ deployment[1].tier }}">
                 <div class='tiers'>
                     {% if deployment[1].tier == 1 %}

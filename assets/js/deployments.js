@@ -2,7 +2,8 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 let deploymentsData = [];
-let deploymentHints = { short_fields: [], extra_columns: {} };
+let deploymentHints = { short_fields: [], extra_columns: {}, data_repo_base_url: null };
+const data_repo_base_url = "https://github.com/opendp/deployments-registry-data/blob/main/deployments";
 
 // Initialize sidebar state
 document.addEventListener('DOMContentLoaded', function () {
@@ -25,8 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!deploymentHints.extra_columns) {
         throw new Error('Missing extra_columns in deployment hints');
       }
+      if (!deploymentHints.data_repo_base_url) {
+        throw new Error('Missing data_repo_base_url in deployment hints');
+      }
     } catch (e) {
-      console.warn('Encountered error parsing deployment hints JSON', e);
+      console.warn('Encountered error parsing deployment hints JSON: \n', e);
     }
     // Initialize short field hints after parsing
     initShortFields();
@@ -139,8 +143,9 @@ function selectDeploymentRow(index) {
       modalOverlay.classList.add('active');
     }
 
+    const fileName = selectedRow.dataset.fileName;
     // Generate details HTML
-    const detailsHTML = generateDeploymentDetailsHTML(deployment);
+    const detailsHTML = generateDeploymentDetailsHTML(deployment, fileName);
     deploymentDetailsDiv.innerHTML = detailsHTML;
   }
   try {
@@ -233,8 +238,7 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
   return html.join('');
 }
 
-
-function generateDeploymentDetailsHTML(deployment) {
+function generateDeploymentDetailsHTML(deployment, fileName) {
   let deploymentHeader = `
       <div class="deployment-header-container">
         <div class="deployment-header">
@@ -245,22 +249,14 @@ function generateDeploymentDetailsHTML(deployment) {
 
             ${deployment.description ? `<div class="description">${marked.parse(deployment.description)}</div>` : ''}
 
-            <!-- This will be replaced by link button that redirects user to original deployment file in opendp/deployments-registry-data repo -->
-            <!-- Will be resolved in Issue #72: https://github.com/opendp/deployments-registry-ui/issues/72 -->
-            <button class="download-btn" onClick="downloadDeployment()">
-              <span>Download</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <mask id="mask0_509_4001" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16"
-                      height="16">
-                      <rect width="16" height="16" fill="#D9D9D9" />
-                  </mask>
-                  <g mask="url(#mask0_509_4001)">
-                      <path
-                          d="M7.49618 10.9423C7.40451 10.9423 7.31858 10.9263 7.23837 10.8942C7.15816 10.8622 7.08623 10.8141 7.02257 10.75L4.31076 8.01923C4.17072 7.87936 4.10388 7.71622 4.11024 7.52981C4.11661 7.34327 4.18676 7.17949 4.32069 7.03846C4.46685 6.89744 4.63223 6.82692 4.81684 6.82692C5.00145 6.82692 5.16377 6.89744 5.30382 7.03846L6.8125 8.57692V2.69231C6.8125 2.49615 6.878 2.33173 7.00901 2.19904C7.14002 2.06635 7.30234 2 7.49599 2C7.68964 2 7.8533 2.06635 7.98698 2.19904C8.12066 2.33173 8.1875 2.49615 8.1875 2.69231V8.57692L9.71528 7.03846C9.85112 6.89744 10.0124 6.83013 10.199 6.83654C10.3858 6.84295 10.5522 6.91667 10.6984 7.05769C10.8323 7.19872 10.8993 7.36218 10.8993 7.54808C10.8993 7.73397 10.8293 7.89744 10.6892 8.03846L7.97743 10.75C7.90868 10.8141 7.8342 10.8622 7.75399 10.8942C7.67378 10.9263 7.58785 10.9423 7.49618 10.9423ZM3.36965 14C2.99127 14 2.6684 13.8644 2.40104 13.5933C2.13368 13.3221 2 12.9962 2 12.6154V11.9231C2 11.7269 2.0655 11.5625 2.19651 11.4298C2.32752 11.2971 2.48984 11.2308 2.68349 11.2308C2.87714 11.2308 3.0408 11.2971 3.17448 11.4298C3.30816 11.5625 3.375 11.7269 3.375 11.9231V12.6154H11.625V11.9231C11.625 11.7269 11.6905 11.5625 11.8215 11.4298C11.9525 11.2971 12.1148 11.2308 12.3085 11.2308C12.5021 11.2308 12.6658 11.2971 12.7995 11.4298C12.9332 11.5625 13 11.7269 13 11.9231V12.6154C13 12.9962 12.8653 13.3221 12.5959 13.5933C12.3265 13.8644 12.0026 14 11.6242 14H3.36965Z"
-                          fill="#181818" />
-                  </g>
-              </svg>
-            </button>
+            ${data_repo_base_url && fileName ? (
+              `<button class="download-btn" onClick="window.open('${data_repo_base_url}/${fileName }.yaml', '_blank')">
+                View on GitHub
+                <span class="material-symbols-rounded icon">
+                  arrow_outward
+                </span>
+              </button>`
+            ) : ''}
           </div>
 
           <button class="close-btn variant-ghost" onClick="clearSelection()">
