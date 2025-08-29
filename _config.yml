@@ -7,6 +7,7 @@ description: >-
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://registry.opendp.org/"
 owner: OpenDP
+data_repo_base_url: "https://github.com/opendp/deployments-registry-data/blob/main/deployments"
 
 # Build settings
 theme: minima

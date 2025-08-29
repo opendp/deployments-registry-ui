@@ -206,6 +206,11 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 <script type="application/json" id="deployment-hints">
     {{ site.data.ui-hints['deployments-hints'] | jsonify }}
 </script>
+<script>
+    window.siteConfig = {
+        dataRepoBaseUrl: "{{ site.data_repo_base_url | escape }}"
+    };
+</script>
 
 <script type="module" src="{{ '/assets/js/deployments.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/filter.js' | relative_url }}" defer></script>

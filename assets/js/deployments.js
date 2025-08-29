@@ -3,7 +3,6 @@ import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 let deploymentsData = [];
 let deploymentHints = { short_fields: [], extra_columns: {} };
-const data_repo_base_url = "https://github.com/opendp/deployments-registry-data/blob/main/deployments";
 
 // Initialize sidebar state
 document.addEventListener('DOMContentLoaded', function () {
@@ -281,6 +280,8 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
 }
 
 function generateDeploymentDetailsHTML(deployment, fileName) {
+  const data_repo_base_url = window.siteConfig.dataRepoBaseUrl;
+
   let deploymentHeader = `
       <div class="deployment-header-container">
         <div class="deployment-header">
