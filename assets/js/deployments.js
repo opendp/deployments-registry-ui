@@ -2,7 +2,7 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 let deploymentsData = [];
-let deploymentHints = { short_fields: [], extra_columns: {}, data_repo_base_url: null };
+let deploymentHints = { short_fields: [], extra_columns: {} };
 const data_repo_base_url = "https://github.com/opendp/deployments-registry-data/blob/main/deployments";
 
 // Initialize sidebar state
@@ -25,9 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       if (!deploymentHints.extra_columns) {
         throw new Error('Missing extra_columns in deployment hints');
-      }
-      if (!deploymentHints.data_repo_base_url) {
-        throw new Error('Missing data_repo_base_url in deployment hints');
       }
     } catch (e) {
       console.warn('Encountered error parsing deployment hints JSON: \n', e);
