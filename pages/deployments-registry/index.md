@@ -4,27 +4,21 @@ title: Deployments Registry
 order: 1
 class: deployments-registry
 permalink: /deployments-registry/
+icon: 'assignment'
 ---
 
 <div class="home-page deployments-registry-page">
 <div class="main-content" markdown="1">
 
 {% if page.icon %}
-    <i class="fa-solid fa-2xl {{ page.icon }} page-icon"></i>
+<i class="material-symbols-rounded icon page-icon">{{ page.icon }}</i>
 {% endif %}
 {% if page.title %}
 <header>
     <h1 class="post-title">{{ page.title | escape }}</h1>
     <button class="download-data-button">
         <a download="registry.tsv" id="download-tsv">Download data</a>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <mask id="mask0_1060_3018" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
-            <rect width="16" height="16" fill="#D9D9D9"/>
-            </mask>
-            <g mask="url(#mask0_1060_3018)">
-            <path d="M7.49618 10.9423C7.40451 10.9423 7.31858 10.9263 7.23837 10.8942C7.15816 10.8622 7.08623 10.8141 7.02257 10.75L4.31076 8.01923C4.17072 7.87936 4.10388 7.71622 4.11024 7.52981C4.11661 7.34327 4.18676 7.17949 4.32069 7.03846C4.46685 6.89744 4.63223 6.82692 4.81684 6.82692C5.00145 6.82692 5.16377 6.89744 5.30382 7.03846L6.8125 8.57692V2.69231C6.8125 2.49615 6.878 2.33173 7.00901 2.19904C7.14002 2.06635 7.30234 2 7.49599 2C7.68964 2 7.8533 2.06635 7.98698 2.19904C8.12066 2.33173 8.1875 2.49615 8.1875 2.69231V8.57692L9.71528 7.03846C9.85112 6.89744 10.0124 6.83013 10.199 6.83654C10.3858 6.84295 10.5522 6.91667 10.6984 7.05769C10.8323 7.19872 10.8993 7.36218 10.8993 7.54808C10.8993 7.73397 10.8293 7.89744 10.6892 8.03846L7.97743 10.75C7.90868 10.8141 7.8342 10.8622 7.75399 10.8942C7.67378 10.9263 7.58785 10.9423 7.49618 10.9423ZM3.36965 14C2.99127 14 2.6684 13.8644 2.40104 13.5933C2.13368 13.3221 2 12.9962 2 12.6154V11.9231C2 11.7269 2.0655 11.5625 2.19651 11.4298C2.32752 11.2971 2.48984 11.2308 2.68349 11.2308C2.87714 11.2308 3.0408 11.2971 3.17448 11.4298C3.30816 11.5625 3.375 11.7269 3.375 11.9231V12.6154H11.625V11.9231C11.625 11.7269 11.6905 11.5625 11.8215 11.4298C11.9525 11.2971 12.1148 11.2308 12.3085 11.2308C12.5021 11.2308 12.6658 11.2971 12.7995 11.4298C12.9332 11.5625 13 11.7269 13 11.9231V12.6154C13 12.9962 12.8653 13.3221 12.5959 13.5933C12.3265 13.8644 12.0026 14 11.6242 14H3.36965Z" fill="#181818"/>
-            </g>
-        </svg>
+        <i class="material-symbols-rounded icon icon-download">download</i>
     </button>
 </header>
 {% endif %}
@@ -35,8 +29,13 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 
 <script>
     const deployments = {{ site.data.deployments | jsonify }};
+    // Provide full deployments object (with tier and metadata) to visualization code without altering existing data sources
+    window.deployments = deployments;
 </script>
 <script type="module" src="/assets/js/download-tsv.js"></script>
+
+<!-- Visualizations Section -->
+{% include visualizations-section.html %}
 
 <!-- Filters Section -->
 <div class="filters-container">
@@ -121,7 +120,12 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     <tbody>
     {% for deployment in site.data.deployments %}
         {% assign d = deployment[1].deployment %}
-        <tr class="deployment-row" data-index="{{ forloop.index0 }}" data-file-name="{{ deployment[0] }}">
+        <tr
+            class="deployment-row"
+            data-index="{{ forloop.index0 }}"
+            data-file-name="{{ deployment[0] }}"
+            data-anchor="{% if deployment[1].url_slug %}{{ deployment[1].url_slug }}{% else %}{{ deployment[0] }}{% endif %}"
+        >
             <td class='tier-column' data-tier="{{ deployment[1].tier }}">
                 <div class='tiers'>
                     {% if deployment[1].tier == 1 %}
@@ -192,7 +196,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 <script type="application/json" id="deployments-data">
 [
 {% for deployment in site.data.deployments %}
-    {% assign d = deployment[1].deployment %}
+    {% assign d = deployment[1] %}
     {{ d | jsonify }}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]
@@ -204,4 +208,5 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 </script>
 
 <script type="module" src="{{ '/assets/js/deployments.js' | relative_url }}"></script>
-{% include filter-script.html %}
+<script src="{{ '/assets/js/filter.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/visualization-toggle.js' | relative_url }}" defer></script>

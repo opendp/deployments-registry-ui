@@ -1,0 +1,305 @@
+---
+---
+
+/* Visualization layout & styling extracted from inline JS styles */
+.visualizations-section {
+    margin-top: 1.5rem;
+}
+
+.visualizations-wrapper {
+    display: none;
+    flex-direction: column;
+}
+
+.visualizations-header {
+    width: 100%;
+    padding: 8px 0;
+    border-top: 0.5px solid #E7E7E7;
+    border-bottom: 1px solid #E7E7E7;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    color: #181818;
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.visualizations-container {
+    display: none;
+
+    &.visible {
+        display: flex
+    }
+
+    >div {
+        width: 100%;
+    }
+
+}
+
+.visualizations-row {
+    width: 100%;
+    max-width: 750px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.toggle-visualizations-btn {
+
+    .btn-content {
+        display: none;
+
+        align-items: center;
+        gap: 4px;
+    }
+
+    .icon {
+        color: #fff;
+    }
+
+    .show {
+        display: flex;
+    }
+
+    &.visible {
+        .hide {
+            display: flex;
+        }
+
+        .show {
+            display: none;
+        }
+    }
+}
+
+#vis-container {
+    position: relative;
+}
+
+.vis-header {
+    padding-top: 16px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+
+    .header-item {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.vis-header-left {
+    padding-right: 48px;
+
+    align-items: start;
+
+    box-sizing: border-box;
+
+    .vis-header-left-content {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        gap: 12px 32px;
+        box-sizing: border-box;
+    }
+
+    .vis-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        font-size: 0.9rem;
+
+        label {
+            font-weight: 600;
+        }
+    }
+
+
+    .filtered-by {
+        display: none;
+
+        color: #A1A1A1;
+        text-align: left;
+        text-wrap: nowrap;
+
+        /* Heading/XS/Semibold */
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        line-height: 20px;
+        /* 142.857% */
+
+        .label {
+            font-weight: 600;
+        }
+
+        &.visible {
+            display: block;
+        }
+    }
+}
+
+
+.vis-header-right {
+    box-sizing: border-box;
+    padding-top: 4px;
+    padding-left: 32px;
+    align-items: end;
+}
+
+/* Bars */
+rect.bar {
+    opacity: 0.8;
+    /* default; dynamic fill set in JS */
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+
+/* Stacked segments group (applied to parent g); keep rects consistent */
+g.stack-segment {
+    rect {
+        opacity: 0.8;
+        transition: opacity 0.2s ease-in-out;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+/* Filter text styling */
+.filterText {
+    fill: gray;
+}
+
+/* Legend */
+.legend text {
+    font-size: 10px;
+}
+
+/* External right plot legend (HTML-based) */
+#right-plot-legend-container {
+    width: 100%;
+
+    .legend-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        align-items: start;
+        font-size: 11px;
+    }
+
+    .legend-item {
+        display: inline-flex;
+        align-items: start;
+        line-height: 1.1;
+    }
+
+    .legend-swatch {
+        flex-shrink: 0;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        margin-right: 6px;
+    }
+
+    .legend-label {
+        color: #474747;
+        /* text-align: center; */
+
+        /* Body */
+        font-family: "Inter";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+}
+
+
+
+.axis-label-x,
+.axis-label-y {
+    color: #474747;
+    text-align: center;
+
+    /* Body/XS/Medium */
+    font-family: "Inter";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    /* 133.333% */
+}
+
+.visualizations-not-supported-warning {
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid #FF7B00;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+
+    color: #9D4C00;
+    background: rgba(255, 119, 0, 0.08);
+
+    /* Body/XS/Medium */
+    font-family: "Inter";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    /* 133.333% */
+
+    .icon {
+        color: #9D4C00;
+    }
+}
+
+
+.vis-tooltip {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 6px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+    border-radius: 4px;
+    font-family: Inter, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    /* shown/hidden via transitions in JS */
+    transition: opacity 150ms ease-in-out;
+}
+
+@media screen and (min-width: 1024px) {
+    .visualizations-wrapper {
+        display: flex;
+    }
+
+    .visualizations-not-supported-warning {
+        display: none;
+    }
+}

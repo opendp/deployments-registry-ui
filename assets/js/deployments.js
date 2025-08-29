@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Load deployments data
   const dataScript = document.getElementById('deployments-data');
   if (dataScript) {
-    deploymentsData = JSON.parse(dataScript.textContent);
+    deploymentsData = JSON.parse(dataScript.textContent).map(d => d.deployment);
   }
 
   // Load deployment hints
@@ -49,6 +49,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Create modal overlay for mobile
   createModalOverlay();
+
+  // Auto-select deployment if URL has #deployment_anchor
+  // Runs only once on load
+  (function readAndAutoSelectDeploymentFromURLAnchor() {
+    if (window.__selectDeploymentFromAnchorRan) return; // defensive guard
+    window.__selectDeploymentFromAnchorRan = true;
+
+    const rawHash = window.location.hash;
+    if (!rawHash || rawHash.length <= 1) return;
+
+    const anchor = decodeURIComponent(rawHash.substring(1));
+
+    // Use CSS.escape if available to safely query
+    const esc = window.CSS && CSS.escape ? CSS.escape(anchor) : anchor.replace(/"/g, '\\"');
+
+    const targetRow = document.querySelector(`.deployment-row[data-anchor="${esc}"]`);
+    if (!targetRow) return;
+
+    const idx = parseInt(targetRow.getAttribute('data-index'), 10);
+    if (Number.isNaN(idx)) return;
+
+    // Defer selection slightly to ensure MathJax / layout stable
+    requestAnimationFrame(() => {
+      selectDeploymentRow(idx);
+      try {
+        targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (e) {
+        console.error('Failed to scroll into view: ', e);
+      }
+    });
+  })();
 });
 
 function renderLatexDescriptionWindows() {
@@ -114,6 +145,14 @@ function selectDeploymentRow(index) {
     row.classList.remove('selected');
   });
 
+  // Append deployments anchor as hash to current url
+  const anchor = selectedRow?.dataset?.anchor;
+  if (anchor) {
+    const currentUrl = new URL(window.location.href);
+    currentUrl.hash = anchor;
+    window.history.pushState({}, '', currentUrl);
+  }
+
   // Add selected class to clicked row
   if (selectedRow) {
     selectedRow.classList.add('selected');
@@ -148,6 +187,7 @@ function selectDeploymentRow(index) {
     const detailsHTML = generateDeploymentDetailsHTML(deployment, fileName);
     deploymentDetailsDiv.innerHTML = detailsHTML;
   }
+
   try {
     MathJax.typeset();
   } catch (err) {
@@ -155,6 +195,11 @@ function selectDeploymentRow(index) {
       console.warn('[deployments.js] MathJax typeset failed or MathJax not loaded after selecting deployment.', err);
       window.__mathjaxTypesetWarned = true;
     }
+  }
+
+  // Trigger resize to adjust visualizations width
+  if (typeof window.triggerResize === 'function') {
+    window.triggerResize();
   }
 }
 
@@ -260,14 +305,7 @@ function generateDeploymentDetailsHTML(deployment, fileName) {
           </div>
 
           <button class="close-btn variant-ghost" onClick="clearSelection()">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <mask id="mask0_1238_9006" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
-                <rect width="16" height="16" fill="#D9D9D9"/>
-              </mask>
-              <g mask="url(#mask0_1238_9006)">
-                <path d="M12 4L4 12M4 4L12 12" stroke="#181818" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </g>
-            </svg>
+            <i class="material-symbols-rounded icon">close</i>
           </button>
         </div>
         <div class="section-spacer"></div>
@@ -416,6 +454,11 @@ function clearSelection() {
     row.classList.remove('selected');
   });
 
+  // Remove anchor to current url
+  const currentUrl = new URL(window.location.href);
+  currentUrl.hash = '';
+  window.history.pushState({}, '', currentUrl);
+
   // Expand sidebar
   if (sidebar) {
     sidebar.classList.remove('collapsed');
@@ -436,6 +479,11 @@ function clearSelection() {
 
   // Reset side panel content
   deploymentDetailsDiv.innerHTML = '';
+
+  // Trigger resize to adjust visualizations width
+  if (typeof window.triggerResize === 'function') {
+    window.triggerResize();
+  }
 }
 
 // Expose clearSelection for non-module scripts (e.g., sidebar.js)
