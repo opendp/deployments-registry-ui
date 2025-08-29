@@ -123,6 +123,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
         <tr
             class="deployment-row"
             data-index="{{ forloop.index0 }}"
+            data-file-name="{{ deployment[0] }}"
             data-anchor="{% if deployment[1].url_slug %}{{ deployment[1].url_slug }}{% else %}{{ deployment[0] }}{% endif %}"
         >
             <td class='tier-column' data-tier="{{ deployment[1].tier }}">
@@ -204,6 +205,11 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 <!-- Hidden deployment/ui hints data for JavaScript -->
 <script type="application/json" id="deployment-hints">
     {{ site.data.ui-hints['deployments-hints'] | jsonify }}
+</script>
+<script>
+    window.siteConfig = {
+        dataRepoBaseUrl: "{{ site.data_repo_base_url | escape }}"
+    };
 </script>
 
 <script type="module" src="{{ '/assets/js/deployments.js' | relative_url }}"></script>

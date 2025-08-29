@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         throw new Error('Missing extra_columns in deployment hints');
       }
     } catch (e) {
-      console.warn('Encountered error parsing deployment hints JSON', e);
+      console.warn('Encountered error parsing deployment hints JSON: \n', e);
     }
     // Initialize short field hints after parsing
     initShortFields();
@@ -178,8 +178,9 @@ function selectDeploymentRow(index) {
       modalOverlay.classList.add('active');
     }
 
+    const fileName = selectedRow.dataset.fileName;
     // Generate details HTML
-    const detailsHTML = generateDeploymentDetailsHTML(deployment);
+    const detailsHTML = generateDeploymentDetailsHTML(deployment, fileName);
     deploymentDetailsDiv.innerHTML = detailsHTML;
   }
 
@@ -278,7 +279,9 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
   return html.join('');
 }
 
-function generateDeploymentDetailsHTML(deployment) {
+function generateDeploymentDetailsHTML(deployment, fileName) {
+  const data_repo_base_url = window.siteConfig.dataRepoBaseUrl;
+
   let deploymentHeader = `
       <div class="deployment-header-container">
         <div class="deployment-header">
@@ -289,12 +292,14 @@ function generateDeploymentDetailsHTML(deployment) {
 
             ${deployment.description ? `<div class="description">${marked.parse(deployment.description)}</div>` : ''}
 
-            <!-- This will be replaced by link button that redirects user to original deployment file in opendp/deployments-registry-data repo -->
-            <!-- Will be resolved in Issue #72: https://github.com/opendp/deployments-registry-ui/issues/72 -->
-            <button class="download-btn" onClick="downloadDeployment()">
-              <span>Download</span>
-              <i class="material-symbols-rounded icon">download</i>
-            </button>
+            ${data_repo_base_url && fileName ? (
+              `<button class="download-btn" onClick="window.open('${data_repo_base_url}/${fileName }.yaml', '_blank')">
+                View on GitHub
+                <span class="material-symbols-rounded icon">
+                  arrow_outward
+                </span>
+              </button>`
+            ) : ''}
           </div>
 
           <button class="close-btn variant-ghost" onClick="clearSelection()">
