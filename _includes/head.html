@@ -11,35 +11,36 @@
 
   <!-- Our additions below: -->
 
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
-    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-
   <!--
     We prefer ESM, but not currently available for Vega.
     https://github.com/vega/vega-lite/issues/3924#issuecomment-400895031
   -->
-  <!-- Custom Styles -->
-
-  <!-- icons -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
-
-  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
-
-  <!-- Reusable UI components -->
-  <script src="{{ '/assets/js/custom-select.js' | relative_url }}" defer></script>
-  <script src="{{ '/assets/js/custom-multi-select.js' | relative_url }}" defer></script>
-
   <script src="https://cdn.jsdelivr.net/npm/vega@6.1.2"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.2.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
 
+  <!-- MathJax for rendering math -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Preconnect to font services -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Font styles -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0..1,-50..200" />
+
   <!-- Global sidebar & deployment interactions -->
   <script type="module" src="{{ '/assets/js/sidebar.js' | relative_url }}"></script>
+
+
+  <!-- Reusable UI components -->
+  <script src="{{ '/assets/js/custom-select.js' | relative_url }}" defer></script>
 </head>

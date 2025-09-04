@@ -42,144 +42,21 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     <div style="white-space: nowrap">Deployments Registry</div>
     <div class="filter-row" style="justify-content: right">
         <div class="filter-group">
-            <input type="text" id="search-filter" placeholder="Search">
-        </div>
-        <div class="filter-group">
-            <select id="visible-filters">
-                <option value="">Filters</option>
-            </select>
+            <div class="search-container">
+                <input type="text" id="search-filter" placeholder="Search">
+                <button id="clear-search-btn" class="clear-search-btn">
+                    <i class="material-symbols-rounded icon">close</i>
+                </button>
+            </div>
         </div>
         <div class="filter-actions">
-            <button id="clear-filters" title="Clear all filters">Clear</button>
-        </div>
-    </div>
-</div>
-
-<div class="filters-container" style="margin-top: 0.5rem">
-    <div class="filter-row">
-        <div class="filter-group" id="curator-filter-group" style="display: none;">
-            <label for="curator-filter">Curator:</label>
-            <select id="curator-filter">
-                <option value="">All Curators</option>
-            </select>
-        </div>
-        <div class="filter-group" id="model-filter-group" style="display: none;">
-            <label for="model-filter">Model:</label>
-            <select id="model-filter">
-                <option value="">All Models</option>
-            </select>
-        </div>
-        <div class="filter-group" id="product-filter-group" style="display: none;">
-            <label for="product-filter">Product:</label>
-            <select id="product-filter">
-                <option value="">All Products</option>
-            </select>
-        </div>
-        <div class="filter-group" id="flavor-filter-group" style="display: none;">
-            <label for="flavor-filter">Flavor:</label>
-            <select id="flavor-filter">
-                <option value="">All Flavors</option>
-            </select>
-        </div>
-        <div class="filter-group" id="privacy-unit-filter-group" style="display: none;">
-            <label for="privacy-unit-filter">Privacy Unit:</label>
-            <select id="privacy-unit-filter">
-                <option value="">All Privacy Units</option>
-            </select>
-        </div>
-        <div class="filter-group" id="tier-filter-group" style="display: none;">
-            <label for="tier-filter">Tier:</label>
-            <select id="tier-filter">
-                <option value="">All Tiers</option>
-            </select>
-        </div>
-        <div class="filter-group" id="year-filter-group" style="display: none;">
-            <label for="year-filter">Year:</label>
-            <select id="year-filter">
-                <option value="">All Years</option>
-            </select>
+            <button id="clear-filters" title="Clear all filters">Clear all</button>
         </div>
     </div>
 </div>
 
 <div class="table-container">
-<table id="deployments-table">
-    <thead>
-        <tr>
-            <th style="text-align: center; width: 35px;">Tier</th>
-            <th style="width: 20%;">Product</th>
-            <th style="width: 20%;">Description</th>
-            <th style="min-width: 60px;">Year</th>
-            <th style="width: 15%; min-width: 100px">Flavor name</th>
-            <th style="width: 15%; min-width: 100px">Privacy Loss</th>
-            <th style="min-width: 70px">Model</th>
-            <th style="width: 10%; min-width: 80px">Accounting</th>
-            <th style="width: 10%; min-width: 80px">Implementation</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for deployment in site.data.deployments %}
-        {% assign d = deployment[1].deployment %}
-        <tr
-            class="deployment-row"
-            data-index="{{ forloop.index0 }}"
-            data-file-name="{{ deployment[0] }}"
-            data-anchor="{% if deployment[1].url_slug %}{{ deployment[1].url_slug }}{% else %}{{ deployment[0] }}{% endif %}"
-        >
-            <td class='tier-column' data-tier="{{ deployment[1].tier }}">
-                <div class='tiers'>
-                    {% if deployment[1].tier == 1 %}
-                        <i class="fa-solid fa-circle"></i>
-                        <i class="fa-regular fa-circle"></i>
-                        <i class="fa-regular fa-circle"></i>
-                    {% elsif deployment[1].tier == 2 %}
-                        <i class="fa-solid fa-circle"></i>
-                        <i class="fa-solid fa-circle"></i>
-                        <i class="fa-regular fa-circle"></i>
-                    {% elsif deployment[1].tier == 3 %}
-                        <i class="fa-solid fa-circle"></i>
-                        <i class="fa-solid fa-circle"></i>
-                        <i class="fa-solid fa-circle"></i>
-                    {% else %}
-                        {{ deployment[1].tier }}
-                    {% endif %}
-                </div>
-            </td>
-            <td style="width: 15%;">
-                <div style="color: #181818; font-weight: 500; margin-bottom: 4px">{{ d.name }}</div>
-                <div>by {{ d.data_curator }}</div>
-            </td>
-            <td class="product-description">
-                <span class="description-text">{{ d.description }}</span>
-                {% if d.description.size > 0 %}
-                    <div data-index="{{ forloop.index0 }}" class="description-window">
-                        {{ d.description }}
-                    </div>
-                {% endif %}
-            </td>
-            <td style="min-width: 60px;">{{ d.publication_date | date: "%Y" }}</td>
-            <td>{{ d.dp_flavor.name }}</td>
-            <td>
-                {% if d.privacy_loss.privacy_unit %}
-                    <div style="font-weight: 500; margin-bottom: 4px; font-size: 12px">{{ d.privacy_loss.privacy_unit }}</div>
-                {% endif %}
-                {% if d.privacy_loss.privacy_parameters.epsilon %}
-                    ε:&nbsp;{{ d.privacy_loss.privacy_parameters.epsilon }}<br>
-                {% endif %}
-                {% if d.privacy_loss.privacy_parameters.delta %}
-                    δ:&nbsp;{{ d.privacy_loss.privacy_parameters.delta }}<br>
-                {% endif %}
-                {% if d.privacy_loss.privacy_parameters.rho %}
-                    ρ:&nbsp;{{ d.privacy_loss.privacy_parameters.rho }}<br>
-                {% endif %}
-            </td>
-            <td>{{ d.model.model_name }}</td>
-            <td> - </td>
-            <td> - </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<table id="deployments-table" class="display stripe"></table>
 </div>
 
 </div>
@@ -197,7 +74,14 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 [
 {% for deployment in site.data.deployments %}
     {% assign d = deployment[1] %}
-    {{ d | jsonify }}{% unless forloop.last %},{% endunless %}
+    {% assign d_json = d | jsonify %}
+    {% assign d_json_without_brace = d_json | replace_first: '{', '' %}
+    {% assign anchor_value = d.url_slug | default: deployment[0] %}
+    {
+        "file_name": {{ deployment[0] | jsonify }},
+        "index": {{ forloop.index0 }},
+        "anchor": {{ anchor_value | jsonify }},
+        {{ d_json_without_brace }}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]
 </script>
@@ -213,5 +97,23 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
 </script>
 
 <script type="module" src="{{ '/assets/js/deployments.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/filter.js' | relative_url }}" defer></script>
+
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables core -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+<!-- Select extension (must come before SearchPanes) -->
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css">
+<script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
+
+<!-- SearchPanes extension -->
+<link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.1/css/searchPanes.dataTables.min.css">
+<script src="https://cdn.datatables.net/searchpanes/2.3.1/js/dataTables.searchPanes.min.js"></script>
+
+<!-- Custom scripts -->
+<script type="module" src="{{ '/assets/js/datatable-init.js' | relative_url }}"></script>
+
 <script src="{{ '/assets/js/visualization-toggle.js' | relative_url }}" defer></script>

@@ -1,0 +1,492 @@
+---
+---
+/* eslint-disable css/no-important */
+
+/* Table Sorting */
+table.dataTable#deployments-table thead>tr>th,
+table.dataTable#deployments-table thead>tr>td {
+    padding: 8px;
+}
+
+table.dataTable#deployments-table thead>tr>th.sorting,
+table.dataTable#deployments-table thead>tr>th.sorting_asc,
+table.dataTable#deployments-table thead>tr>th.sorting_desc,
+table.dataTable#deployments-table thead>tr>th.sorting_asc_disabled,
+table.dataTable#deployments-table thead>tr>th.sorting_desc_disabled,
+table.dataTable#deployments-table thead>tr>td.sorting,
+table.dataTable#deployments-table thead>tr>td.sorting_asc,
+table.dataTable#deployments-table thead>tr>td.sorting_desc,
+table.dataTable#deployments-table thead>tr>td.sorting_asc_disabled,
+table.dataTable#deployments-table thead>tr>td.sorting_desc_disabled {
+    padding-right: 64px;
+
+    &::before,
+    &::after {
+        color: #A1A1A1;
+
+        font-family: 'Material Symbols Rounded';
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        font-size: 14px;
+        line-height: 1;
+        vertical-align: middle;
+
+        display: inline-block;
+
+        opacity: 1;
+    }
+
+    &::before {
+        bottom: 43%;
+        right: 14px;
+        content: 'arrow_upward_alt';
+    }
+
+    &::after {
+        top: 43%;
+        right: 10px;
+        content: 'arrow_downward_alt';
+    }
+}
+
+table.dataTable#deployments-table thead>tr>th.sorting_asc:before,
+table.dataTable#deployments-table thead>tr>th.sorting_desc:after,
+table.dataTable#deployments-table thead>tr>td.sorting_asc:before,
+table.dataTable#deployments-table thead>tr>td.sorting_desc:after {
+    color: #000;
+}
+
+// These selectors are duplicates of searchPanes classes, hence the complexity needs to be kept intact
+table.dataTable.row-border>tbody>tr>th,
+table.dataTable.row-border>tbody>tr>td,
+table.dataTable.display>tbody>tr>th,
+table.dataTable.display>tbody>tr>td {
+    border-top: 1px solid #E7E7E7;
+}
+
+table.dataTable.stripe>tbody>tr.odd>*,
+table.dataTable.display>tbody>tr.odd>* {
+    box-shadow: none !important;
+}
+
+table.dataTable.stripe>tbody>tr.odd.selected>*,
+table.dataTable.display>tbody>tr.deployment-row.selected>*,
+table.dataTable.stripe>tbody>tr.odd.selected>*,
+table.dataTable.display>tbody>tr.deployment-row.odd.selected>*,
+.deployment-row.selected {
+    color: #181818;
+    background-color: #DADADA;
+    box-shadow: none !important;
+}
+
+table.dataTable.hover>tbody>tr.selected:hover>*,
+table.dataTable.display>tbody>tr.deployment-row.selected:hover>*,
+table.dataTable.hover>tbody>tr.selected:hover>*,
+table.dataTable.display>tbody>tr.deployment-row.odd.selected:hover>*,
+.deployment-row.selected:hover {
+    color: #181818;
+    background-color: #DADADA;
+    box-shadow: none !important;
+}
+
+
+/* Table filters */
+button.filter-trigger {
+    border-radius: 2px;
+}
+
+.filter-trigger {
+    position: absolute;
+    right: 28px;
+    top: 50%;
+
+    --trigger-size: 20px;
+    height: var(--trigger-size);
+    width: var(--trigger-size);
+    padding: 0;
+
+    background-color: transparent;
+
+    transform: translateY(-50%);
+
+    &::after {
+        content: attr(data-count);
+
+        position: absolute;
+        top: -6px;
+        right: -6px;
+
+        min-width: 16px;
+        height: 16px;
+        padding: 0 4px;
+        border-radius: 999px;
+
+        color: #fff;
+        background: #5BB98B;
+
+        font-size: 11px;
+        line-height: 16px;
+        font-weight: 500;
+        text-align: center;
+
+        display: none;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+
+    /* hidden when 0 or empty */
+    &[data-count]:not([data-count="" i]):not([data-count="0"])::after {
+        display: inline-block;
+    }
+
+    .material-symbols-rounded {
+        height: var(--trigger-size);
+        width: var(--trigger-size);
+
+        color: rgba(24, 24, 24, 0.3);
+        font-size: var(--trigger-size);
+    }
+
+    &.open,
+    &.has-active-filters {
+        .material-symbols-rounded {
+            color: #000;
+        }
+    }
+}
+
+/* SearchPanes adjustments */
+.dtsp-panesContainer {
+    display: none !important;
+}
+
+.filters-popover-wrapper {
+    min-width: 150px;
+    width: 284px;
+    max-width: 284px;
+    border-radius: 8px;
+    border: 1px solid #4b15000f;
+
+    display: none;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 4px);
+
+    background: #fff;
+
+    box-shadow: 0px 4px 16px -8px #1212121a, 0px 3px 12px -4px #1212121a, 0px 2px 3px -2px #4b15000f;
+    z-index: 1000;
+
+    &.visible {
+        display: flex;
+    }
+
+    .filters-popover {
+        width: 100%;
+        max-width: inherit;
+        box-sizing: border-box;
+        padding: 8px 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+
+        .dtsp-searchPane {
+            width: 100%;
+            max-width: 100%;
+            max-height: 260px;
+            padding: 0 8px;
+
+            display: flex;
+            flex-direction: column;
+
+            box-sizing: border-box;
+
+            &:not(:first-child) {
+                padding-top: 8px;
+                border-top: 1px solid #E7E7E7;
+            }
+
+            div.dtsp-topRow {
+                margin-bottom: 4px;
+
+                flex-direction: column-reverse;
+                justify-content: unset;
+                align-items: unset;
+                align-content: unset;
+                gap: 4px;
+
+                div.dtsp-subRow1 {
+                    input.dtsp-search {
+                        height: unset;
+                        padding: 4px 3px 4px 28px;
+                        border-radius: 6px;
+                        border: 1px solid #DADADA;
+                        margin: 0px;
+
+                        color: #5F5F5F;
+                        background: #F3F3F3;
+
+                        /* Body/XS/Medium */
+                        font-family: "Inter";
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 16px;
+                        /* 133.333% */
+
+                        &::placeholder {
+                            opacity: 0.5;
+                        }
+                    }
+
+                    .dtsp-searchIcon {
+                        height: unset;
+                        width: 12px;
+                        padding: 0px;
+                        margin: 0px;
+
+                        left: 8px;
+                        top: 2px;
+                        bottom: 2px;
+                        right: unset;
+
+                        display: flex;
+                        align-items: center;
+
+                        &::before {
+                            content: 'search';
+
+                            color: #3A3A3A;
+
+                            font-family: 'Material Symbols Rounded';
+                            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                            font-size: 12px;
+                            line-height: 1.2;
+                            vertical-align: middle;
+
+                            display: inline-block;
+                        }
+
+                        span {
+                            display: none;
+                        }
+                    }
+                }
+
+                .dtsp-subRow2 {
+                    width: 100%;
+
+                    display: flex;
+                    flex-direction: row-reverse;
+                    justify-content: space-between;
+
+                    .filter-label {
+                        padding: 2px 0;
+
+                        color: #5F5F5F;
+
+                        /* Typography/1/Medium */
+                        font-family: "Inter";
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 16px;
+                        /* 133.333% */
+                        letter-spacing: 0.04px;
+                    }
+
+                    .dtsp-buttonGroup {
+                        height: 100%;
+
+                        .dtsp-paneButton {
+                            padding: 0;
+                        }
+
+                        button.clearButton {
+                            height: fit-content;
+                            width: fit-content;
+                            padding: 2px 4px;
+                            border-radius: 4px;
+                            margin: 0;
+
+                            background: #F3F3F3;
+
+                            font-size: 12px;
+                            line-height: 16px;
+
+                            display: none;
+                            gap: 4px;
+                            align-items: center;
+
+                            &::before {
+                                content: 'Clear';
+
+                                font-family: 'Inter';
+                                font-size: 12px;
+                                line-height: 16px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            div.dtsp-narrow {
+                flex-direction: row !important;
+            }
+
+            .dataTables_wrapper {
+                border: none;
+                border-radius: 0;
+            }
+
+            .dataTables_scrollBody {
+                height: fit-content !important;
+                max-height: 200px;
+
+                table {
+                    border-radius: 0;
+                    border: none !important;
+                }
+
+                .dataTable {
+                    display: flex;
+
+                    tbody {
+                        width: 100%;
+
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2px;
+
+                        tr,
+                        td {
+                            height: fit-content;
+                            border-radius: 4px;
+                            border: none !important;
+
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+
+                            box-sizing: border-box;
+                            cursor: pointer !important;
+                            transition: all 0.2s ease;
+
+                            >* {
+                                cursor: pointer !important;
+                            }
+                        }
+
+                        tr {
+                            &:hover {
+                                background-color: transparent;
+                            }
+
+                            td {
+                                --padding-x: 12px;
+                                --checkbox-size: 16px;
+                                --gap: 8px;
+
+                                padding: 6px var(--padding-x) 6px calc(var(--padding-x) + var(--checkbox-size) + var(--gap));
+
+                                color: #181818;
+
+                                font-size: 14px;
+                                font-weight: 300;
+                                line-height: 20px;
+
+                                position: relative;
+
+                                &.dataTables_empty {
+                                    width: 100%;
+                                    padding-left: var(--padding-x);
+                                    justify-content: center;
+                                }
+
+                                &:not(.dataTables_empty) {
+
+                                    &::after,
+                                    &::before {
+                                        content: '';
+                                        position: absolute;
+                                        left: 12px;
+
+                                        border: 1px solid transparent;
+
+                                        color: white;
+                                    }
+
+                                    &::before {
+                                        height: var(--checkbox-size);
+                                        width: var(--checkbox-size);
+                                        border-radius: 3px;
+                                        border-color: rgba(32, 9, 0, 0.20);
+
+                                        background: rgba(255, 255, 255, 0.90);
+                                    }
+
+                                    &::after {
+                                        font-family: 'Material Symbols Rounded';
+                                        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                                        font-size: var(--checkbox-size);
+                                        line-height: 1;
+                                        vertical-align: middle;
+
+                                        display: inline-block;
+
+                                        opacity: 0;
+                                    }
+                                }
+
+                                div.dtsp-nameCont {
+
+                                    span.dtsp-name {
+                                        flex-grow: 0;
+                                        cursor: pointer !important;
+                                    }
+
+                                    span.dtsp-pill {
+
+                                        min-width: unset;
+                                        border-radius: 0;
+
+                                        background-color: transparent;
+
+                                        cursor: pointer !important;
+
+                                        &::before {
+                                            content: '(';
+                                        }
+
+                                        &::after {
+                                            content: ')';
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.selected {
+                                >* {
+                                    box-shadow: none;
+                                }
+
+                                td:not(.dataTables_empty) {
+                                    &::before {
+                                        background: #7F7F7F;
+                                    }
+
+                                    &::after {
+                                        content: 'check';
+
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -22,15 +22,13 @@
     max-width: 750px;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
 }
 
 .filter-group {
     flex-grow: 1;
-    min-width: 180px;
-    max-width: 200px;
     display: flex;
     flex-direction: column;
+    align-items: end;
     position: relative;
 }
 
@@ -50,6 +48,43 @@
     color: #5F5F5F;
     height: 32px;
     transition: all 0.2s ease;
+}
+
+.search-container {
+    position: relative;
+
+    display: flex;
+}
+
+#search-filter {
+    padding-right: 28px;
+}
+
+.clear-search-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+
+    padding: 0 8px 0 4px;
+
+    background-color: transparent;
+
+    display: none;
+
+    transform: translateY(-50%);
+}
+
+.clear-search-btn .icon {
+    color: #5F5F5F;
+}
+
+.clear-search-btn:hover {
+    background-color: transparent;
+}
+
+#clear-filters {
+    display: none;
+    margin-left: 8px;
 }
 
 /* Forms Responsive Design */
@@ -84,13 +119,19 @@
     .filter-row {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
         align-items: end;
         width: 100%;
     }
 
+    .search-container,
+    #search-filter,
     .filter-actions,
     #clear-filters {
         width: 100%;
+    }
+
+    #clear-filters {
+        margin-top: 8px;
+        margin-left: 0;
     }
 }

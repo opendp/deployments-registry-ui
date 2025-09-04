@@ -4,9 +4,8 @@ import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 let deploymentsData = [];
 let deploymentHints = { short_fields: [], extra_columns: {} };
 
-// Initialize sidebar state
-document.addEventListener('DOMContentLoaded', function () {
-  // Initialize all sections as expanded
+// Export the initialization function for use by datatable-init.js
+export function initializeDeploymentsFeatures() {
   // Load deployments data
   const dataScript = document.getElementById('deployments-data');
   if (dataScript) {
@@ -32,11 +31,14 @@ document.addEventListener('DOMContentLoaded', function () {
     initShortFields();
   }
 
-  // Add click handlers to deployment rows
+  // Add click handlers to deployment rows (now that DataTable is initialized)
   const deploymentRows = document.querySelectorAll('.deployment-row');
-  deploymentRows.forEach(function (row, index) {
+  deploymentRows.forEach(function (row) {
     row.addEventListener('click', function () {
-      selectDeploymentRow(index);
+      const rowIndex = parseInt(row.getAttribute('data-index'), 10);
+      if (!Number.isNaN(rowIndex)) {
+        selectDeploymentRow(rowIndex);
+      }
     });
   });
 
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   })();
-});
+}
 
 function renderLatexDescriptionWindows() {
   const elements = document.querySelectorAll('.description-window');
