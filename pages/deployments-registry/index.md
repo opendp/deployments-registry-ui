@@ -23,9 +23,7 @@ icon: 'assignment'
 </header>
 {% endif %}
 
-Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://journalprivacyconfidentiality.org/index.php/jpc/article/view/689) by Cynthia Dwork, Nitin Kohli, and Deirdre Mulligan, this registry provides:
-
-> A publicly available communal body of knowledge about differential privacy implementations that can be used by various stakeholders to drive the identification and adoption of judicious differentially private implementations -Dwork Kohli Mulligan 2019
+This registry is a collaborative resource for information about real-world differential privacy deployments. Use the table and visualizations below to explore both technical and sociotechnical aspects of these deployments.
 
 <script>
     const deployments = {{ site.data.deployments | jsonify }};
@@ -55,45 +53,45 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     </div>
 </div>
 
-<div class="filters-container" style="margin-top: 0.5rem">
+<div class="filters-container" style="margin-top: 0">
     <div class="filter-row">
-        <div class="filter-group" id="curator-filter-group" style="display: none;">
+        <div class="filter-group" id="curator-filter-group" style="margin-top: 0.5rem; display: none;">
             <label for="curator-filter">Curator:</label>
             <select id="curator-filter">
                 <option value="">All Curators</option>
             </select>
         </div>
-        <div class="filter-group" id="model-filter-group" style="display: none;">
+        <div class="filter-group" id="model-filter-group" style="margin-top: 0.5rem; display: none;">
             <label for="model-filter">Model:</label>
             <select id="model-filter">
                 <option value="">All Models</option>
             </select>
         </div>
-        <div class="filter-group" id="product-filter-group" style="display: none;">
+        <div class="filter-group" id="product-filter-group" style="margin-top: 0.5rem; display: none;">
             <label for="product-filter">Product:</label>
             <select id="product-filter">
                 <option value="">All Products</option>
             </select>
         </div>
-        <div class="filter-group" id="flavor-filter-group" style="display: none;">
+        <div class="filter-group" id="flavor-filter-group" style="margin-top: 0.5rem; display: none;">
             <label for="flavor-filter">Flavor:</label>
             <select id="flavor-filter">
                 <option value="">All Flavors</option>
             </select>
         </div>
-        <div class="filter-group" id="privacy-unit-filter-group" style="display: none;">
+        <div class="filter-group" id="privacy-unit-filter-group" style="margin-top: 0.5rem; display: none;">
             <label for="privacy-unit-filter">Privacy Unit:</label>
             <select id="privacy-unit-filter">
                 <option value="">All Privacy Units</option>
             </select>
         </div>
-        <div class="filter-group" id="tier-filter-group" style="display: none;">
+        <div class="filter-group" id="tier-filter-group" style="margin-top: 0.5rem; display: none;">
             <label for="tier-filter">Tier:</label>
             <select id="tier-filter">
                 <option value="">All Tiers</option>
             </select>
         </div>
-        <div class="filter-group" id="year-filter-group" style="display: none;">
+        <div class="filter-group" id="year-filter-group" style="margin-top: 0.5rem; display: none;">
             <label for="year-filter">Year:</label>
             <select id="year-filter">
                 <option value="">All Years</option>
@@ -102,7 +100,7 @@ Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://jo
     </div>
 </div>
 
-<div class="table-container">
+<div class="table-container custom-borders">
 <table id="deployments-table">
     <thead>
         <tr>

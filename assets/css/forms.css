@@ -3,9 +3,9 @@
 .filters-container {
     display: flex;
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
     color: #181818;
     font-size: 16px;
@@ -22,7 +22,7 @@
     max-width: 750px;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 0 8px;
 }
 
 .filter-group {

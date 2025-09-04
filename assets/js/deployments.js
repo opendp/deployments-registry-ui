@@ -220,9 +220,14 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
   if (!deploymentObject || typeof deploymentObject !== 'object') return '';
   let html = [];
   for (let [key, value] of Object.entries(deploymentObject)) {
-    if (key === 'name' || key === 'data_curator' || key === 'description') continue; // These are all rendered in side-panel header
-    if (value === null || value === undefined || value === '') continue;
     const path = joinPath(currentPath, key);
+
+    if (path === '/deployment/name'
+      || path === '/deployment/description') {
+      continue; // These are all rendered in side-panel header
+    }
+
+    if (value === null || value === undefined || value === '') continue;
 
     // If current JSON pointer path matches any value in extra_columns, use its display name (the map key)
     let overrideLabel;
