@@ -2,10 +2,6 @@
 ---
 
 /* Visualization layout & styling extracted from inline JS styles */
-.visualizations-section {
-    margin-top: 1.5rem;
-}
-
 .visualizations-wrapper {
     display: none;
     flex-direction: column;
@@ -13,8 +9,7 @@
 
 .visualizations-header {
     width: 100%;
-    padding: 8px 0;
-    border-top: 0.5px solid #E7E7E7;
+    padding: 8px 0 16px 0;
     border-bottom: 1px solid #E7E7E7;
 
     display: flex;

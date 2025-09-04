@@ -303,20 +303,25 @@ function initDeploymentsVis() {
             let tspan = text.append('tspan').attr('x', 0).attr('y', y).attr('dy', dy + 'em');
 
             // Build wrapped (multi-line) tick labels: accumulate words until they exceed
-            // the allowed band width; when they do, finalize the current line and start
-            // a new <tspan> so long category names stack vertically.
+            // the allowed band width; when they do, finalize current line and start a new <tspan>
+            // so category names stack vertically.
+            // Lines are capped at 2 (second line truncated with ellipsis if overflow).
             words.forEach(word => {
-                line.push(word);
-                tspan.text(line.join(' '));
-                if (tspan.node().getComputedTextLength() > maxWidth && line.length > 1) {
-                    line.pop();
+                if (lineNumber < 1) {
+                    line.push(word);
                     tspan.text(line.join(' '));
-                    line = [word];
-                    tspan = text.append('tspan')
+                    if (tspan.node().getComputedTextLength() > maxWidth && line.length > 1) {
+                        line.pop();
+                        tspan.text(line.join(' '));
+                        line = [word];
+                        tspan = text.append('tspan')
                         .attr('x', 0)
                         .attr('y', y)
                         .attr('dy', ((++lineNumber * lineHeightEm) + dy) + 'em')
                         .text(word);
+                    }
+                } else {
+                    tspan.text(line.join(' ') + '...');
                 }
             });
         });
