@@ -81,8 +81,6 @@ table tr:nth-child(even) {
     text-align: left;
     color: #181818;
     border: 1px solid #E7E7E7;
-    border-right: 0;
-    border-bottom: 0;
     font-weight: 300;
 }
 
@@ -104,42 +102,42 @@ table tr:nth-child(even) {
     /* eslint-enable css/no-important */
 }
 
-.table-container th:last-child,
-.table-container td:last-child {
+.table-container.custom-borders th:last-child,
+.table-container.custom-borders td:last-child {
     border-right: 1px solid #E7E7E7;
 }
 
 /* Add bottom border to last row */
-.table-container tr:last-child td,
-.table-container tr:last-child th {
+.table-container.custom-borders tr:last-child td,
+.table-container.custom-borders tr:last-child th {
     border-bottom: 1px solid #E7E7E7;
 }
 
 /* Table Corner Radius */
-.table-container table th,
-.table-container:not(:has(thead)) tr:first-child td {
+.table-container.custom-borders table th,
+.table-container.custom-borders:not(:has(thead)) tr:first-child td {
     border-top-width: 0;
 }
 
-.table-container table tr th:first-child,
-.table-container table tr td:first-child {
+.table-container.custom-borders table tr th:first-child,
+.table-container.custom-borders table tr td:first-child {
     border-left-width: 0;
 }
 
-.table-container table tr th:last-child,
-.table-container table tr td:last-child {
+.table-container.custom-borders table tr th:last-child,
+.table-container.custom-borders table tr td:last-child {
     border-right-width: 0;
 }
 
-.table-container table tr:last-child td {
+.table-container.custom-borders table tr:last-child td {
     border-bottom-width: 0;
 }
 
-.table-container table tr:last-child td:first-child {
+.table-container.custom-borders table tr:last-child td:first-child {
     border-left-width: 0;
 }
 
-.table-container table tr:last-child td:last-child {
+.table-container.custom-borders table tr:last-child td:last-child {
     border-bottom-width: 0;
 }
 

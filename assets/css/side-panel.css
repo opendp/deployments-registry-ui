@@ -293,7 +293,7 @@
     .side-panel.expanded {
         max-height: 85vh;
         max-width: 95vw;
-        padding: 12px 4px 24px 16px;
+        padding: 12px 4px 12px 16px;
         overflow-y: auto;
         opacity: 1;
         visibility: visible;

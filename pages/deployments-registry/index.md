@@ -23,9 +23,7 @@ icon: 'assignment'
 </header>
 {% endif %}
 
-Inspired by [Differential Privacy in Practice: Expose your Epsilons!](https://journalprivacyconfidentiality.org/index.php/jpc/article/view/689) by Cynthia Dwork, Nitin Kohli, and Deirdre Mulligan, this registry provides:
-
-> A publicly available communal body of knowledge about differential privacy implementations that can be used by various stakeholders to drive the identification and adoption of judicious differentially private implementations -Dwork Kohli Mulligan 2019
+This registry is a collaborative resource for information about real-world differential privacy deployments. Use the table and visualizations below to explore both technical and sociotechnical aspects of these deployments.
 
 <script>
     const deployments = {{ site.data.deployments | jsonify }};

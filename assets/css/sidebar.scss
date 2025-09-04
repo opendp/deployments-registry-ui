@@ -113,7 +113,6 @@
 
 /* Navigation Container */
 .docs-nav {
-    width: calc(290px - 1rem);
     box-sizing: border-box;
     height: 100%;
     max-height: calc(100vh - 80px);
@@ -142,9 +141,9 @@
     color: #181818;
     display: flex;
     height: 40px;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 8px;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 8px;
     border-radius: 6px;
     font-size: 16px;
@@ -167,8 +166,6 @@
 }
 
 .sidebar-toggle.active,
-.sidebar-link-wrapper.active,
-.sidebar-link-wrapper.active:hover,
 .sidebar-link.active,
 .sidebar-link.active:hover {
     color: white;
@@ -200,27 +197,50 @@
     transition: all 0.2s ease;
     opacity: 1;
     padding: 0;
-    margin: 0.5rem 0 0 0;
+    margin: 0.5rem 0 0 16px;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     max-height: 500px;
     /* Set a reasonable max-height for content */
 }
 
 /* Individual Sidebar Links */
 .sidebar-link-wrapper {
-    display: flex;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    padding: 6px 12px;
+    padding: 2px 0;
 
-    &:hover {
-        background-color: #e9ecef;
+    display: flex;
+    transition: all 0.2s ease;
+
+    box-sizing: border-box;
+    position: relative;
+
+
+    &::before {
+        content: '';
+        position: absolute;
+        top :0;
+        bottom: 0;
+
+        width: 1px;
+        border-radius: 1px;
+        background: #e7e7e7;
+    }
+
+    &:first-child::before {
+        border-radius: 1px 1px 0 0;
+    }
+
+    &:last-child::before {
+        border-radius: 0 0 1px 1px;
     }
 }
 
 .sidebar-link {
+    width: 100%;
+    border-radius: 6px;
+    padding: 6px 12px 6px 8px;
+    margin-left: 8px;
+
     color: #3A3A3A;
     text-decoration: none;
     font-size: 14px;
@@ -231,6 +251,7 @@
     &:hover {
         color: #3A3A3A;
         text-decoration: none;
+        background-color: #e9ecef;
     }
 }
 
