@@ -44,7 +44,7 @@ export function getColumnsConfig(deploymentsData) {
         options: Array.from(productSet).map(product => ({
             label: product,
             value: function (rowData) {
-                return rowData?.deployment?.data_product_type === product;
+                return rowData?.deployment?.product?.data_product_type === product;
             }
         }))
     };
@@ -56,10 +56,11 @@ export function getColumnsConfig(deploymentsData) {
         options: Array.from(curatorSet).map(curator => ({
             label: curator,
             value: function (rowData) {
-                if (Array.isArray(rowData?.deployment?.data_curators)) {
-                    return rowData?.deployment?.data_curators.includes(curator);
-                } else if (typeof rowData?.deployment?.data_curators === 'string') {
-                    return rowData?.deployment?.data_curators === curator;
+                const curators = rowData?.deployment?.product.data_curators;
+                if (Array.isArray(curators)) {
+                    return curators.includes(curator);
+                } else if (typeof curators === 'string') {
+                    return curators === curator;
                 }
                 return false;
             }

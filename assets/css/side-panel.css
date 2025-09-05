@@ -28,13 +28,13 @@
     z-index: 1000;
     box-sizing: border-box;
     width: min(30vw, 480px);
+    height: 100%;
+    max-height: calc(100vh - 104px - 2rem);
     border-radius: 8px;
     border: 1px solid #E7E7E7;
     background: #FFF;
     padding: 0;
     transition: all 0.2s ease;
-    height: fit-content;
-    max-height: calc(100vh - 104px - 2rem);
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
