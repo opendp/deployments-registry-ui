@@ -224,8 +224,8 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
   for (let [key, value] of Object.entries(deploymentObject)) {
     const path = joinPath(currentPath, key);
 
-    if (path === '/deployment/name'
-      || path === '/deployment/description') {
+    if (path === '/deployment/product/name'
+      || path === '/deployment/product/description') {
       continue; // These are all rendered in side-panel header
     }
 
@@ -288,24 +288,25 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
 
 function generateDeploymentDetailsHTML(deployment, fileName) {
   const data_repo_base_url = window.siteConfig.dataRepoBaseUrl;
+  const { name, description } = deployment.product;
 
   let deploymentHeader = `
       <div class="deployment-header-container">
         <div class="deployment-header">
           <div class="info">
             <div class="title">
-              ${deployment.name || 'Deployment Details'}${deployment.data_curator ? ` by ${deployment.data_curator}` : ''}
+              ${name || 'Deployment Details'}
             </div>
 
-            ${deployment.description ? `<div class="description">${marked.parse(deployment.description)}</div>` : ''}
+            ${description ? `<div class="description">${marked.parse(description)}</div>` : ''}
 
             ${data_repo_base_url && fileName ? (
-              `<button class="download-btn" onClick="window.open('${data_repo_base_url}/${fileName }.yaml', '_blank')">
+              `<a class="button download-btn" href="${data_repo_base_url}/${fileName}.yaml" target="_blank">
                 View on GitHub
                 <span class="material-symbols-rounded icon">
                   arrow_outward
                 </span>
-              </button>`
+              </a>`
             ) : ''}
           </div>
 

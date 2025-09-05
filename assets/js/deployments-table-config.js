@@ -9,8 +9,8 @@ export function getColumnsConfig(deploymentsData) {
         const { tier } = dep;
         // Safe extraction with defaults so missing keys don't create sparse/shift issues.
 		const deployment = dep?.deployment || {};
-		const data_product_type = deployment.data_product_type ?? '';
-		const data_curators = deployment.data_curators ?? null; // may be array or string; null if absent
+		const data_product_type = deployment.product.data_product_type ?? '';
+		const data_curators = deployment.product.data_curators ?? null; // may be array or string; null if absent
 		const privacy_unit = deployment.privacy_loss?.privacy_unit ?? '';
 
         if (tier)  tierSet.add(tier);
@@ -78,6 +78,7 @@ export function getColumnsConfig(deploymentsData) {
     };
 
     const columnsConfig = [
+        // TIER
         {
             column: {
                 data: 'tier',
@@ -118,16 +119,17 @@ export function getColumnsConfig(deploymentsData) {
                 config: tierSearchPaneConfig,
             },
         },
+        // PRODUCT
         {
             column: {
                 data: null,
                 className: 'product-column',
                 title: 'Product',
                 render: (_, __, row) => {
-                    const { name, data_curators } = row.deployment;
+                    const { name, data_curators } = row.deployment.product;
                     return (`
                         <div style="color: #181818; font-weight: 500; margin-bottom: 4px">${name}</div>
-                        <div>by ${data_curators}</div>
+                        <div>by ${Array.isArray(data_curators) ? data_curators.join(', ') : data_curators}</div>
                     `);
                 },
             },
@@ -139,13 +141,14 @@ export function getColumnsConfig(deploymentsData) {
                 ],
             }
         },
+        // DESCRIPTION
         {
             column: {
                 data: 'deployment.description',
                 className: 'product-description',
                 title: 'Description',
                 render: (_, __, row, meta) => {
-                    const description = row?.deployment?.description || '';
+                    const description = row?.deployment?.product?.description || '';
                     if (!description) return '';
                     const displayIndex = meta?.row ?? 0;
 
@@ -161,9 +164,10 @@ export function getColumnsConfig(deploymentsData) {
             },
             searchPane: { show: true }
         },
+        // YEAR
         {
             column: {
-                data: 'deployment.publication_date',
+                data: 'deployment.product.publication_date',
                 className: 'year-column',
                 title: 'Year',
                 render: (data, type) => {
@@ -180,6 +184,7 @@ export function getColumnsConfig(deploymentsData) {
             },
             searchPane: true
         },
+        // FLAVOUR
         {
             column: {
                 data: null,
@@ -192,6 +197,7 @@ export function getColumnsConfig(deploymentsData) {
             },
             searchPane: true
         },
+        // PRIVACY LOSS
         {
             column: {
                 data: null,
@@ -233,6 +239,7 @@ export function getColumnsConfig(deploymentsData) {
                 config: privacyUnitSearchPaneConfig,
             },
         },
+        // MODEL
         {
             column: {
                 data: null,
@@ -245,6 +252,7 @@ export function getColumnsConfig(deploymentsData) {
             },
             searchPane: true
         },
+        // ACCOUNTING
         {
             column: {
                 data: null,
@@ -257,6 +265,7 @@ export function getColumnsConfig(deploymentsData) {
             searchPane: { show: false },
 			columnDef: { orderable: false },
         },
+        // IMPLEMENTATION
         {
             column: {
                 data: null,
