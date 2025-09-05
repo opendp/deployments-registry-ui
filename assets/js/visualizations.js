@@ -48,7 +48,7 @@ const VIS_CONFIG = {
     height: 350,                                            // total SVG height (before dynamic extension for wrapped labels)
     plotSpacing: 70,                                        // horizontal space between left & right charts
     dropdownHeight: 24,                                     // vertical reserve for dropdown UI
-    defaultVariable: "data_product_type"                    // initial variable shown
+    defaultVariable: "product_data_product_type"                    // initial variable shown
 };
 
 // Base vertical offset from plot area bottom to x-axis label
@@ -59,11 +59,11 @@ const X_LABEL_GAP = 16;
 // Dropdown options: internal 'name' = data field; 'displayName' = user-facing label
 const VARIABLE_OPTIONS = [
     { name: "dp_flavor_name", displayName: "Flavor" },
-    { name: "data_product_sector", displayName: "Sector" },
-    { name: "data_product_region", displayName: "Region" },
+    { name: "product_data_product_sector", displayName: "Sector" },
+    { name: "product_data_product_region", displayName: "Region" },
     { name: "tier", displayName: "Tier" },
     { name: "model_model_name", displayName: "Deployment model" },
-    { name: "data_product_type", displayName: "Data product type" },
+    { name: "product_data_product_type", displayName: "Data product type" },
     { name: "model_release_type", displayName: "Release type" },
     { name: "model_access_type", displayName: "Access type" },
     { name: "model_data_source_type", displayName: "Data source" }
@@ -160,7 +160,7 @@ function buildDataFromDeployments(raw) {
             ...flattenedDeployment,
 
             tier: tierRaw != null ? tierRaw.toString() : UNKNOWN,
-            year: extractYear(dep.publication_date),
+            year: extractYear(dep.product.publication_date),
         };
     });
 
