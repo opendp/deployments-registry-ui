@@ -176,8 +176,9 @@ export function getColumnsConfig(deploymentsData) {
                     const date = new Date(dateString);
                     const year = date.getFullYear();
 
-                    if (type === 'sort') {
-                        return date.getTime(); // Return timestamp for sorting
+                    // For sorting, return the timestamp
+                    if (type === 'sort' || type === 'type') {
+                        return date.getTime();
                     }
 
                     return year;
@@ -204,13 +205,23 @@ export function getColumnsConfig(deploymentsData) {
                 data: null,
                 className: 'privacy-loss-column',
                 title: 'Privacy Loss',
-                render: (_, __, row) => {
+                render: (_, type, row) => {
                     const privacy_unit = row?.deployment?.privacy_loss.privacy_unit || null;
                     const privacy_parameters = row?.deployment?.privacy_loss?.privacy_parameters || {};
                     const epsilon = privacy_parameters.epsilon || null;
                     const delta = privacy_parameters.delta || null;
                     const rho = privacy_parameters.rho || null;
 
+                    // For sorting, return a comparable value
+                    if (type === 'sort' || type === 'type') {
+                        let epsilonNum = epsilon ? parseFloat(epsilon) : 0;
+                        let deltaNum = delta ? parseFloat(delta) : 0;
+                        let rhoNum = rho ? parseFloat(rho) : 0;
+
+                        // Create a composite sort value using smaller, safer multipliers
+                        const sortValue = epsilonNum * 100000000 + deltaNum * 10000 + rhoNum;
+                        return sortValue;
+                    }
                     const elements = [];
 
                     if (privacy_unit) {
@@ -239,6 +250,7 @@ export function getColumnsConfig(deploymentsData) {
                 show: true,
                 config: privacyUnitSearchPaneConfig,
             },
+			columnDef: { orderable: true },
         },
         // MODEL
         {
