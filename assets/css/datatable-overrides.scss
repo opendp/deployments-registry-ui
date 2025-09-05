@@ -55,6 +55,11 @@ table.dataTable#deployments-table thead>tr>td.sorting_desc:after {
     color: #000;
 }
 
+table.dataTable.display>tbody>tr.deployment-row.even>.sorting_1,
+table.dataTable.order-column.stripe>tbody>tr.deployment-row.even>.sorting_1 {
+    box-shadow: none;
+}
+
 // These selectors are duplicates of searchPanes classes, hence the complexity needs to be kept intact
 table.dataTable.row-border>tbody>tr>th,
 table.dataTable.row-border>tbody>tr>td,
