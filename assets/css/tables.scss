@@ -92,9 +92,9 @@ table tr:nth-child(even) {
 
 /* Table Border Management */
 /* Add right border to last column */
-// .table-container .empty-cell {
-//     display: none;
-// }
+.table-container .empty-cell {
+    display: none;
+}
 
 .table-container table {
     /* eslint-disable css/no-important */
