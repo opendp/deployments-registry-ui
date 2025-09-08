@@ -4,9 +4,8 @@ import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 let deploymentsData = [];
 let deploymentHints = { short_fields: [], extra_columns: {} };
 
-// Initialize sidebar state
-document.addEventListener('DOMContentLoaded', function () {
-  // Initialize all sections as expanded
+// Export the initialization function for use by datatable-init.js
+export function initializeDeploymentsFeatures() {
   // Load deployments data
   const dataScript = document.getElementById('deployments-data');
   if (dataScript) {
@@ -32,11 +31,14 @@ document.addEventListener('DOMContentLoaded', function () {
     initShortFields();
   }
 
-  // Add click handlers to deployment rows
+  // Add click handlers to deployment rows (now that DataTable is initialized)
   const deploymentRows = document.querySelectorAll('.deployment-row');
-  deploymentRows.forEach(function (row, index) {
+  deploymentRows.forEach(function (row) {
     row.addEventListener('click', function () {
-      selectDeploymentRow(index);
+      const rowIndex = parseInt(row.getAttribute('data-index'), 10);
+      if (!Number.isNaN(rowIndex)) {
+        selectDeploymentRow(rowIndex);
+      }
     });
   });
 
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   })();
-});
+}
 
 function renderLatexDescriptionWindows() {
   const elements = document.querySelectorAll('.description-window');
@@ -222,8 +224,8 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
   for (let [key, value] of Object.entries(deploymentObject)) {
     const path = joinPath(currentPath, key);
 
-    if (path === '/deployment/name'
-      || path === '/deployment/description') {
+    if (path === '/deployment/product/name'
+      || path === '/deployment/product/description') {
       continue; // These are all rendered in side-panel header
     }
 
@@ -295,24 +297,25 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
 
 function generateDeploymentDetailsHTML(deployment, fileName) {
   const data_repo_base_url = window.siteConfig.dataRepoBaseUrl;
+  const { name, description } = deployment.product;
 
   let deploymentHeader = `
       <div class="deployment-header-container">
         <div class="deployment-header">
           <div class="info">
             <div class="title">
-              ${deployment.name || 'Deployment Details'}${deployment.data_curator ? ` by ${deployment.data_curator}` : ''}
+              ${name || 'Deployment Details'}
             </div>
 
-            ${deployment.description ? `<div class="description">${marked.parse(deployment.description)}</div>` : ''}
+            ${description ? `<div class="description">${marked.parse(description)}</div>` : ''}
 
             ${data_repo_base_url && fileName ? (
-              `<button class="download-btn" onClick="window.open('${data_repo_base_url}/${fileName }.yaml', '_blank')">
+              `<a class="button download-btn" href="${data_repo_base_url}/${fileName}.yaml" target="_blank">
                 View on GitHub
                 <span class="material-symbols-rounded icon">
                   arrow_outward
                 </span>
-              </button>`
+              </a>`
             ) : ''}
           </div>
 
