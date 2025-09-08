@@ -20,7 +20,7 @@ div:has(.bib-link-wrapper) {
   transform: none;
   padding-top: 10px;
   background: transparent;
-  z-index: 99999;
+  z-index: 999;
   margin-top: -8px;
   margin-left: -20px;
   opacity: 0;
@@ -62,6 +62,7 @@ div:has(.bib-link-wrapper) {
   color: #181818;
   margin-top: 6px;
 }
+
 .bib-title {
   color: #181818;
   font-size: 16px;
@@ -126,7 +127,7 @@ div:has(.bib-link-wrapper) {
     left: 0;
     transform: none;
   }
-  
+
   .bib-link-wrapper:hover .bib-tooltip {
     transform: translateY(2px);
   }

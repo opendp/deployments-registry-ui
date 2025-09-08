@@ -1,7 +1,10 @@
+---
+---
 /* Table Styles - Data tables styling including borders, hover effects, and clickable rows */
 
 /* Base Table Styling */
 .docs-content .table-container {
+
     width: fit-content;
     max-width: 100%;
     overflow-x: auto;
@@ -27,9 +30,32 @@
     width: max-content;
 }
 
+#deployments-table {
+    border-bottom: none;
+}
+
+#deployments-table_wrapper {
+    min-height: 564px;
+}
+
 .main .docs-content table {
     margin: 0;
 }
+
+/* Table Head */
+.docs-content thead {
+    background: #F3F3F3;
+}
+
+.tier-column { min-width: 24px; }
+.product-column { min-width: 200px }
+.product-description { min-width: 200px }
+.year-column { min-width: 60px; }
+.flavour-column { min-width: 175px; }
+.privacy-loss-column { min-width: 175px; }
+.model-column { min-width: 70px }
+.accounting-column { min-width: 124px; }
+.implementation-column { min-width: 124px; }
 
 /* Table Rows */
 .docs-content tbody tr {
@@ -43,6 +69,7 @@ table tr:nth-child(even) {
 
 .docs-content tr th {
     background-color: transparent;
+    position: relative;
 }
 
 /* Table Cells */
@@ -125,7 +152,7 @@ table tr:nth-child(even) {
 }
 
 /* Table Hover Effects */
-.docs-content tr:hover {
+.docs-content tbody tr:hover {
     background: #F3F3F3;
 }
 
@@ -139,14 +166,6 @@ table tr:nth-child(even) {
     background-color: #e9ecef;
 }
 
-.deployment-row.selected {
-    background-color: #DADADA;
-    color: white;
-}
-
-.deployment-row.selected:hover {
-    background-color: #DADADA;
-}
 
 .tier-column .tiers {
     text-align: center;
@@ -165,7 +184,8 @@ table tr:nth-child(even) {
     font-size: 6px;
     line-height: 10px;
 }
-.tier-column .tiers i.fa-solid {
+
+.tier-column .tiers i.filled {
     color: #5BB98B;
 }
 
@@ -186,9 +206,9 @@ table tr:nth-child(even) {
 .product-description .description-window {
     position: absolute;
     top: calc(50% - 1.6em - 0.5px);
-    z-index: 99999;
-    left: -0.5px;
-    right: -0.5px;
+    z-index: 999;
+    left: 1px;
+    right: 1px;
     max-width: 320px;
     padding: 8px;
     border-radius: 8px;
@@ -208,9 +228,25 @@ table tr:nth-child(even) {
 }
 
 tr:has(.description-window):last-child .product-description .description-window,
-tr:nth-last-child(2):has(.description-window) .product-description .description-window {
+tr:nth-last-child(4):has(.description-window) .product-description .description-window {
     top: unset;
     bottom: calc(50% - 1.9em);
+}
+
+
+/* Inline alignment for Tier header */
+th.tier-header {
+    white-space: nowrap;
+}
+
+th.tier-header .th-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+th.tier-header .th-title {
+    font-weight: 500;
 }
 
 /* Table Responsive Design */
