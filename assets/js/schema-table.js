@@ -39,7 +39,7 @@ function fillTable(table, properties, required, nameCells) {
         const nameCell = makeNameCell(name, def, required)
         row.appendChild(nameCell);
 
-        if (!def.properties && def.description) {
+        if (!def.properties) {
             const descriptionCell = makeDescriptionCell(def, maxDepth - nameCells.length);
             row.appendChild(descriptionCell);
         }
