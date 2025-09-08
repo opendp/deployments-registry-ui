@@ -46,12 +46,12 @@ $$
 
 This \\(M\\) algorithm will provide a set amount of noise, quantified by ϵ, which would generate outputs with certain error from the real value, which can be quantified by the following interactive widget.
 
-### Randomized Response was ε-Differential Privacy
+### Randomized Response was ϵ-Differential Privacy
 
 Although randomized response surveys predate the formal definition of differential privacy by over 40 years, the technique directly maps to the binary mechanism used in modern differential privacy. 
 
 Assume you wish to set up the spinner originally proposed by Warner
-to achieve ε-differential privacy. This can be done by asking
+to achieve ϵ-differential privacy. This can be done by asking
 participants to tell the truth with probability
 \\(\frac{e^{\frac{\epsilon}{2}}}{1 + e^{\frac{\epsilon}{2}}}\\). This is
 known in the literature as the binary mechanism.
@@ -62,7 +62,7 @@ This mechanism is incredibly useful for building intuition among a non-technical
 <table>
     <thead>
         <tr>
-            <th>ε</th>
+            <th>ϵ</th>
             <th>Probability of Truth</th>
             <th>Odds of Truth</th>
         </tr>
@@ -80,7 +80,7 @@ guarantees to have a meaningful privacy assurance.
 
 ### Intuition of the Laplace Mechanism
 
-One of the most widely used mechanisms in ε-differential privacy is the
+One of the most widely used mechanisms in ϵ-differential privacy is the
 Laplace mechanism. It is used when we are adding bounded values
 together such as counts or summations of private values, provided the
 extreme values (usually referenced as _bounds_) of the private
@@ -90,7 +90,7 @@ subject is _bounded_.
 In practice, the true sum is first computed, then noise is sampled from the Laplace distribution, and finally this noise is added to the result.
 For example, if you're counting and all the values lie within range in (0, 1), the widget below shows how the
 distribution of noise and expected error change as
-ε varies.
+ϵ varies.
 
 Note that the error is additive and so we can make claims about the
 absolute error, but not the relative error of the final stochastic
@@ -101,9 +101,9 @@ result.
 </div>
 <script type="module" src="/assets/js/epsilon-expected-error.js"></script>
 
-## (ε, δ)-Differential Privacy
+## (ϵ, δ)-Differential Privacy
 
-(ε, δ)-differential privacy is a mathematical guarantee that extends the concept of pure epsilon-differential privacy by allowing for a small probability of failure, with a second privacy parameter \\(\delta\\). Just as we described pure DP in our previous section, it also ensures that the outcome of any analysis is nearly the same, regardless of whether any individual's data is present, but further includes a small allowance for a cryptographically small chance of error.
+(ϵ, δ)-differential privacy is a mathematical guarantee that extends the concept of pure epsilon-differential privacy by allowing for a small probability of failure, with a second privacy parameter \\(\delta\\). Just as we described pure DP in our previous section, it also ensures that the outcome of any analysis is nearly the same, regardless of whether any individual's data is present, but further includes a small allowance for a cryptographically small chance of error.
 
 Formally, the privacy guarantee is now quantified using both \\(\epsilon\\) (epsilon) and also \\(\delta\\) (delta). A randomized algorithm \\(M\\) is \\((\epsilon, \delta)\\)-differentially private if for all neighboring datasets \\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all subsets of outputs \\(S \subseteq \text{Range}(M)\\)
 
@@ -115,7 +115,7 @@ $$
 
 <!-- eslint-enable markdown/no-missing-label-refs -->
 
-The following widget describes the expected error for noise added under (ε, δ)-DP.
+The following widget describes the expected error for noise added under (ϵ, δ)-DP.
 
 <div class="diagram-container">
 <div id="laplace-to-gaussian"></div>

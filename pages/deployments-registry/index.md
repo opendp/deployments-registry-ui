@@ -162,7 +162,7 @@ This registry is a collaborative resource for information about real-world diffe
                     <div style="font-weight: 500; margin-bottom: 4px; font-size: 12px">{{ d.privacy_loss.privacy_unit }}</div>
                 {% endif %}
                 {% if d.privacy_loss.privacy_parameters.epsilon %}
-                    ε:&nbsp;{{ d.privacy_loss.privacy_parameters.epsilon }}<br>
+                    ϵ:&nbsp;{{ d.privacy_loss.privacy_parameters.epsilon }}<br>
                 {% endif %}
                 {% if d.privacy_loss.privacy_parameters.delta %}
                     δ:&nbsp;{{ d.privacy_loss.privacy_parameters.delta }}<br>
