@@ -1,5 +1,5 @@
 /* eslint-env browser, jquery */
-/* global DataTable */
+/* global DataTable, MathJax */
 
 import { getColumnsConfig } from './deployments-table-config.js';
 import { initializeDeploymentsFeatures } from './deployments.js';
@@ -167,6 +167,16 @@ window.addEventListener('DOMContentLoaded', () => {
 				initializeDeploymentsFeatures();
 			} catch (e) {
 				console.warn('Failed to initialize deployments features:', e);
+			}
+
+			// Typeset math only for the affected elements
+			try {
+				MathJax.typeset?.(Array.from(document.querySelectorAll('.inline-markdown')));
+			} catch (err) {
+				if (!window.__mathjaxTypesetWarned) {
+				console.warn('[deployments.js] MathJax typeset failed or MathJax not loaded when rendering datatable.', err);
+				window.__mathjaxTypesetWarned = true; // avoid spamming console
+				}
 			}
 		},
 	});
