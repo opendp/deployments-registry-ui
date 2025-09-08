@@ -230,16 +230,25 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
     if (value === null || value === undefined || value === '') continue;
 
     // If current JSON pointer path matches any value in extra_columns, use its display name (the map key)
-    let overrideLabel;
+    let label = key.split('_').join(' ');
     if (deploymentHints && deploymentHints.extra_columns) {
       for (const [displayName, pointer] of Object.entries(deploymentHints.extra_columns)) {
         if (pointer === path) {
-          overrideLabel = displayName;
+          label = displayName;
           break;
         }
       }
     }
-    const label = overrideLabel || key.split('_').join(' ');
+
+    const definitionAnchor = path.replace(/\//g, '-').substring(1); // e.g. /deployment/name -> deployment-name
+    const definitionAnchorElHref = `/deployments-registry/schema#${definitionAnchor}`;
+    const definitionAnchorEl = `
+      <a class="definition-anchor" title="See definition in schema" href="${definitionAnchorElHref}">
+        <i class="material-symbols-rounded icon">info</i>
+      </a>
+    `;
+
+    const labelEl = `${label}${definitionAnchorEl}`
 
     // If value is plain object
     if (typeof value === 'object' && !Array.isArray(value)) {
@@ -267,7 +276,7 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
       html.push(`
           <table class="short-field">
             <tr>
-              <th style="text-transform: capitalize;">${label}</th>
+              <th style="text-transform: capitalize;">${labelEl}</th>
               <td>${marked.parse(renderedValue)}</td>
             </tr>
           </table>`
@@ -275,7 +284,7 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
     } else {
       html.push(`
           <div class="long-field">
-            <div class="section-sub-heading" style="text-transform: capitalize;">${label}</div>
+            <div class="section-sub-heading" style="text-transform: capitalize;">${labelEl}</div>
             <div class="section-content">${marked.parse(renderedValue)}</div>
           </div>`
       );
