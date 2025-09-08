@@ -246,7 +246,7 @@ function objectToHTML(deploymentObject, currentPath = '/deployment') {
     const definitionAnchorElHref = `/deployments-registry/schema#${definitionAnchor}`;
     const definitionAnchorEl = `
       <a class="definition-anchor" title="See definition in schema" href="${definitionAnchorElHref}">
-        <i class="material-symbols-rounded icon">info</i>
+        <i class="material-symbols-rounded icon">arrow_outward</i>
       </a>
     `;
 
