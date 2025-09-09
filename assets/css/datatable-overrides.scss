@@ -81,6 +81,7 @@ table.dataTable.row-border>tbody>tr>td,
 table.dataTable.display>tbody>tr>th,
 table.dataTable.display>tbody>tr>td {
     border-top: 1px solid #E7E7E7;
+    vertical-align: top;
 }
 
 table.dataTable.stripe>tbody>tr.odd>*,

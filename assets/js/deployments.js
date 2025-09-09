@@ -34,12 +34,24 @@ export function initializeDeploymentsFeatures() {
   // Add click handlers to deployment rows (now that DataTable is initialized)
   const deploymentRows = document.querySelectorAll('.deployment-row');
   deploymentRows.forEach(function (row) {
+    const rowIndex = parseInt(row.getAttribute('data-index'), 10);
+
     row.addEventListener('click', function () {
-      const rowIndex = parseInt(row.getAttribute('data-index'), 10);
       if (!Number.isNaN(rowIndex)) {
         selectDeploymentRow(rowIndex);
       }
     });
+
+    const hiddenDescriptionText = row.querySelector('.hidden-description-text');
+    const showMoreButton = row.querySelector('.show-more-btn');
+    if(hiddenDescriptionText && showMoreButton) {
+      showMoreButton.addEventListener('click', function (e) {
+        e.stopPropagation(); // Prevent row click event
+        if (!Number.isNaN(rowIndex)) {
+          hiddenDescriptionText.classList.toggle('truncate');
+        }
+      });
+    }
   });
 
   // Render latex descriptions (assumes order of .product-description cells matches deploymentsData)

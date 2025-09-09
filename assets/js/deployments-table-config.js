@@ -1,4 +1,6 @@
 // columnsConfig.js
+const DESCRIPTION_CHAR_LIMIT = 100;
+
 export function getColumnsConfig(deploymentsData) {
 	const tierSet = new Set();
 	const productSet = new Set();
@@ -148,19 +150,52 @@ export function getColumnsConfig(deploymentsData) {
                 data: 'deployment.description',
                 className: 'product-description',
                 title: 'Description',
-                render: (_, __, row, meta) => {
+                render: (_, type, row, meta) => {
                     const description = row?.deployment?.product?.description || '';
                     if (!description) return '';
+
+                    // For sorting, return the full description text
+                    if (type === 'sort' || type === 'type') {
+                        return description;
+                    }
+
                     const displayIndex = meta?.row ?? 0;
 
-                    return (`
-                        <span class="description-text">${description}</span>
-                        ${description.length > 0 ? `
-                            <div data-index="${displayIndex}" class="description-window">
-                                ${description}
-                            </div>
-                        ` : ``}
-                    `);
+                    const descriptionCell = document.createElement('div');
+                    descriptionCell.classList.add('description-cell');
+                    descriptionCell.setAttribute('data-index', displayIndex);
+
+                    const descriptionText = document.createElement('span');
+                    descriptionText.classList.add('description-text');
+                    descriptionText.textContent = description.substring(0, DESCRIPTION_CHAR_LIMIT);
+
+                    descriptionCell.appendChild(descriptionText);
+
+                    if (description.length > DESCRIPTION_CHAR_LIMIT) {
+                        const hiddenDescriptionText = document.createElement('span');
+                        hiddenDescriptionText.classList.add('hidden-description-text', 'truncate');
+
+                        const ellipsisSpan = document.createElement('span');
+                        ellipsisSpan.classList.add('ellipsis');
+                        ellipsisSpan.textContent = '...';
+
+                        const fullTextSpan = document.createElement('span');
+                        fullTextSpan.classList.add('full-text');
+                        fullTextSpan.textContent = description.substring(DESCRIPTION_CHAR_LIMIT);
+
+                        const showMoreBtn = document.createElement('span');
+                        showMoreBtn.classList.add('show-more-btn');
+                        showMoreBtn.innerHTML = 'show <span class="more">more</span><span class="less">less</span>';
+
+                        hiddenDescriptionText.appendChild(ellipsisSpan);
+                        hiddenDescriptionText.appendChild(fullTextSpan);
+                        hiddenDescriptionText.appendChild(showMoreBtn);
+
+                        descriptionCell.appendChild(hiddenDescriptionText);
+                    }
+
+                    // Return the outer HTML of the constructed description cell
+                    return descriptionCell.outerHTML;
                 },
             },
             searchPane: { show: true }
