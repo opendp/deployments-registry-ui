@@ -37,15 +37,16 @@ This registry is a collaborative resource for information about real-world diffe
 
 <!-- Filters Section -->
 <div class="filters-container">
-    <div style="white-space: nowrap">Deployments Registry</div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span class="title" style="white-space: nowrap;">Deployments Registry</span>
+        <span class="sub-title">Click any row to view detailed information.</span>
+    </div>
     <div class="filter-row" style="justify-content: right">
-        <div class="filter-group">
-            <div class="search-container">
-                <input type="text" id="search-filter" placeholder="Search">
-                <button id="clear-search-btn" class="clear-search-btn">
-                    <i class="material-symbols-rounded icon">close</i>
-                </button>
-            </div>
+        <div class="search-container">
+            <input type="text" id="search-filter" placeholder="Search">
+            <button id="clear-search-btn" class="clear-search-btn">
+                <i class="material-symbols-rounded icon">close</i>
+            </button>
         </div>
         <div class="filter-actions">
             <button id="clear-filters" title="Clear all filters">Clear all</button>
