@@ -123,7 +123,7 @@ function createModalOverlay() {
 function selectDeploymentRow(index) {
   const sidebar = document.querySelector('.docs-sidebar');
   const sidePanel = document.querySelector('.side-panel');
-  const sidePanelContainer = document.querySelector('.side-panel-container');
+  const sidePanelContainers = document.querySelectorAll('.side-panel-container');
   const deploymentDetailsDiv = document.getElementById('deployment-details');
   const modalOverlay = document.querySelector('.modal-overlay');
 
@@ -168,9 +168,9 @@ function selectDeploymentRow(index) {
     }
 
     // Expand side panel container and panel
-    if (sidePanelContainer) {
-      sidePanelContainer.classList.add('expanded');
-    }
+    sidePanelContainers.forEach(container => {
+      container.classList.add('expanded');
+    });
     if (sidePanel) {
       sidePanel.classList.add('expanded');
     }
@@ -450,7 +450,7 @@ function convertToYAML(data) {
 function clearSelection() {
   const sidebar = document.querySelector('.docs-sidebar');
   const sidePanel = document.querySelector('.side-panel');
-  const sidePanelContainer = document.querySelector('.side-panel-container');
+  const sidePanelContainers = document.querySelectorAll('.side-panel-container');
   const deploymentDetailsDiv = document.getElementById('deployment-details');
   const modalOverlay = document.querySelector('.modal-overlay');
 
@@ -474,8 +474,10 @@ function clearSelection() {
   if (sidePanel) {
     sidePanel.classList.remove('expanded');
   }
-  if (sidePanelContainer) {
-    sidePanelContainer.classList.remove('expanded');
+  if (sidePanelContainers) {
+    sidePanelContainers.forEach(container => {
+      container.classList.remove('expanded');
+    });
   }
 
   // Hide modal overlay

@@ -1,4 +1,7 @@
 /* Layout Styles - Main page structure, documentation layout, and page containers */
+:root {
+    --page-h-padding: 2rem;
+}
 
 /* Page Content Layout */
 .page {
@@ -41,7 +44,7 @@
     display: flex;
     flex-direction: row;
     gap: 0;
-    padding: 0 2rem;
+    padding: 0 var(--page-h-padding);
     box-sizing: border-box;
     max-width: 100%;
     width: 100%;
@@ -146,6 +149,10 @@
 }
 
 @media (max-width: 768px) {
+    :root {
+        --page-h-padding: 0;
+    }
+
     .docs-page {
         overflow-x: hidden;
         overflow-y: auto;
@@ -168,7 +175,6 @@
 
     .home-page {
         flex-direction: column;
-        padding: 0;
     }
 
     .home-page .main-content {
