@@ -17,7 +17,7 @@
 }
 
 .docs-content table {
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0;
     width: fit-content;
     border-radius: 8px;
@@ -98,6 +98,7 @@ table tr:nth-child(even) {
 
 .table-container table {
     /* eslint-disable css/no-important */
+    margin: -1px;
     margin-bottom: 0 !important;
     /* eslint-enable css/no-important */
 }
