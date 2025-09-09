@@ -143,6 +143,8 @@
 
 /* Layout Responsive Design */
 @media (min-width: 768px) {
+
+    .docs-layout .header,
     .docs-layout .header .site-title {
         display: none;
     }

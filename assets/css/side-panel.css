@@ -23,13 +23,15 @@
     position: fixed;
     display: flex;
     flex-direction: column;
-    top: 104px;
+    /* eslint-disable-next-line css/no-invalid-properties */
+    top: var(--sidebar-padding-v);
     right: 2rem;
     z-index: 1000;
     box-sizing: border-box;
     width: min(30vw, 480px);
     height: 100%;
-    max-height: calc(100vh - 104px - 2rem);
+    /* eslint-disable-next-line css/no-invalid-properties */
+    max-height: calc(100vh - var(--sidebar-padding-v) - var(--sidebar-padding-v));
     border-radius: 8px;
     border: 1px solid #E7E7E7;
     background: #FFF;
