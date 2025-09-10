@@ -10,6 +10,22 @@ Entries in the registry conform to a standard schema. The summary below may be s
     #schema-table td {
         vertical-align: top;
     }
+
+    #schema-table tr.highlighted {
+        animation: HighlightRow 5s ease;
+    }
+
+    @keyframes HighlightRow {
+        from {
+            background-color: #F3F3F3;
+            outline: 2px solid #0f62fe;
+        }
+
+        to {
+            background-color: transparent;
+            outline: 2px solid transparent;
+        }
+    }
 </style>
 <div class="table-container">
 <table id="schema-table" ></table>

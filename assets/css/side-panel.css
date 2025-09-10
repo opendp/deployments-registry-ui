@@ -264,6 +264,13 @@
     line-height: 20px;
 }
 
+.side-panel table th i.material-symbols-rounded,
+.side-panel .section-sub-heading i.material-symbols-rounded {
+    color: #646464;
+    font-size: 14px;
+    line-height: 24px;
+}
+
 .side-panel table td {
     font-weight: 500;
     /* eslint-disable-next-line css/no-important */
