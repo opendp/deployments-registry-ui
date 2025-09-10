@@ -7,9 +7,10 @@
 
 (function (global) {
     class CustomSelect {
-        constructor (container, placeholder = '') {
+        constructor (container, placeholder = '', id = '') {
             if (!container) throw new Error('CustomSelect: container required');
             this.container = container;
+            if(id.length > 0) this.id = id;
             this.placeholder = placeholder;
             this.value = '';
             this.options = []; // stored normalized objects { value, label }
@@ -20,7 +21,7 @@
         }
         _render() {
             this.container.innerHTML = `
-                <div class="custom-select">
+                <div class="custom-select" ${this.id ? `id="${this.id}"` : ''}>
                     <div class="custom-select-trigger">
                         <span class="custom-select-value">${this.placeholder}</span>
                         <i class="material-symbols-rounded icon chevron">keyboard_arrow_down</i>
