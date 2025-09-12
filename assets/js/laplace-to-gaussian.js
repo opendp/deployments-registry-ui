@@ -7,7 +7,7 @@ const spec = {
       {
         "name": "epsilon",
         "value": 1,
-        "bind": {"input": "range", "min": 0.01, "max": 5, "step": 0.01, "name": "Epsilon (ε)"}
+        "bind": {"input": "range", "min": 0.01, "max": 5, "step": 0.01, "name": "Epsilon (ϵ)"}
       },
       {
         "name": "delta",

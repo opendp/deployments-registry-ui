@@ -42,9 +42,6 @@ export function initializeDeploymentsFeatures() {
     });
   });
 
-  // Render latex descriptions (assumes order of .product-description cells matches deploymentsData)
-  renderLatexDescriptionWindows();
-
   // Create modal overlay for mobile
   createModalOverlay();
 
@@ -78,37 +75,6 @@ export function initializeDeploymentsFeatures() {
       }
     });
   })();
-}
-
-function renderLatexDescriptionWindows() {
-  const elements = document.querySelectorAll('.description-window');
-  if (!elements.length || !deploymentsData.length) return;
-
-  elements.forEach((element) => {
-    const deploymentIndex = element.dataset.index;
-    const d = deploymentsData[deploymentIndex];
-
-    // Skip if no corresponding deployment found
-    if (!d) return;
-
-    // Skip if already processed (heuristic: no child elements yet or data-md-processed flag)
-    if (element.dataset.mdProcessed === 'true') return;
-
-    if (typeof d.description === 'string' && d.description.trim().length) {
-      element.innerHTML = marked.parse(String(d.description));
-      element.dataset.mdProcessed = 'true';
-    }
-  });
-
-  // Typeset math only for the affected elements
-  try {
-    MathJax.typeset?.(Array.from(document.querySelectorAll('.description-window')));
-  } catch (err) {
-    if (!window.__mathjaxTypesetWarned) {
-      console.warn('[deployments.js] MathJax typeset failed or MathJax not loaded when rendering description windows.', err);
-      window.__mathjaxTypesetWarned = true; // avoid spamming console
-    }
-  }
 }
 
 function createModalOverlay() {
@@ -333,127 +299,6 @@ function generateDeploymentDetailsHTML(deployment, fileName) {
   `;
 
   return deploymentHeader + deploymentSection;
-}
-
-function downloadDeployment() {
-  try {
-    // Get the current deployment from the stored index
-    if (window.currentDeploymentIndex === undefined || !deploymentsData[window.currentDeploymentIndex]) {
-      alert('No deployment selected for download.');
-      return;
-    }
-
-    const deploymentData = deploymentsData[window.currentDeploymentIndex];
-
-    // Convert deployment data to YAML format
-    const yamlContent = convertToYAML(deploymentData);
-
-    // Create filename based on deployment name or curator
-    const filename = `${(deploymentData.name || deploymentData.data_curator || 'deployment').replace(/[^a-z0-9]/gi, '_').toLowerCase()}.yaml`;
-
-    // Create blob and download
-    const blob = new Blob([yamlContent], { type: 'text/yaml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-
-    // Create temporary link and trigger download
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Clean up the URL object
-    URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error('Error downloading deployment:', error);
-    alert('Error downloading deployment file. Please try again.');
-  }
-}
-
-// Expose function to global scope
-window.downloadDeployment = downloadDeployment;
-
-function convertToYAML(data) {
-  // Simple YAML converter - handles basic data structures
-  function toYAML(obj, indent = 0) {
-    const spaces = '  '.repeat(indent);
-    let yaml = '';
-
-    if (obj === null || obj === undefined) {
-      return 'null';
-    }
-
-    if (typeof obj === 'string') {
-      // Handle strings that need quoting or escaping
-      if (obj.includes('\n')) {
-        // Multi-line strings use literal block scalar
-        const lines = obj.split('\n');
-        yaml = '|\n';
-        lines.forEach(line => {
-          yaml += `${spaces}  ${line}\n`;
-        });
-        return yaml.slice(0, -1); // Remove last newline
-      } else if (obj.includes('"') || obj.includes("'") || obj.includes(':') || obj.includes('[') || obj.includes(']') || obj.includes('{') || obj.includes('}') || obj.includes('#')) {
-        // Quote strings that contain special YAML characters
-        return `"${obj.replace(/"/g, '\\"')}"`;
-      } else {
-        // Simple strings don't need quotes
-        return obj;
-      }
-    }
-
-    if (typeof obj === 'number' || typeof obj === 'boolean') {
-      return obj.toString();
-    }
-
-    if (Array.isArray(obj)) {
-      if (obj.length === 0) return '[]';
-      yaml = '\n';
-      obj.forEach(item => {
-        const itemYaml = toYAML(item, indent + 1);
-        if (itemYaml.includes('\n')) {
-          yaml += `${spaces}- |\n${spaces}  ${itemYaml.replace(/\n/g, `\n${spaces}  `)}\n`;
-        } else {
-          yaml += `${spaces}- ${itemYaml}\n`;
-        }
-      });
-      return yaml.slice(0, -1); // Remove last newline
-    }
-
-    if (typeof obj === 'object') {
-      const keys = Object.keys(obj).filter(key => {
-        const value = obj[key];
-        return value !== null && value !== undefined && value !== '';
-      });
-
-      if (keys.length === 0) return '{}';
-
-      yaml = '\n';
-      keys.forEach((key) => {
-        const value = obj[key];
-        const yamlValue = toYAML(value, indent + 1);
-
-        if (yamlValue.startsWith('\n')) {
-          // Object or array value
-          yaml += `${spaces}${key}:${yamlValue}\n`;
-        } else {
-          // Simple value
-          yaml += `${spaces}${key}: ${yamlValue}\n`;
-        }
-      });
-      return yaml.slice(0, -1); // Remove last newline
-    }
-
-    return String(obj);
-  }
-
-  // Wrap the deployment in the expected structure
-  const wrappedData = {
-    ...data
-  };
-
-  return toYAML(wrappedData);
 }
 
 function clearSelection() {
