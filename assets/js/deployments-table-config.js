@@ -1,3 +1,31 @@
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
+// Helper function to parse markdown with optional wrapper class
+function parseInlineMarkdown(text, wrapperClass = '') {
+    // Handle null, undefined, or non-string values
+    if (text == null) {
+        return '';
+    }
+
+    // If it's an object, try to extract meaningful content
+    if (typeof text === 'object') {
+        // If it's an array, join the elements
+        if (Array.isArray(text)) {
+            text = text.join(', ');
+        } else {
+            // For other objects, convert to string or return empty
+            text = text.toString();
+            if (text === '[object Object]') {
+                return '';
+            }
+        }
+    }
+
+    // Convert to string and parse markdown
+    const parsed = marked.parse(String(text));
+    return `<span class="inline-markdown ${wrapperClass}">${parsed}</span>`;
+}
+
 // columnsConfig.js
 export function getColumnsConfig(deploymentsData) {
 	const tierSet = new Set();
@@ -129,8 +157,8 @@ export function getColumnsConfig(deploymentsData) {
                 render: (_, __, row) => {
                     const { name, data_curators } = row.deployment.product;
                     return (`
-                        <div style="color: #181818; font-weight: 500; margin-bottom: 4px">${name}</div>
-                        <div>by ${Array.isArray(data_curators) ? data_curators.join(', ') : data_curators}</div>
+                        <div style="color: #181818; font-weight: 500; margin-bottom: 4px">${parseInlineMarkdown(name)}</div>
+                        <div>by ${parseInlineMarkdown(data_curators)}</div>
                     `);
                 },
             },
@@ -154,10 +182,10 @@ export function getColumnsConfig(deploymentsData) {
                     const displayIndex = meta?.row ?? 0;
 
                     return (`
-                        <span class="description-text">${description}</span>
+                        <span class="description-text">${parseInlineMarkdown(description)}</span>
                         ${description.length > 0 ? `
                             <div data-index="${displayIndex}" class="description-window">
-                                ${description}
+                                ${parseInlineMarkdown(description)}
                             </div>
                         ` : ``}
                     `);
@@ -194,7 +222,7 @@ export function getColumnsConfig(deploymentsData) {
                 title: 'Flavor Name',
                 render: (_, __, row) => {
                     const flavorName = row?.deployment?.dp_flavor?.name || '';
-                    return flavorName;
+                    return parseInlineMarkdown(flavorName);
                 },
             },
             searchPane: true
@@ -225,12 +253,12 @@ export function getColumnsConfig(deploymentsData) {
                     const elements = [];
 
                     if (privacy_unit) {
-                        elements.push(`<div style="font-weight: 500; margin-bottom: 4px; font-size: 12px">${privacy_unit}</div>`)
+                        elements.push(`<div style="font-weight: 500; margin-bottom: 4px; font-size: 12px">${parseInlineMarkdown(privacy_unit)}</div>`)
                     }
                     if (epsilon) {
                         const epsilonNum = parseFloat(epsilon);
                         const formattedEpsilon = epsilonNum < 0.01 ? epsilonNum.toExponential(2) : epsilonNum.toString();
-                        elements.push(`ε:&nbsp;${formattedEpsilon}<br>`)
+                        elements.push(`ϵ:&nbsp;${formattedEpsilon}<br>`)
                     }
                     if (delta) {
                         const deltaNum = parseFloat(delta);
@@ -260,7 +288,7 @@ export function getColumnsConfig(deploymentsData) {
                 title: 'Model',
                 render: (_, __, row) => {
                     const modelName = row?.deployment?.model?.model_name || '';
-                    return modelName;
+                    return parseInlineMarkdown(modelName);
                 },
             },
             searchPane: true
@@ -272,7 +300,7 @@ export function getColumnsConfig(deploymentsData) {
                 className: 'accounting-column',
                 title: 'Accounting',
                 render: () => {
-                    return '-';
+                    return parseInlineMarkdown('--');
                 },
             },
             searchPane: { show: false },
@@ -285,7 +313,7 @@ export function getColumnsConfig(deploymentsData) {
                 className: 'implementation-column',
                 title: 'Implementation',
                 render: () => {
-                    return '-';
+                    return parseInlineMarkdown('--');
                 },
             },
             searchPane: { show: false },

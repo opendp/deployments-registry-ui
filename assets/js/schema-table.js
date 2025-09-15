@@ -2,8 +2,10 @@ import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 const maxDepth = 4;
 
-function makeNameCell(name, def, required) {
+function makeNameCell(name, def, required, anchor) {
     const nameCell = document.createElement("td");
+    nameCell.id = anchor;
+
     const typeMd = def.type || 'string';
     const tierMd = def.tier ? `tier ${def.tier}` : '';
     const requiredMd = required.includes(name) ? 'required' : 'optional';
@@ -25,9 +27,10 @@ function makeDescriptionCell(def, colSpan) {
     return descriptionCell;
 }
 
-function fillTable(table, properties, required, nameCells) {
+function fillTable(table, properties, required, nameCells, path = '') {
     required = required || [];
     for (const [name, def] of Object.entries(properties)) {
+        const anchor = path ? `${path}-${name}` : name;
         const row = document.createElement("tr");
 
         if (nameCells.length > 0) {
@@ -36,7 +39,7 @@ function fillTable(table, properties, required, nameCells) {
             row.appendChild(emptyCell);
         }
 
-        const nameCell = makeNameCell(name, def, required)
+        const nameCell = makeNameCell(name, def, required, anchor)
         row.appendChild(nameCell);
 
         if (!def.properties) {
@@ -50,7 +53,7 @@ function fillTable(table, properties, required, nameCells) {
             cell.rowSpan += 1;
         }
         if (def.properties) {
-            fillTable(table, def.properties, def.required, nameCells.concat(nameCell));
+            fillTable(table, def.properties, def.required, nameCells.concat(nameCell), anchor);
         }
     }
 }
@@ -67,4 +70,34 @@ function initTable(table, schema) {
 window.addEventListener("load", () => {
     // eslint-disable-next-line no-undef
     initTable(document.getElementById("schema-table"), schema);
+
+    // Auto-select definition if URL has #definition_anchor
+    // Runs only once on load
+    (function readAnchorAndAutoScrollToRow() {
+        if (window.__autoScrollToRowRan) return; // defensive guard
+        window.__autoScrollToRowRan = true;
+
+        const rawHash = window.location.hash;
+        if (!rawHash || rawHash.length <= 1) return;
+
+        const anchor = decodeURIComponent(rawHash.substring(1));
+
+        // Use CSS.escape if available to safely query
+        const esc = window.CSS && CSS.escape ? CSS.escape(anchor) : anchor.replace(/"/g, '\\"');
+
+        // const targetRow = document.getElementById(esc);
+        const targetCell = document.getElementById(esc);
+        if (!targetCell) return;
+
+        // Defer selection slightly to ensure MathJax / layout stable
+        requestAnimationFrame(() => {
+            try {
+                targetCell.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const targetRow = targetCell.parentElement;
+                if (targetRow) targetRow.classList.add('highlighted');
+            } catch (e) {
+                console.error('Failed to scroll into view: ', e);
+            }
+        });
+    })();
 });
