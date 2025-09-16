@@ -17,4 +17,4 @@ For further discussion of DP Registries, see:
 For an introduction to programming with Differential Privacy, see:
 
 * Near, Joseph P., and Chiké Abuah. "Programming differential privacy." (2021). [https://programming-dp.com/](https://programming-dp.com/)
-* Cowan, Ethan, Michael Shoemate, and Mayana Pereira. Hands-On Differential Privacy. " O'Reilly Media, Inc.", 2024. [Publisher Link](https://www.oreilly.com/library/view/hands-on-differential-privacy/9781492097730/)
+* Cowan, Ethan, Michael Shoemate, and Mayana Pereira. Hands-On Differential Privacy. " O'Reilly Media, Inc.", (2024). [Publisher Link](https://www.oreilly.com/library/view/hands-on-differential-privacy/9781492097730/)
