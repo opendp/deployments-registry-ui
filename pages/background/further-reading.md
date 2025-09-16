@@ -7,7 +7,7 @@ layout: docs
 
 For the foundational paper on DP Registries, see:
 
-*Dwork, Cynthia, Nitin Kohli, and Deirdre Mulligan. "Differential privacy in practice: Expose your epsilons!." Journal of Privacy and Confidentiality 9, no. 2 (2019).  doi:[10.29012/jpc.689](https://doi.org/10.29012/jpc.689)
+* Dwork, Cynthia, Nitin Kohli, and Deirdre Mulligan. "Differential privacy in practice: Expose your epsilons!." Journal of Privacy and Confidentiality 9, no. 2 (2019).  doi:[10.29012/jpc.689](https://doi.org/10.29012/jpc.689)
 
 For further discussion of DP Registries, see:
 
