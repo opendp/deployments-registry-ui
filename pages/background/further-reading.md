@@ -9,6 +9,10 @@ For the foundational paper on DP Registries, see:
 
 * Dwork, Cynthia, Nitin Kohli, and Deirdre Mulligan. "Differential privacy in practice: Expose your epsilons!." Journal of Privacy and Confidentiality 9, no. 2 (2019).  doi:[10.29012/jpc.689](https://doi.org/10.29012/jpc.689)
 
+For the vision and governance of this project, see the NIST White Paper:
+
+* National Institute of Standards and Technology.  "A Community-Driven Differential Privacy Registry."  [NIST Internal Report 8858](https://nvlpubs.nist.gov/nistpubs/ir/2025/NIST.IR.8588.ipd.pdf) (2025).
+
 For further discussion of DP Registries, see:
 
 * Dibia, Onyinye, Mengyi Lu, Prianka Bhattacharjee, Joseph P. Near, and Yuanyuan Feng. "" We Need a Standard": Toward an Expert-Informed Privacy Label for Differential Privacy." arXiv preprint arXiv:2507.15997 (2025). doi:[10.48550/arXiv.2507.15997](https://doi.org/10.48550/arXiv.2507.15997) 
