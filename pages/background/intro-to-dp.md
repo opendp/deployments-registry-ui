@@ -9,7 +9,7 @@ layout: docs
 
 Before the age of big data and data science, traditional data collection faced the challenge called the evasive answer bias. That is to say, people not answering survey questions honestly in fear that their answers may be used against them. Randomized responses emerged in the mid-twentieth century to address this.
 
-Randomized response is a technique to protect the privacy of individuals in surveys. It involves adding local noise, such as flipping a coin multiple times and assigning the responses of the individual based on the coin-flip sequence. In doing so, the responses can be true in expectation but any given response is uncertain. This uncertainty over the response of an individual is one of the first applications of differential privacy, although it was not called as such at the time and the quantification of privacy was simply the weighting of probabilities determined by the mechanism. 
+Randomized response is a technique to protect the privacy of individuals in surveys. It involves adding local noise, such as flipping a coin multiple times and assigning the responses of the individual based on the coin-flip sequence. In doing so, the responses can be true in expectation but any given response is uncertain. This uncertainty over the response of an individual is one of the first applications of differential privacy, although it was not called as such at the time and the quantification of privacy was simply the weighting of probabilities determined by the mechanism.
 
 {% include image.html
     url="/assets/images/randomized-response.png"
@@ -45,10 +45,10 @@ of the guarantee. These parameters are described below.
 
 |               Flavor | Privacy Parameter(s) |
 |---------------------:|----------------------|
-|              Pure DP | ε                    |
-|       Approximate DP | ε, δ                 |
+|              Pure DP | ϵ                    |
+|       Approximate DP | ϵ, δ                 |
 | Zero-concentrated DP | ρ                    |
-|             Rényi DP | α, ε                 |
+|             Rényi DP | α, ϵ                 |
 |          Gaussian DP | μ                    |
 
 **Why does it matter?** Variants of DP other than pure DP provide
@@ -61,7 +61,7 @@ nontrivial and requires careful consideration.
 ## Pure DP
 
 [Pure DP](https://en.wikipedia.org/wiki/Differential_privacy) has a
-single privacy parameter (ε). A smaller value for ε indicates better
+single privacy parameter (ϵ). A smaller value for ϵ indicates better
 privacy. The formal definition says that for all neighboring databases
 \\(D_1\\) and \\(D_2\\) and subsets of outputs \\(S\\), a mechanism \\(M\\) satisfies
 \\(\epsilon\\)-DP if:
@@ -76,7 +76,7 @@ $$
 
 ### Randomized Response was ϵ-Differential Privacy
 
-Although randomized response surveys predate the formal definition of differential privacy by over 40 years, the technique directly maps to the binary mechanism used in modern differential privacy. 
+Although randomized response surveys predate the formal definition of differential privacy by over 40 years, the technique directly maps to the binary mechanism used in modern differential privacy.
 
 Assume you wish to set up the spinner originally proposed by Warner
 to achieve ϵ-differential privacy. This can be done by asking
@@ -133,8 +133,8 @@ result.
 ## Approximate DP
 
 [Approximate DP](https://en.wikipedia.org/wiki/Differential_privacy)
-has two privacy parameters (ε and δ). As in pure DP, a smaller value
-for ε indicates better privacy. The second parameter, δ, is an
+has two privacy parameters (ϵ and δ). As in pure DP, a smaller value
+for ϵ indicates better privacy. The second parameter, δ, is an
 additive relaxation parameter. It is often interpreted as a "failure
 probability" - with probability δ, the privacy guarantee may fail.
 This interpretation provides useful intuition, though [it is not
@@ -165,7 +165,7 @@ The following widget describes the expected error for noise added under (ϵ, δ)
 [Zero-concentrated DP (zCDP)](https://arxiv.org/abs/1605.02065) has a
 single privacy parameter (ρ). A smaller value for ρ indicates better
 privacy. Typical values for ρ are quite different from typical values
-of ε, and they cannot be directly compared. A zCDP guarantee can be
+of ϵ, and they cannot be directly compared. A zCDP guarantee can be
 "converted" into an approximate DP guarantee, which can allow for
 comparisons between parameters, but this conversion may be imprecise.
 The formal definition says that for all neighboring databases \\(D_1\\)
@@ -187,9 +187,9 @@ of order $\alpha$.
 ## Rényi DP
 
 [Rényi DP (RDP)](https://arxiv.org/abs/1702.07476) has two privacy
-parameters (α and ε). As in other definitions, a smaller value for ε
-indicates better privacy, though RDP ε values cannot be directly
-compared with ε values from other variants without considering the
+parameters (α and ϵ). As in other definitions, a smaller value for ϵ
+indicates better privacy, though RDP ϵ values cannot be directly
+compared with ϵ values from other variants without considering the
 value of α. The α parameter is an integer greater than 1, and larger
 values of α indicate better privacy.
 
