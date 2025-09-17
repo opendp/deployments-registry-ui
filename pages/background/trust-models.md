@@ -38,23 +38,64 @@ As such, these concepts are strongly related to the locality of our DP model, wh
 
 These two concepts refer to how often we publish DP statistics. A static release involves publishing a single release with no further interactions, while interactive releases repeat these processes, for example, by allowing multiple queries on the dataset. Static releases are simpler, but interactive releases could offer additional utility, but require a more robust privacy measurement for each query due to composition. 
 
-## Event, Group and Entity Privacy
 
-An important aspect of differential privacy is defining what it is we are endeavoring to protect. Ultimately, we usually are trying to protect the atomic data subjects of a dataset: people, businesses, entities. However, depending on the dataset itself, rows of the data table may refer to different things and individual subjects may have a causal effect on more than one record.
+## Unit of Privacy
 
-<div>Event-level privacy, as described in ({%- include bib-link.html key="NIST" -%}), refers to a dataset where we are protecting the rows of a dataset. Each row might pertain to a single data subject in its whole, or a single event such as a credit card transaction.</div>
+The *unit of privacy* describes the entity being protected by a DP
+guarantee. Common settings for the unit of privacy include:
 
-Group privacy refers to settings where we have multiple data subjects who are linked in some manner such that we care about hiding the contribution of the group. An example of this might be a household in the setting of a census. Finally, there is entity-level privacy. Similar to group-level privacy, this is when multiple records can be linked to a single entity. An example of this would be credit card transactions. One data subject may have zero or multiple transactions associated with them, thus in order to protect the privacy of the entity we need to limit the effect of all records associated with each entity.
+- Person-level privacy: the entity being protected is *one person*
+- User-level privacy: the entity being protected is *one user*, which
+  is usually (but not always) the same as one person
+- Event-level privacy: the entity being protected is *one event*,
+  which is usually not the same as one person
 
-From a technical perspective, the mechanics of the tooling to deal with groups and entities are the same so their terminology is often used interchangeably. 
+DP guarantees with different units of privacy provide very different
+levels of protection to individuals. For example, a dataset of taxi
+trips may include many trips taken by the same person:
 
-## Multiple Parties and Collusions
+- A person-level privacy guarantee would prevent an adversary from
+  learning whether or not an individual took *any* taxi trips
+- An event-level guarantee would prevent the adversary from learning
+  whether a *single* trip occurred, but might reveal the rough number
+  of trips an individual has taken
+- A user-level guarantee might fall somewhere in between: it could be
+  equivalent to a person-level guarantee for a person with a single
+  user account might, but it might be closer to an event-level
+  guarantee for a person who creates a new user account for every trip
 
-Involving multiple parties in DP releases requires additional accounting of the privacy budget, and similarly to how we described an adversarial curator, we now focus on defining a group of analysts, which could adversarially collude against the DP release.
+Formally, the unit of privacy defines which databases are neighboring.
+All variants of differential privacy consider neighboring databases
+\\(D_1\\) and \\(D_2\\); the unit of privacy defines what it means for \\(D_1\\)
+and \\(D_2\\) to be neighbors:
 
-As a more practical example, collusion typically refers to an environment where multiple analysts are allowed a set privacy budget, but they collaborate between each other to leverage composition and produce information about the dataset that is protected by a worse epsilon parameter, and thus breaking the intended privacy budget allocated for them.
+- For a person-level guarantee, \\(D_1\\) and \\(D_2\\) may differ in one
+  person's data (e.g. all of the rows of data associated with the
+  person)
+- For an event-level guarantee, \\(D_1\\) and \\(D_2\\) may differ in data
+  associated with one event (e.g. one row of data associated with a
+  particular event)
+- For a user-level guarantee, \\(D_1\\) and \\(D_2\\) may differ in one user's
+  data
 
-## Periodical Releases
+This distinction may seem subtle, but it can have huge impacts on
+real-world privacy. The definition of neighboring databases directly
+influences how much noise is used when releasing statistics, so
+adjusting the unit of privacy can have the effect of significantly
+increasing or decreasing the amount of noise - *without changing the
+privacy parameter(s)*.
 
-This concept, often also related to the "continual observation" area of study, involves producing multiple differentially private releases for a dataset that is periodically changing. Achieving this can be challenging as each release must be carefully accounted for in the privacy budget, and organizations that allow for DP analysis of continually updated datasets, as some of the ones present in our table, are mindful of setting budgets for both the user and time level. 
+In our taxi example, if a single person might take up to 10 trips,
+then moving from a person-level guarantee to an event-level guarantee
+(i.e. a trip-level guarantee) would enable releasing the *same
+statistics* under the *same privacy budget*, but with
+*\\(\frac{1}{10}\\)th the amount of noise*.
+
+**Why does it matter?** The most conservative choice for the unit of
+privacy is a person-level guarantee. Other units of privacy can be
+more difficult to relate to our intuition about privacy, and may lead
+to significantly weakened real-world privacy, sometimes in
+unpredictable ways.
+
+
 
