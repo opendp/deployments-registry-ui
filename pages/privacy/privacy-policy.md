@@ -5,5 +5,5 @@ class: privacy-policy
 layout: docs
 ---
 
-Add details for the Privacy Policy here
+Please refer to the NIST Internal Report 8588 "A Community-Driven Differential Privacy Registry" for all proposed governance and policies for this project.
 
