@@ -9,7 +9,7 @@ layout: docs
 
 Before the age of big data and data science, traditional data collection faced the challenge called the evasive answer bias. That is to say, people not answering survey questions honestly in fear that their answers may be used against them. Randomized responses emerged in the mid-twentieth century to address this.
 
-Randomized response is a technique to protect the privacy of individuals in surveys. It involves adding local noise, such as flipping a coin multiple times and assigning the responses of the individual based on the coin-flip sequence. In doing so, the responses can be true in expectation but any given response is uncertain. This uncertainty over the response of an individual is one of the first applications of differential privacy, although it was not called as such at the time and the quantification of privacy was simply the weighting of probabilities determined by the mechanism. 
+Randomized response is a technique to protect the privacy of individuals in surveys. It involves adding local noise, such as flipping a coin multiple times and assigning the responses of the individual based on the coin-flip sequence. In doing so, the responses can be true in expectation but any given response is uncertain. This uncertainty over the response of an individual is one of the first applications of differential privacy, although it was not called as such at the time and the quantification of privacy was simply the weighting of probabilities determined by the mechanism.
 
 {% include image.html
     url="/assets/images/randomized-response.png"
@@ -21,34 +21,62 @@ This approach of randomizing the output of the answer to a question by a mechani
 
 (The original approach by S.L. Warner actually involved spinning a "spinner" and as such he could easily change the weighting of the outcome based on the proportion of the circle assigned to each outcome. Whether you prefer a mental model of a roulette wheel, a spinner, coins flipping or dice rolling, as long as we can portray a well calibrated stochastic mechanism which is biased towards the truth, then the approach will work.)
 
-## ϵ-Differential Privacy
+# Flavors of Differential Privacy
 
-Pure epsilon-differential privacy ϵ-DP is a mathematical
-guarantee that enables the sharing of aggregated statistics about a dataset while
-protecting individual privacy by adding random noise. Simply put,
-it ensures that the outcome of any analysis is nearly the same,
-regardless of whether _any individual's data_ is either included or
-removed from the dataset.
+Since the original development of DP, several other variants of the
+definition have been developed that maintain its most important
+properties while offering some additional benefits.
 
-Formally, the privacy guarantee is quantified using the privacy parameter
-ϵ (epsilon). A randomized algorithm \\(A\\) is
-ϵ-differentially private if for all neighboring datasets
-\\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all
-subsets of outputs \\(S \subseteq \text{Range}(M)\\)
+In contrast to the original DP definition, the variants described
+below can be satisfied using Gaussian noise (which has several
+important benefits) and also offer tighter composition bounds in many
+cases. The variants are commonly used in real-world deployments
+because these advantages can be significant for large releases.
+
+All of the variants described below are relaxations of pure DP,
+meaning that their guarantees are no stronger than pure DP. In some
+cases, their guarantees can be weaker. In rare cases, they're
+significantly weaker.
+
+The table below summarizes the most commonly used variants of DP. Each
+has a different set of privacy parameters that describe the strength
+of the guarantee. These parameters are described below.
+
+
+|               Flavor | Privacy Parameter(s) |
+|---------------------:|----------------------|
+|              Pure DP | ϵ                    |
+|       Approximate DP | ϵ, δ                 |
+| Zero-concentrated DP | ρ                    |
+|             Rényi DP | α, ϵ                 |
+|          Gaussian DP | μ                    |
+
+**Why does it matter?** Variants of DP other than pure DP provide
+weaker formal guarantees, but are commonly used due to their
+significant benefits in privacy analysis and utility. Comparing and
+interpreting the privacy parameters of different variants is
+nontrivial and requires careful consideration.
+
+
+## Pure DP
+
+[Pure DP](https://en.wikipedia.org/wiki/Differential_privacy) has a
+single privacy parameter (ϵ). A smaller value for ϵ indicates better
+privacy. The formal definition says that for all neighboring databases
+\\(D_1\\) and \\(D_2\\) and subsets of outputs \\(S\\), a mechanism \\(M\\) satisfies
+\\(\epsilon\\)-DP if:
 
 <!-- eslint-disable markdown/no-missing-label-refs -->
 
 $$
-\Pr[M(D_1) \in S] \leq e^{\epsilon} \cdot \Pr[M(D_2) \in S]
+\frac{\Pr[M(D_1) \in S]}{\Pr[M(D_2) \in S]} \leq e^{\epsilon}
 $$
 
 <!-- eslint-enable markdown/no-missing-label-refs -->
 
-This \\(M\\) algorithm will provide a set amount of noise, quantified by ϵ, which would generate outputs with certain error from the real value, which can be quantified by the following interactive widget.
-
 ### Randomized Response was ϵ-Differential Privacy
 
-Although randomized response surveys predate the formal definition of differential privacy by over 40 years, the technique directly maps to the binary mechanism used in modern differential privacy. 
+Although randomized response surveys predate the formal definition of differential privacy by over 40 years, the technique directly maps to the binary mechanism used in modern differential privacy.
 
 Assume you wish to set up the spinner originally proposed by Warner
 to achieve ϵ-differential privacy. This can be done by asking
@@ -101,16 +129,26 @@ result.
 </div>
 <script type="module" src="/assets/js/epsilon-expected-error.js"></script>
 
-## (ϵ, δ)-Differential Privacy
 
-(ϵ, δ)-differential privacy is a mathematical guarantee that extends the concept of pure epsilon-differential privacy by allowing for a small probability of failure, with a second privacy parameter \\(\delta\\). Just as we described pure DP in our previous section, it also ensures that the outcome of any analysis is nearly the same, regardless of whether any individual's data is present, but further includes a small allowance for a cryptographically small chance of error.
+## Approximate DP
 
-Formally, the privacy guarantee is now quantified using both \\(\epsilon\\) (epsilon) and also \\(\delta\\) (delta). A randomized algorithm \\(M\\) is \\((\epsilon, \delta)\\)-differentially private if for all neighboring datasets \\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all subsets of outputs \\(S \subseteq \text{Range}(M)\\)
+[Approximate DP](https://en.wikipedia.org/wiki/Differential_privacy)
+has two privacy parameters (ϵ and δ). As in pure DP, a smaller value
+for ϵ indicates better privacy. The second parameter, δ, is an
+additive relaxation parameter. It is often interpreted as a "failure
+probability" - with probability δ, the privacy guarantee may fail.
+This interpretation provides useful intuition, though [it is not
+precisely correct](https://arxiv.org/abs/1906.01337). The δ parameter
+should be set very small - typical values are around \\(10^{-5}\\) or
+smaller, and the rule of thumb is to set $\delta \leq \frac{1}{n^2}$
+where \\(n\\) is the size of the database. The formal definition says that
+for all neighboring databases \\(D_1\\) and \\(D_2\\) and subsets of outputs
+\\(S\\), a mechanism \\(M\\) satisfies \\((\epsilon, \delta)\\)-DP if:
 
 <!-- eslint-disable markdown/no-missing-label-refs -->
 
 $$
-\Pr[M(D_1) \in S] \leq e^{\epsilon} \cdot \Pr[M(D_2) \in S] + \delta
+\Pr[M(D_1) \in S] \leq e^\epsilon \Pr[M(D_2) \in S] + \delta
 $$
 
 <!-- eslint-enable markdown/no-missing-label-refs -->
@@ -122,12 +160,52 @@ The following widget describes the expected error for noise added under (ϵ, δ)
 </div>
 <script type="module" src="/assets/js/laplace-to-gaussian.js"></script>
 
-## Zero-Concentrated Differential Privacy
+## Zero-concentrated DP
 
-Zero-Concentrated Differential Privacy (zCDP) introduces a parameter \\(\rho\\) (rho) to measure the concentration of privacy loss around its expected value, enabling tighter control over cumulative privacy loss in repeated or iterative analyses. This makes zCDP particularly useful in applications that require multiple queries or iterative data use.
+[Zero-concentrated DP (zCDP)](https://arxiv.org/abs/1605.02065) has a
+single privacy parameter (ρ). A smaller value for ρ indicates better
+privacy. Typical values for ρ are quite different from typical values
+of ϵ, and they cannot be directly compared. A zCDP guarantee can be
+"converted" into an approximate DP guarantee, which can allow for
+comparisons between parameters, but this conversion may be imprecise.
+The formal definition says that for all neighboring databases \\(D_1\\)
+and \\(D_2\\) and subsets of outputs \\(S\\), a mechanism $M$ satisfies
+\\(\rho\\)-zCDP if:
 
-Formally, a randomized algorithm \\(M\\) satisfies \\(\rho\\)-zCDP such that for neighboring datasets \\(D_1\\) and \\(D_2\\) (differing in at most one element), and for all \\(\alpha\\) in (1, ∞), the following holds:
+<!-- eslint-disable markdown/no-missing-label-refs -->
 
 $$
-D_{\alpha}(M(D_1) \parallel M(D_2)) \leq \rho \alpha
+\forall \alpha \geq 1. D_\alpha(M(D_1) || M(D_2)) \leq \alpha \rho
 $$
+
+<!-- eslint-enable markdown/no-missing-label-refs -->
+
+where $D_\alpha$ is the [Rényi
+divergence](https://en.wikipedia.org/wiki/R%C3%A9nyi_entropy#R%C3%A9nyi_divergence)
+of order $\alpha$.
+
+## Rényi DP
+
+[Rényi DP (RDP)](https://arxiv.org/abs/1702.07476) has two privacy
+parameters (α and ϵ). As in other definitions, a smaller value for ϵ
+indicates better privacy, though RDP ϵ values cannot be directly
+compared with ϵ values from other variants without considering the
+value of α. The α parameter is an integer greater than 1, and larger
+values of α indicate better privacy.
+
+Like zCDP, a RDP guarantee can be "converted" into an approximate DP
+guarantee, but the conversion may be imprecise. The formal definition
+says that for all neighboring databases \\(D_1\\) and \\(D_2\\) and subsets of
+outputs \\(S\\), a mechanism \\(M\\) satisfies \\((\alpha, \epsilon)\\)-RDP if:
+
+<!-- eslint-disable markdown/no-missing-label-refs -->
+
+$$
+D_\alpha(M(D_1) || M(D_2)) \leq \epsilon
+$$
+
+<!-- eslint-enable markdown/no-missing-label-refs -->
+
+where \\(D_\alpha\\) is the [Rényi
+divergence](https://en.wikipedia.org/wiki/R%C3%A9nyi_entropy#R%C3%A9nyi_divergence)
+of order \\(\alpha\\).
