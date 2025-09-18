@@ -28,27 +28,27 @@ function parseInlineMarkdown(text, wrapperClass = '') {
 
 // columnsConfig.js
 export function getColumnsConfig(deploymentsData) {
-	const tierSet = new Set();
-	const productSet = new Set();
-	const curatorSet = new Set();
-	const privacyUnitSet = new Set();
+    const tierSet = new Set();
+    const productSet = new Set();
+    const curatorSet = new Set();
+    const privacyUnitSet = new Set();
 
     deploymentsData.forEach(dep => {
         const { tier } = dep;
         // Safe extraction with defaults so missing keys don't create sparse/shift issues.
-		const deployment = dep?.deployment || {};
-		const data_product_type = deployment.product.data_product_type ?? '';
-		const data_curators = deployment.product.data_curators ?? null; // may be array or string; null if absent
-		const privacy_unit = deployment.privacy_loss?.privacy_unit ?? '';
+        const deployment = dep?.deployment || {};
+        const data_product_type = deployment.product.data_product_type ?? '';
+        const data_curators = deployment.product.data_curators ?? null; // may be array or string; null if absent
+        const privacy_unit = deployment.privacy_loss?.privacy_unit ?? '';
 
-        if (tier)  tierSet.add(tier);
+        if (tier) tierSet.add(tier);
         if (data_product_type) productSet.add(data_product_type);
         if (data_curators) {
             if (Array.isArray(data_curators)) {
-				data_curators.forEach(curator => curatorSet.add(curator));
-			} else {
-				curatorSet.add(data_curators);
-			}
+                data_curators.forEach(curator => curatorSet.add(curator));
+            } else {
+                curatorSet.add(data_curators);
+            }
         }
         if (privacy_unit) privacyUnitSet.add(privacy_unit);
     });
@@ -278,7 +278,7 @@ export function getColumnsConfig(deploymentsData) {
                 show: true,
                 config: privacyUnitSearchPaneConfig,
             },
-			columnDef: { orderable: true },
+            columnDef: { orderable: true },
         },
         // MODEL
         {
@@ -294,31 +294,31 @@ export function getColumnsConfig(deploymentsData) {
             searchPane: true
         },
         // ACCOUNTING
-        {
-            column: {
-                data: null,
-                className: 'accounting-column',
-                title: 'Accounting',
-                render: () => {
-                    return parseInlineMarkdown('--');
-                },
-            },
-            searchPane: { show: false },
-			columnDef: { orderable: false },
-        },
-        // IMPLEMENTATION
-        {
-            column: {
-                data: null,
-                className: 'implementation-column',
-                title: 'Implementation',
-                render: () => {
-                    return parseInlineMarkdown('--');
-                },
-            },
-            searchPane: { show: false },
-			columnDef: { orderable: false },
-        },
+        // {
+        //     column: {
+        //         data: null,
+        //         className: 'accounting-column',
+        //         title: 'Accounting',
+        //         render: () => {
+        //             return parseInlineMarkdown('--');
+        //         },
+        //     },
+        //     searchPane: { show: false },
+        // 	columnDef: { orderable: false },
+        // },
+        // // IMPLEMENTATION
+        // {
+        //     column: {
+        //         data: null,
+        //         className: 'implementation-column',
+        //         title: 'Implementation',
+        //         render: () => {
+        //             return parseInlineMarkdown('--');
+        //         },
+        //     },
+        //     searchPane: { show: false },
+        // 	columnDef: { orderable: false },
+        // },
     ];
 
     const classNamePrefix = 'header-col-idx-';
@@ -352,9 +352,9 @@ export function getColumnsConfig(deploymentsData) {
 
                 // Merge with existing columnDef if it exists (for headerClassName)
                 columnDef = { ...columnDef, ...columnDefConfig };
-            } else if(typeof c.searchPane === 'object' && c.searchPane.show && 'config' in c.searchPane) {
+            } else if (typeof c.searchPane === 'object' && c.searchPane.show && 'config' in c.searchPane) {
                 let searchPanes = [];
-                if(Array.isArray(c.searchPane.config)) {
+                if (Array.isArray(c.searchPane.config)) {
                     searchPanes = c.searchPane.config;
                 } else {
                     searchPanes.push(c.searchPane.config);
