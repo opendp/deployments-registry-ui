@@ -23,7 +23,7 @@ icon: 'assignment'
 </header>
 {% endif %}
 
-This registry is a collaborative resource for information about real-world differential privacy deployments. Use the table and visualizations below to explore both technical and sociotechnical aspects of these deployments.
+This registry is a collaborative resource for information about real-world differential privacy deployments. Use the table and visualizations below to explore both technical and sociotechnical aspects of these deployments.  Click on any row to see expanded details.
 
 <script>
     const deployments = {{ site.data.deployments | jsonify }};
