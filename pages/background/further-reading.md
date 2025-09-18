@@ -17,7 +17,7 @@ For the vision and governance of this project, see the NIST White Paper.
 For further discussion of DP Registries, see:
 
 * Dibia, Onyinye, Mengyi Lu, Prianka Bhattacharjee, Joseph P. Near, and Yuanyuan Feng. "" We Need a Standard": Toward an Expert-Informed Privacy Label for Differential Privacy." arXiv preprint arXiv:2507.15997 (2025). doi:[10.48550/arXiv.2507.15997](https://doi.org/10.48550/arXiv.2507.15997) 
-* Nanayakkara, Priyanka, Elena Ghazi, Salil Vadhan.  "Practitioners' Perspectives on a Differential Privacy Registry." (Forthcoming)
+* Nanayakkara, Priyanka, Elena Ghazi, Salil Vadhan.  "Practitioners' Perspectives on a Differential Privacy Registry." arXiv preprint arXiv:2509.13509 (2025).  doi:[10.48550/arXiv.2509.13509](https://doi.org/10.48550/arXiv.2509.13509)
 
 For an introduction to programming with Differential Privacy, see:
 
