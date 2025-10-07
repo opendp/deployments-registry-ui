@@ -11,6 +11,8 @@ table.dataTable#deployments-table thead>tr>td {
 table.dataTable#deployments-table thead>tr>th.sorting,
 table.dataTable#deployments-table thead>tr>th.sorting_asc,
 table.dataTable#deployments-table thead>tr>th.sorting_desc,
+table.dataTable#deployments-table thead>tr>th[aria-sort="ascending"],
+table.dataTable#deployments-table thead>tr>th[aria-sort="descending"],
 table.dataTable#deployments-table thead>tr>th.sorting_asc_disabled,
 table.dataTable#deployments-table thead>tr>th.sorting_desc_disabled,
 table.dataTable#deployments-table thead>tr>td.sorting,
@@ -50,6 +52,8 @@ table.dataTable#deployments-table thead>tr>td.sorting_desc_disabled {
 
 table.dataTable#deployments-table thead>tr>th.sorting_asc:before,
 table.dataTable#deployments-table thead>tr>th.sorting_desc:after,
+table.dataTable#deployments-table thead>tr>th[aria-sort="ascending"]:before,
+table.dataTable#deployments-table thead>tr>th[aria-sort="descending"]:after,
 table.dataTable#deployments-table thead>tr>td.sorting_asc:before,
 table.dataTable#deployments-table thead>tr>td.sorting_desc:after {
     color: #000;

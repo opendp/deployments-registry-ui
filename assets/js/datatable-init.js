@@ -56,7 +56,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	const dt = new DataTable('#deployments-table', {
 		paging: false,
-		order: [],
+		order: [0],
 		autoWidth: false, // stop DT from guessing widths
 		info: false,
 		deferRender: true,
