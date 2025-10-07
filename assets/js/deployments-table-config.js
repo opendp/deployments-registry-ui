@@ -1,28 +1,65 @@
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
+// Helper function to parse markdown with optional wrapper class
+function parseInlineMarkdown(text, wrapperClass = '', truncate = false, startIndex = 0, endIndex = null) {
+    // Handle null, undefined, or non-string values
+    if (text == null) {
+        return '';
+    }
+
+    // If it's an object, try to extract meaningful content
+    if (typeof text === 'object') {
+        // If it's an array, join the elements
+        if (Array.isArray(text)) {
+            text = text.join(', ');
+        } else {
+            // For other objects, convert to string or return empty
+            text = text.toString();
+            if (text === '[object Object]') {
+                return '';
+            }
+        }
+    }
+
+    // Convert to string and parse markdown
+    const parsed = marked.parse(String(text));
+
+    let displayText = parsed;
+    if (truncate) {
+        if(!endIndex) {
+            endIndex = parsed.length;
+        }
+        displayText = parsed.substring(startIndex, endIndex);
+    }
+
+    return `<span class="inline-markdown ${wrapperClass}">${displayText}</span>`;
+}
+
 // columnsConfig.js
 const DESCRIPTION_CHAR_LIMIT = 100;
 
 export function getColumnsConfig(deploymentsData) {
-	const tierSet = new Set();
-	const productSet = new Set();
-	const curatorSet = new Set();
-	const privacyUnitSet = new Set();
+    const tierSet = new Set();
+    const productSet = new Set();
+    const curatorSet = new Set();
+    const privacyUnitSet = new Set();
 
     deploymentsData.forEach(dep => {
         const { tier } = dep;
         // Safe extraction with defaults so missing keys don't create sparse/shift issues.
-		const deployment = dep?.deployment || {};
-		const data_product_type = deployment.product.data_product_type ?? '';
-		const data_curators = deployment.product.data_curators ?? null; // may be array or string; null if absent
-		const privacy_unit = deployment.privacy_loss?.privacy_unit ?? '';
+        const deployment = dep?.deployment || {};
+        const data_product_type = deployment.product.data_product_type ?? '';
+        const data_curators = deployment.product.data_curators ?? null; // may be array or string; null if absent
+        const privacy_unit = deployment.privacy_loss?.privacy_unit ?? '';
 
-        if (tier)  tierSet.add(tier);
+        if (tier) tierSet.add(tier);
         if (data_product_type) productSet.add(data_product_type);
         if (data_curators) {
             if (Array.isArray(data_curators)) {
-				data_curators.forEach(curator => curatorSet.add(curator));
-			} else {
-				curatorSet.add(data_curators);
-			}
+                data_curators.forEach(curator => curatorSet.add(curator));
+            } else {
+                curatorSet.add(data_curators);
+            }
         }
         if (privacy_unit) privacyUnitSet.add(privacy_unit);
     });
@@ -131,8 +168,8 @@ export function getColumnsConfig(deploymentsData) {
                 render: (_, __, row) => {
                     const { name, data_curators } = row.deployment.product;
                     return (`
-                        <div style="color: #181818; font-weight: 500; margin-bottom: 4px">${name}</div>
-                        <div>by ${Array.isArray(data_curators) ? data_curators.join(', ') : data_curators}</div>
+                        <div style="color: #181818; font-weight: 500; margin-bottom: 4px">${parseInlineMarkdown(name)}</div>
+                        <div>by ${parseInlineMarkdown(data_curators)}</div>
                     `);
                 },
             },
@@ -166,33 +203,35 @@ export function getColumnsConfig(deploymentsData) {
                     descriptionCell.setAttribute('data-index', displayIndex);
 
                     const descriptionText = document.createElement('span');
-                    descriptionText.classList.add('description-text');
-                    descriptionText.textContent = description.substring(0, DESCRIPTION_CHAR_LIMIT);
+                    descriptionText.classList.add('description-text', 'truncate');
 
                     descriptionCell.appendChild(descriptionText);
 
-                    if (description.length > DESCRIPTION_CHAR_LIMIT) {
-                        const hiddenDescriptionText = document.createElement('span');
-                        hiddenDescriptionText.classList.add('hidden-description-text', 'truncate');
+                    const truncatedText = document.createElement('span');
+                    truncatedText.classList.add('truncated-text');
+                    truncatedText.innerHTML = parseInlineMarkdown(description, '', true, 0, DESCRIPTION_CHAR_LIMIT);
 
+                    descriptionText.appendChild(truncatedText);
+
+                    if (description.length > DESCRIPTION_CHAR_LIMIT) {
                         const ellipsisSpan = document.createElement('span');
                         ellipsisSpan.classList.add('ellipsis');
                         ellipsisSpan.textContent = '...';
 
                         const fullTextSpan = document.createElement('span');
                         fullTextSpan.classList.add('full-text');
-                        fullTextSpan.textContent = description.substring(DESCRIPTION_CHAR_LIMIT);
+                        fullTextSpan.innerHTML = parseInlineMarkdown(description);
 
                         const showMoreBtn = document.createElement('span');
                         showMoreBtn.classList.add('show-more-btn');
                         showMoreBtn.innerHTML = 'show <span class="more">more</span><span class="less">less</span>';
 
-                        hiddenDescriptionText.appendChild(ellipsisSpan);
-                        hiddenDescriptionText.appendChild(fullTextSpan);
-                        hiddenDescriptionText.appendChild(showMoreBtn);
-
-                        descriptionCell.appendChild(hiddenDescriptionText);
+                        descriptionText.appendChild(ellipsisSpan);
+                        descriptionText.appendChild(fullTextSpan);
+                        descriptionText.appendChild(showMoreBtn);
                     }
+
+                    descriptionCell.appendChild(descriptionText);
 
                     // Return the outer HTML of the constructed description cell
                     return descriptionCell.outerHTML;
@@ -229,7 +268,7 @@ export function getColumnsConfig(deploymentsData) {
                 title: 'Flavor Name',
                 render: (_, __, row) => {
                     const flavorName = row?.deployment?.dp_flavor?.name || '';
-                    return flavorName;
+                    return parseInlineMarkdown(flavorName);
                 },
             },
             searchPane: true
@@ -260,12 +299,12 @@ export function getColumnsConfig(deploymentsData) {
                     const elements = [];
 
                     if (privacy_unit) {
-                        elements.push(`<div style="font-weight: 500; margin-bottom: 4px; font-size: 12px">${privacy_unit}</div>`)
+                        elements.push(`<div style="font-weight: 500; margin-bottom: 4px; font-size: 12px">${parseInlineMarkdown(privacy_unit)}</div>`)
                     }
                     if (epsilon) {
                         const epsilonNum = parseFloat(epsilon);
                         const formattedEpsilon = epsilonNum < 0.01 ? epsilonNum.toExponential(2) : epsilonNum.toString();
-                        elements.push(`ε:&nbsp;${formattedEpsilon}<br>`)
+                        elements.push(`ϵ:&nbsp;${formattedEpsilon}<br>`)
                     }
                     if (delta) {
                         const deltaNum = parseFloat(delta);
@@ -285,7 +324,7 @@ export function getColumnsConfig(deploymentsData) {
                 show: true,
                 config: privacyUnitSearchPaneConfig,
             },
-			columnDef: { orderable: true },
+            columnDef: { orderable: true },
         },
         // MODEL
         {
@@ -295,37 +334,37 @@ export function getColumnsConfig(deploymentsData) {
                 title: 'Model',
                 render: (_, __, row) => {
                     const modelName = row?.deployment?.model?.model_name || '';
-                    return modelName;
+                    return parseInlineMarkdown(modelName);
                 },
             },
             searchPane: true
         },
         // ACCOUNTING
-        {
-            column: {
-                data: null,
-                className: 'accounting-column',
-                title: 'Accounting',
-                render: () => {
-                    return '-';
-                },
-            },
-            searchPane: { show: false },
-			columnDef: { orderable: false },
-        },
-        // IMPLEMENTATION
-        {
-            column: {
-                data: null,
-                className: 'implementation-column',
-                title: 'Implementation',
-                render: () => {
-                    return '-';
-                },
-            },
-            searchPane: { show: false },
-			columnDef: { orderable: false },
-        },
+        // {
+        //     column: {
+        //         data: null,
+        //         className: 'accounting-column',
+        //         title: 'Accounting',
+        //         render: () => {
+        //             return parseInlineMarkdown('--');
+        //         },
+        //     },
+        //     searchPane: { show: false },
+        // 	columnDef: { orderable: false },
+        // },
+        // // IMPLEMENTATION
+        // {
+        //     column: {
+        //         data: null,
+        //         className: 'implementation-column',
+        //         title: 'Implementation',
+        //         render: () => {
+        //             return parseInlineMarkdown('--');
+        //         },
+        //     },
+        //     searchPane: { show: false },
+        // 	columnDef: { orderable: false },
+        // },
     ];
 
     const classNamePrefix = 'header-col-idx-';
@@ -359,9 +398,9 @@ export function getColumnsConfig(deploymentsData) {
 
                 // Merge with existing columnDef if it exists (for headerClassName)
                 columnDef = { ...columnDef, ...columnDefConfig };
-            } else if(typeof c.searchPane === 'object' && c.searchPane.show && 'config' in c.searchPane) {
+            } else if (typeof c.searchPane === 'object' && c.searchPane.show && 'config' in c.searchPane) {
                 let searchPanes = [];
-                if(Array.isArray(c.searchPane.config)) {
+                if (Array.isArray(c.searchPane.config)) {
                     searchPanes = c.searchPane.config;
                 } else {
                     searchPanes.push(c.searchPane.config);

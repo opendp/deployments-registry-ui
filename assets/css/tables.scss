@@ -42,6 +42,20 @@
     margin: 0;
 }
 
+/* inline markdown */
+.inline-markdown p {
+    margin: 0;
+    padding: 0;
+
+    color: inherit;
+
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: inherit;
+
+    display: inline;
+}
+
 /* Table Head */
 .docs-content thead {
     background: #F3F3F3;
@@ -190,7 +204,8 @@ table tr:nth-child(even) {
     color: #5BB98B;
 }
 
-.hidden-description-text {
+.description-text {
+    .truncated-text { display: none; }
     .ellipsis { display: none; }
     .full-text { display: inline; }
     .show-more-btn  {
@@ -199,6 +214,7 @@ table tr:nth-child(even) {
     }
 
     &.truncate {
+        .truncated-text { display: inline; }
         .ellipsis { display: inline; }
         .full-text { display: none; }
         .show-more-btn  {

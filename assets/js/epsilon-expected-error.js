@@ -15,7 +15,7 @@ const spec = {
           "min": 0.01,
           "max": 10, 
           "step": 0.01,
-          "name": "Epsilon (ε)"
+          "name": "Epsilon (ϵ)"
           }
       },
       {

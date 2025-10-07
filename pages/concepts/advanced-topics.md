@@ -11,7 +11,7 @@ When multiple queries are performed on the same dataset, the privacy guarantees 
 
 ### Basic Composition
 
-Under basic composition, if we perform k queries each satisfying ε-differential privacy, the total privacy loss is at most kε. This additive property is fundamental to privacy budget management.
+Under basic composition, if we perform k queries each satisfying ϵ-differential privacy, the total privacy loss is at most kϵ. This additive property is fundamental to privacy budget management.
 
 ### Advanced Composition
 
