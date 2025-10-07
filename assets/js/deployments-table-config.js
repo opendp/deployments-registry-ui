@@ -48,6 +48,8 @@ export function getColumnsConfig(deploymentsData) {
     const productSet = new Set();
     const curatorSet = new Set();
     const privacyUnitSet = new Set();
+    const AccountingTagsSet = new Set();
+    const ImplementationTagsSet = new Set();
 
     deploymentsData.forEach(dep => {
         const { tier } = dep;
@@ -56,6 +58,8 @@ export function getColumnsConfig(deploymentsData) {
         const data_product_type = deployment.product.data_product_type ?? '';
         const data_curators = deployment.product.data_curators ?? null; // may be array or string; null if absent
         const privacy_unit = deployment.privacy_loss?.privacy_unit ?? '';
+        const accounting = deployment.accounting || {};
+        const implementation = deployment.implementation || {};
 
         if (tier) tierSet.add(tier);
         if (data_product_type) productSet.add(data_product_type);
@@ -67,6 +71,16 @@ export function getColumnsConfig(deploymentsData) {
             }
         }
         if (privacy_unit) privacyUnitSet.add(privacy_unit);
+        if (Object.keys(accounting).length > 0) {
+            Object.keys(accounting).forEach(key => {
+                AccountingTagsSet.add(key);
+            });
+        }
+        if (Object.keys(implementation).length > 0) {
+            Object.keys(implementation).forEach(key => {
+                ImplementationTagsSet.add(key);
+            });
+        }
     });
 
     // tier search pane config
@@ -131,6 +145,30 @@ export function getColumnsConfig(deploymentsData) {
             && value.trim().length > 0
             && value !== "No information provided")
     }
+
+    const AccountingSearchPaneConfig = {
+        className: 'accounting-filter',
+        header: 'Accounting',
+        options: Array.from(AccountingTagsSet).map(accountingTag => ({
+            label: getTagName(accountingTag),
+            value: function (rowData) {
+                const tagValue = rowData?.deployment?.accounting?.[accountingTag];
+                return showTag(tagValue);
+            }
+        }))
+    };
+
+    const ImplementationSearchPaneConfig = {
+        className: 'implementation-filter',
+        header: 'Implementation',
+        options: Array.from(ImplementationTagsSet).map(implementationTag => ({
+            label: getTagName(implementationTag),
+            value: function (rowData) {
+                const tagValue = rowData?.deployment?.implementation?.[implementationTag];
+                return showTag(tagValue);
+            }
+        }))
+    };
 
     function appendTags(container, config) {
         const variants = CustomTag.variants;
@@ -318,7 +356,6 @@ export function getColumnsConfig(deploymentsData) {
                 show: true,
                 config: privacyUnitSearchPaneConfig,
             },
-            columnDef: { orderable: true },
         },
         // MODEL
         {
@@ -350,7 +387,10 @@ export function getColumnsConfig(deploymentsData) {
                     return accountingCell.outerHTML;
                 },
             },
-            searchPane: { show: false },
+            searchPane: {
+                show: true,
+                config: AccountingSearchPaneConfig,
+            },
             columnDef: { orderable: false },
         },
         // IMPLEMENTATION
@@ -370,7 +410,10 @@ export function getColumnsConfig(deploymentsData) {
                     return implementationCell.outerHTML;
                 },
             },
-            searchPane: { show: false },
+            searchPane: {
+                show: true,
+                config: ImplementationSearchPaneConfig,
+            },
             columnDef: { orderable: false },
         },
     ];
@@ -395,6 +438,8 @@ export function getColumnsConfig(deploymentsData) {
         headerAttributes['id'] = `header-${c.column.title.toLowerCase().replace(/\s+/g, '-')}-${index}`;
 
         if ('searchPane' in c) {
+            headerAttributes['has-searchpane'] = 'true';
+
             if (typeof c.searchPane === 'boolean') {
                 const header = c.column.title;
                 const columnDefConfig = {
