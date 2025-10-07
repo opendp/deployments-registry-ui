@@ -24,6 +24,9 @@ export function initializeDeploymentsFeatures() {
       if (!deploymentHints.extra_columns) {
         throw new Error('Missing extra_columns in deployment hints');
       }
+      if (!deploymentHints.tile_names) {
+        throw new Error('Missing tile_names in deployment hints');
+      }
     } catch (e) {
       console.warn('Encountered error parsing deployment hints JSON: \n', e);
     }

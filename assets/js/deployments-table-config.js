@@ -1,3 +1,4 @@
+/* global CustomTag */
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 // Helper function to parse markdown with optional wrapper class
@@ -28,6 +29,21 @@ function parseInlineMarkdown(text, wrapperClass = '') {
 
 // columnsConfig.js
 export function getColumnsConfig(deploymentsData) {
+    // Load deployment hints
+    let deploymentHints = {};
+    const hintsScript = document.getElementById('deployment-hints');
+    if (hintsScript) {
+        try {
+            deploymentHints = JSON.parse(hintsScript.textContent);
+
+            if (!deploymentHints.tile_names) {
+                throw new Error('Missing tile_names in deployment hints');
+            }
+        } catch (e) {
+            console.warn('Encountered error parsing deployment hints JSON: \n', e);
+        }
+    }
+
     const tierSet = new Set();
     const productSet = new Set();
     const curatorSet = new Set();
@@ -105,6 +121,30 @@ export function getColumnsConfig(deploymentsData) {
             }
         }))
     };
+
+    function getTagName(key) {
+        const shortNames = deploymentHints?.tile_names || {};
+        return key in shortNames ? shortNames[key] : key.replaceAll('_', ' ');
+    }
+    function showTag(value) {
+        return(value
+            && value.trim().length > 0
+            && value !== "No information provided")
+    }
+
+    function appendTags(container, config) {
+        const variants = CustomTag.variants;
+
+        Object.entries(config).forEach(([key, value], idx) => {
+            if (showTag(value)) {
+                const cont = document.createElement('div');
+                cont.classList.add(`${key}-tag-container`);
+                container.appendChild(cont);
+
+                new CustomTag(cont, getTagName(key), `variant-${variants[idx % variants.length]}`);
+            }
+        });
+    }
 
     const columnsConfig = [
         // TIER
@@ -294,31 +334,45 @@ export function getColumnsConfig(deploymentsData) {
             searchPane: true
         },
         // ACCOUNTING
-        // {
-        //     column: {
-        //         data: null,
-        //         className: 'accounting-column',
-        //         title: 'Accounting',
-        //         render: () => {
-        //             return parseInlineMarkdown('--');
-        //         },
-        //     },
-        //     searchPane: { show: false },
-        // 	columnDef: { orderable: false },
-        // },
-        // // IMPLEMENTATION
-        // {
-        //     column: {
-        //         data: null,
-        //         className: 'implementation-column',
-        //         title: 'Implementation',
-        //         render: () => {
-        //             return parseInlineMarkdown('--');
-        //         },
-        //     },
-        //     searchPane: { show: false },
-        // 	columnDef: { orderable: false },
-        // },
+        {
+            column: {
+                data: null,
+                className: 'accounting-column',
+                title: 'Accounting',
+                render: (_, __, row) => {
+                    const accounting = row?.deployment?.accounting || {};
+
+                    const accountingCell = document.createElement('div');
+                    accountingCell.classList.add('accounting-cell');
+
+                    appendTags(accountingCell, accounting);
+
+                    return accountingCell.outerHTML;
+                },
+            },
+            searchPane: { show: false },
+            columnDef: { orderable: false },
+        },
+        // IMPLEMENTATION
+        {
+            column: {
+                data: null,
+                className: 'implementation-column',
+                title: 'Implementation',
+                render: (_, __, row) => {
+                    const implementation = row?.deployment?.implementation || {};
+
+                    const implementationCell = document.createElement('div');
+                    implementationCell.classList.add('implementation-cell');
+
+                    appendTags(implementationCell, implementation);
+
+                    return implementationCell.outerHTML;
+                },
+            },
+            searchPane: { show: false },
+            columnDef: { orderable: false },
+        },
     ];
 
     const classNamePrefix = 'header-col-idx-';
