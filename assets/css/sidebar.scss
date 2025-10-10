@@ -2,6 +2,9 @@
 ---
 
 /* Sidebar Styles - Navigation sidebar component including collapsed states and interactions */
+:root {
+    --sidebar-padding-v: 2rem;
+}
 
 /* Sidebar Container */
 .docs-sidebar {
@@ -10,7 +13,7 @@
     z-index: 9999;
     min-width: 290px;
     border-right: 1px solid #F3F3F3;
-    padding: 2rem 0 2rem 1rem;
+    padding: var(--sidebar-padding-v) 0 var(--sidebar-padding-v) 1rem;
     transition: all 0.2s ease;
     height: 100vh;
     position: sticky;
