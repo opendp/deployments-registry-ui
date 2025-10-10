@@ -25,6 +25,8 @@ icon: 'assignment'
 
 This registry is a collaborative resource for information about real-world differential privacy deployments. Use the table and visualizations below to explore both technical and sociotechnical aspects of these deployments.
 
+**Click on any row to see expanded details.**
+
 <script>
     const deployments = {{ site.data.deployments | jsonify }};
     // Provide full deployments object (with tier and metadata) to visualization code without altering existing data sources
@@ -37,15 +39,15 @@ This registry is a collaborative resource for information about real-world diffe
 
 <!-- Filters Section -->
 <div class="filters-container">
-    <div style="white-space: nowrap">Deployments Registry</div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span class="title" style="white-space: nowrap;">Deployments Registry</span>
+    </div>
     <div class="filter-row" style="justify-content: right">
-        <div class="filter-group">
-            <div class="search-container">
-                <input type="text" id="search-filter" placeholder="Search">
-                <button id="clear-search-btn" class="clear-search-btn">
-                    <i class="material-symbols-rounded icon">close</i>
-                </button>
-            </div>
+        <div class="search-container">
+            <input type="text" id="search-filter" placeholder="Search">
+            <button id="clear-search-btn" class="clear-search-btn">
+                <i class="material-symbols-rounded icon">close</i>
+            </button>
         </div>
         <div class="filter-actions">
             <button id="clear-filters" title="Clear all filters">Clear all</button>
