@@ -112,7 +112,7 @@ def test_row_click_opens_side_panel(page: Page):
 
     deployment_name = first_row.locator('.deployment-name').inner_text().strip()
 
-    side_panel = page.locator('.side-panel-container')
+    side_panel = page.locator('.deployments-registry-page>.side-panel-container')
     expect(side_panel).to_be_visible()
     expect(side_panel).to_have_class(re.compile(r'.*expanded.*'))
 
