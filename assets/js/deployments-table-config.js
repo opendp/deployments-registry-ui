@@ -78,7 +78,7 @@ export function getColumnsConfig(deploymentsData) {
 
     // product search pane config
     const productSearchPaneConfig = {
-        className: 'product-filter',
+        className: 'product-filter product-type-filter',
         header: 'Product Type',
         options: Array.from(productSet).map(product => ({
             label: product,
@@ -90,7 +90,7 @@ export function getColumnsConfig(deploymentsData) {
 
     // curator search pane config
     const curatorSearchPaneConfig = {
-        className: 'product-filter',
+        className: 'product-filter curator-filter',
         header: 'Curator',
         options: Array.from(curatorSet).map(curator => ({
             label: curator,
@@ -168,8 +168,8 @@ export function getColumnsConfig(deploymentsData) {
                 render: (_, __, row) => {
                     const { name, data_curators } = row.deployment.product;
                     return (`
-                        <div style="color: #181818; font-weight: 500; margin-bottom: 4px">${parseInlineMarkdown(name)}</div>
-                        <div>by ${parseInlineMarkdown(data_curators)}</div>
+                        <div class="deployment-name" style="color: #181818; font-weight: 500; margin-bottom: 4px">${parseInlineMarkdown(name)}</div>
+                        <div>by ${parseInlineMarkdown(data_curators, 'curators-list')}</div>
                     `);
                 },
             },
