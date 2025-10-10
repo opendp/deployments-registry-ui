@@ -1,8 +1,13 @@
 /* Footer Component Styles */
 
+.site-footer-container {
+  display: flex;
+}
+
 .site-footer {
   border: none;
-  padding: 56px 120px;
+  /* eslint-disable-next-line css/no-invalid-properties */
+  padding: 56px var(--page-h-padding) 0;
 }
 
 .footer-heading {
@@ -107,11 +112,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .site-footer {
-    padding: 1rem 20px 80px 20px;
-    margin-top: 2rem;
-  }
+@media (max-width: 1024px) {
 
   .footer-col-wrapper {
     grid-auto-flow: row;
@@ -120,6 +121,19 @@
 
   .footer-col-wrapper .separator {
     display: block;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+  .site-footer-container {
+    flex-direction: column;
+  }
+
+  .site-footer {
+    padding-top: 1rem;
+    margin-top: 2rem;
   }
 
   .footer-col-wrapper a {

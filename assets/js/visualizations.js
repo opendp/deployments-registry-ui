@@ -242,14 +242,19 @@ function initDeploymentsVis() {
     // -----------------------------------------------------------------------
     // LEFT CHART scaffolding (categorical counts)
     // -----------------------------------------------------------------------
-    const left_plot = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`);
+    const left_plot = svg.append('g')
+        .attr('id', 'left-plot-group')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
     const x_scale_left = d3.scaleBand().padding(0.2).range([0, PLOT_WIDTH]);                            // Ordinal band scale: maps each category to a horizontal band
     const y_scale_left = d3.scaleLinear().range([PLOT_HEIGHT, 0]);                                      // Linear scale: maps counts (0..max) to vertical pixel positions
-    const x_axis_group_left = left_plot.append('g').attr('transform', `translate(0, ${PLOT_HEIGHT})`);  // <g> container where the left x-axis (categories) will be drawn
+    const x_axis_group_left = left_plot.append('g')
+        .attr('id', 'left-plot-x-axis')
+        .attr('transform', `translate(0, ${PLOT_HEIGHT})`);  // <g> container where the left x-axis (categories) will be drawn
     const y_axis_group_left = left_plot.append('g');                                                    // <g> container for the left y-axis (deployment counts)
 
     // Axis labels
     const x_label_left = left_plot.append('text')
+        .attr('id', 'left-plot-x-axis-label')
         .attr('class', 'axis-label axis-label-x')
         .attr('text-anchor', 'middle')
         .attr('x', PLOT_WIDTH / 2)
@@ -258,6 +263,7 @@ function initDeploymentsVis() {
 
     // Add the left y‑axis label: rotated -90 degrees so it reads vertically beside the axis.
     left_plot.append('text')
+        .attr('id', 'left-plot-y-axis-label')
         .attr('class', 'axis-label axis-label-y')
         .attr('transform', 'rotate(-90)')
         .attr('x', -(PLOT_HEIGHT / 2))
@@ -354,6 +360,7 @@ function initDeploymentsVis() {
     // RIGHT CHART scaffolding (stacked bars over time)
     // -----------------------------------------------------------------------
     const right_plot = svg.append('g')
+        .attr('id', 'right-plot-group')
         .attr('transform', `translate(${margin.left + plotSpacing + PLOT_WIDTH}, ${margin.top})`);
 
     // Right chart x scale
@@ -365,6 +372,7 @@ function initDeploymentsVis() {
 
     // Add right plot x‑axis label centered beneath the year axis.
     right_plot.append('text')
+        .attr('id', 'right-plot-x-axis-label')
         .attr('text-anchor', 'middle')
         .attr('x', PLOT_WIDTH / 2)
         .attr('y', PLOT_HEIGHT + BASE_X_LABEL_OFFSET)
@@ -373,6 +381,7 @@ function initDeploymentsVis() {
 
     // Add right plot y‑axis label showing what the stack height represents.
     right_plot.append('text')
+        .attr('id', 'right-plot-y-axis-label')
         .attr('class', 'axis-label axis-label-y')
         .attr('transform', 'rotate(-90)')
         .attr('x', -(PLOT_HEIGHT / 2))
@@ -388,7 +397,7 @@ function initDeploymentsVis() {
 
     if (window.CustomSelect) {
         // Initialize custom select dropdown
-        variableSelect = new CustomSelect(dropdownContainer);
+        variableSelect = new CustomSelect(dropdownContainer, '', 'variable-dropdown');
 
         // Populate options from VARIABLE_OPTIONS
         variableSelect.updateOptions(VARIABLE_OPTIONS.map(o => ({ value: o.name, label: o.displayName })));

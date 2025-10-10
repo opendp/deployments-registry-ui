@@ -1,0 +1,56 @@
+---
+---
+
+.tag {
+    width: fit-content;
+    padding: 2px 12px;
+    border-radius: 9999px;
+
+    color: #FFF;
+    background: #2E2E2E;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    .label {
+        /* Body/XS/Medium */
+        font-family: "Inter";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        /* 133.333% */
+
+        text-transform: capitalize;
+        text-wrap: nowrap;
+    }
+
+    .material-symbols-rounded.icon {
+        font-size: 12px;
+    }
+
+    &.variant-neutral-800 {
+        background: #3A3A3A;
+    }
+
+    &.variant-neutral-700 {
+        background: #5F5F5F;
+    }
+
+    &.variant-neutral-600 {
+        color: #181818;
+        background: #A1A1A1;
+    }
+
+    &.variant-neutral-500 {
+        color: #181818;
+        background: #DADADA;
+    }
+
+    &.variant-neutral-400 {
+        color: #181818;
+        background: #E7E7E7;
+    }
+}

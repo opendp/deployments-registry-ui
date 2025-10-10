@@ -5,12 +5,22 @@
     width: 100%;
     margin-top: 1rem;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     gap: 12px;
     color: #181818;
+}
+
+.filters-container .title {
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
+}
+
+.filters-container .sub-title {
+    font-size: 14px;
+    font-style: normal;
+    line-height: 20px;
+    /* 142.857% */
 }
 
 .filters-container button {
@@ -18,28 +28,16 @@
 }
 
 .filter-row {
-    width: 100%;
-    max-width: 750px;
     display: flex;
-    flex-wrap: wrap;
 }
 
-.filter-group {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    position: relative;
-}
-
-.filter-group label {
+.filter-row label {
     display: block;
     margin-bottom: 4px;
 }
 
-.filter-group input,
-.filter-group input:active,
-.filter-group select {
+.filter-row input,
+.filter-row input:active {
     padding: 0px 12px;
     background: white;
     border: 1px solid #DADADA;
@@ -82,45 +80,43 @@
     background-color: transparent;
 }
 
+.filter-actions {
+    flex-shrink: 0;
+}
+
 #clear-filters {
+    flex-shrink: 0;
     display: none;
     margin-left: 8px;
 }
 
 /* Forms Responsive Design */
-@media (max-width: 1068px) {
-    .filters-container {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .filter-group {
-        max-width: unset;
-    }
-}
-
-/* Forms Responsive Design */
-@media (max-width: 768px) {
-    .filter-row {
-        flex-direction: column;
-    }
-
-    .filter-group {
-        min-width: 100%;
-        max-width: unset;
-    }
+@media (max-width: 1024px) {
 
     /* Filter Container */
     .filters-container {
         flex-direction: column;
+        align-items: start;
         gap: 12px;
     }
 
     .filter-row {
+        width: 100%;
+
         display: flex;
         flex-wrap: wrap;
         align-items: end;
-        width: 100%;
+    }
+
+    .search-container,
+    #search-filter {
+        flex-grow: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-row {
+        flex-direction: column;
     }
 
     .search-container,

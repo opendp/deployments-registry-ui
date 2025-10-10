@@ -42,7 +42,7 @@ def test_ui(page: Page):
     # Confirm visible
     latex_node.is_visible()
 
-    expect(page.get_by_text("2020 Census Redistricting Data (P.L. 94-171) Summary File").first).to_be_visible()
+    expect(page.get_by_text("Set of summary statistics (tables with counts of individuals").first).to_be_visible()
 
     # TODO: confirm the second paragraph is in a separate element.
 
