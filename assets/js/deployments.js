@@ -37,12 +37,24 @@ export function initializeDeploymentsFeatures() {
   // Add click handlers to deployment rows (now that DataTable is initialized)
   const deploymentRows = document.querySelectorAll('.deployment-row');
   deploymentRows.forEach(function (row) {
+    const rowIndex = parseInt(row.getAttribute('data-index'), 10);
+
     row.addEventListener('click', function () {
-      const rowIndex = parseInt(row.getAttribute('data-index'), 10);
       if (!Number.isNaN(rowIndex)) {
         selectDeploymentRow(rowIndex);
       }
     });
+
+    const descriptionText = row.querySelector('.description-text');
+    const showMoreButton = row.querySelector('.show-more-btn');
+    if(descriptionText && showMoreButton) {
+      showMoreButton.addEventListener('click', function (e) {
+        e.stopPropagation(); // Prevent row click event
+        if (!Number.isNaN(rowIndex)) {
+          descriptionText.classList.toggle('truncate');
+        }
+      });
+    }
   });
 
   // Create modal overlay for mobile
@@ -92,7 +104,7 @@ function createModalOverlay() {
 function selectDeploymentRow(index) {
   const sidebar = document.querySelector('.docs-sidebar');
   const sidePanel = document.querySelector('.side-panel');
-  const sidePanelContainer = document.querySelector('.side-panel-container');
+  const sidePanelContainers = document.querySelectorAll('.side-panel-container');
   const deploymentDetailsDiv = document.getElementById('deployment-details');
   const modalOverlay = document.querySelector('.modal-overlay');
 
@@ -137,9 +149,9 @@ function selectDeploymentRow(index) {
     }
 
     // Expand side panel container and panel
-    if (sidePanelContainer) {
-      sidePanelContainer.classList.add('expanded');
-    }
+    sidePanelContainers.forEach(container => {
+      container.classList.add('expanded');
+    });
     if (sidePanel) {
       sidePanel.classList.add('expanded');
     }
@@ -307,7 +319,7 @@ function generateDeploymentDetailsHTML(deployment, fileName) {
 function clearSelection() {
   const sidebar = document.querySelector('.docs-sidebar');
   const sidePanel = document.querySelector('.side-panel');
-  const sidePanelContainer = document.querySelector('.side-panel-container');
+  const sidePanelContainers = document.querySelectorAll('.side-panel-container');
   const deploymentDetailsDiv = document.getElementById('deployment-details');
   const modalOverlay = document.querySelector('.modal-overlay');
 
@@ -331,8 +343,10 @@ function clearSelection() {
   if (sidePanel) {
     sidePanel.classList.remove('expanded');
   }
-  if (sidePanelContainer) {
-    sidePanelContainer.classList.remove('expanded');
+  if (sidePanelContainers) {
+    sidePanelContainers.forEach(container => {
+      container.classList.remove('expanded');
+    });
   }
 
   // Hide modal overlay

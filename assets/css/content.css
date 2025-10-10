@@ -4,7 +4,8 @@
 .docs-content {
     min-width: 0;
     max-width: 100%;
-    padding: 24px 28px;
+    /* eslint-disable-next-line css/no-invalid-properties */
+    padding: var(--sidebar-padding-v) 28px;
     padding-right: 0;
 
     color: #5F5F5F;

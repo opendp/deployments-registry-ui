@@ -1,36 +1,40 @@
-<footer class="site-footer h-card">
-  <data class="u-url" href="{{ '/' | relative_url }}"></data>
+<footer class="site-footer-container">
+  <div class="site-footer h-card">
+    <data class="u-url" href="{{ '/' | relative_url }}"></data>
 
-  <div class="footer-col-wrapper">
-    <div class="footer-col footer-col-1">
-      <div class="footer-logo">
-        LOGO
-        <!-- <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="LOGO" class="footer-logo-img"> -->
-      </div>
-      <ul class="contact-list">
-        <li class="p-name">
-          {%- if site.author -%}
-          {{ site.author | escape }}
-          {%- else -%}
-          {{ site.title | escape }}
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <div class="footer-logo">
+          LOGO
+          <!-- <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="LOGO" class="footer-logo-img"> -->
+        </div>
+        <ul class="contact-list">
+          <li class="p-name">
+            {%- if site.author -%}
+            {{ site.author | escape }}
+            {%- else -%}
+            {{ site.title | escape }}
+            {%- endif -%}
+          </li>
+          {%- if site.email -%}
+          <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
           {%- endif -%}
-        </li>
-        {%- if site.email -%}
-        <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-        {%- endif -%}
-      </ul>
-    </div>
+        </ul>
+      </div>
 
-    {%- if social.html -%}
-    <div class="footer-col footer-col-2">
-      {%- include social.html -%}
-    </div>
-    {%- endif -%}
+      {%- if social.html -%}
+      <div class="footer-col footer-col-2">
+        {%- include social.html -%}
+      </div>
+      {%- endif -%}
 
-    <div class="separator"></div>
+      <div class="separator"></div>
 
-    <div class="footer-col footer-col-3">
-      <p>{{- site.description | escape -}}</p>
+      <div class="footer-col footer-col-3">
+        <p>{{- site.description | escape -}}</p>
+      </div>
     </div>
+  </div>
+  <div class="side-panel-container">
   </div>
 </footer>

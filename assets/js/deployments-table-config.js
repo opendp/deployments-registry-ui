@@ -2,7 +2,7 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 // Helper function to parse markdown with optional wrapper class
-function parseInlineMarkdown(text, wrapperClass = '') {
+function parseInlineMarkdown(text, wrapperClass = '', truncate = false, startIndex = 0, endIndex = null) {
     // Handle null, undefined, or non-string values
     if (text == null) {
         return '';
@@ -24,10 +24,21 @@ function parseInlineMarkdown(text, wrapperClass = '') {
 
     // Convert to string and parse markdown
     const parsed = marked.parse(String(text));
-    return `<span class="inline-markdown ${wrapperClass}">${parsed}</span>`;
+
+    let displayText = parsed;
+    if (truncate) {
+        if(!endIndex) {
+            endIndex = parsed.length;
+        }
+        displayText = parsed.substring(startIndex, endIndex);
+    }
+
+    return `<span class="inline-markdown ${wrapperClass}">${displayText}</span>`;
 }
 
 // columnsConfig.js
+const DESCRIPTION_CHAR_LIMIT = 100;
+
 export function getColumnsConfig(deploymentsData) {
     // Load deployment hints
     let deploymentHints = {};
@@ -97,7 +108,7 @@ export function getColumnsConfig(deploymentsData) {
 
     // product search pane config
     const productSearchPaneConfig = {
-        className: 'product-filter',
+        className: 'product-filter product-type-filter',
         header: 'Product Type',
         options: Array.from(productSet).map(product => ({
             label: product,
@@ -109,7 +120,7 @@ export function getColumnsConfig(deploymentsData) {
 
     // curator search pane config
     const curatorSearchPaneConfig = {
-        className: 'product-filter',
+        className: 'product-filter curator-filter',
         header: 'Curator',
         options: Array.from(curatorSet).map(curator => ({
             label: curator,
@@ -235,8 +246,8 @@ export function getColumnsConfig(deploymentsData) {
                 render: (_, __, row) => {
                     const { name, data_curators } = row.deployment.product;
                     return (`
-                        <div style="color: #181818; font-weight: 500; margin-bottom: 4px">${parseInlineMarkdown(name)}</div>
-                        <div>by ${parseInlineMarkdown(data_curators)}</div>
+                        <div class="deployment-name" style="color: #181818; font-weight: 500; margin-bottom: 4px">${parseInlineMarkdown(name)}</div>
+                        <div>by ${parseInlineMarkdown(data_curators, 'curators-list')}</div>
                     `);
                 },
             },
@@ -254,19 +265,54 @@ export function getColumnsConfig(deploymentsData) {
                 data: 'deployment.description',
                 className: 'product-description',
                 title: 'Description',
-                render: (_, __, row, meta) => {
+                render: (_, type, row, meta) => {
                     const description = row?.deployment?.product?.description || '';
                     if (!description) return '';
+
+                    // For sorting, return the full description text
+                    if (type === 'sort' || type === 'type') {
+                        return description;
+                    }
+
                     const displayIndex = meta?.row ?? 0;
 
-                    return (`
-                        <span class="description-text">${parseInlineMarkdown(description)}</span>
-                        ${description.length > 0 ? `
-                            <div data-index="${displayIndex}" class="description-window">
-                                ${parseInlineMarkdown(description)}
-                            </div>
-                        ` : ``}
-                    `);
+                    const descriptionCell = document.createElement('div');
+                    descriptionCell.classList.add('description-cell');
+                    descriptionCell.setAttribute('data-index', displayIndex);
+
+                    const descriptionText = document.createElement('span');
+                    descriptionText.classList.add('description-text', 'truncate');
+
+                    descriptionCell.appendChild(descriptionText);
+
+                    const truncatedText = document.createElement('span');
+                    truncatedText.classList.add('truncated-text');
+                    truncatedText.innerHTML = parseInlineMarkdown(description, '', true, 0, DESCRIPTION_CHAR_LIMIT);
+
+                    descriptionText.appendChild(truncatedText);
+
+                    if (description.length > DESCRIPTION_CHAR_LIMIT) {
+                        const ellipsisSpan = document.createElement('span');
+                        ellipsisSpan.classList.add('ellipsis');
+                        ellipsisSpan.textContent = '...';
+
+                        const fullTextSpan = document.createElement('span');
+                        fullTextSpan.classList.add('full-text');
+                        fullTextSpan.innerHTML = parseInlineMarkdown(description);
+
+                        const showMoreBtn = document.createElement('span');
+                        showMoreBtn.classList.add('show-more-btn');
+                        showMoreBtn.innerHTML = 'show <span class="more">more</span><span class="less">less</span>';
+
+                        descriptionText.appendChild(ellipsisSpan);
+                        descriptionText.appendChild(fullTextSpan);
+                        descriptionText.appendChild(showMoreBtn);
+                    }
+
+                    descriptionCell.appendChild(descriptionText);
+
+                    // Return the outer HTML of the constructed description cell
+                    return descriptionCell.outerHTML;
                 },
             },
             searchPane: { show: true }

@@ -2,6 +2,16 @@
 ---
 /* eslint-disable css/no-important */
 
+.table-container {
+    table.dataTable {
+        margin: -1px;
+    }
+}
+
+table.dataTable {
+    border-collapse: collapse !important;
+}
+
 /* Table Sorting */
 table.dataTable#deployments-table thead>tr>th,
 table.dataTable#deployments-table thead>tr>td {
@@ -43,7 +53,6 @@ table.dataTable#deployments-table thead>tr>td.sorting_desc_disabled {
         color: #A1A1A1;
 
         font-family: 'Material Symbols Rounded';
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         font-size: 14px;
         line-height: 1;
         vertical-align: middle;
@@ -53,17 +62,23 @@ table.dataTable#deployments-table thead>tr>td.sorting_desc_disabled {
         opacity: 1;
     }
 
+    --y-bound: calc(50% - 4px);
     &::before {
-        bottom: 43%;
+        bottom: var(--y-bound);
         right: 14px;
         content: 'arrow_upward_alt';
     }
 
     &::after {
-        top: 43%;
+        top: var(--y-bound);
         right: 10px;
         content: 'arrow_downward_alt';
     }
+}
+
+table.dataTable#deployments-table>thead>tr>th,
+table.dataTable#deployments-table>thead>tr>td {
+    border-bottom: 1px solid #E7E7E7;
 }
 
 table.dataTable#deployments-table thead>tr>th.sorting_asc:before,
@@ -84,6 +99,7 @@ table.dataTable.row-border>tbody>tr>td,
 table.dataTable.display>tbody>tr>th,
 table.dataTable.display>tbody>tr>td {
     border-top: 1px solid #E7E7E7;
+    vertical-align: top;
 }
 
 table.dataTable.stripe>tbody>tr.odd>*,
