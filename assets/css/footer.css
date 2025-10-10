@@ -114,10 +114,6 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
 
-  .site-footer-container {
-    flex-direction: column;
-  }
-
   .footer-col-wrapper {
     grid-auto-flow: row;
     gap: 40px;
@@ -130,6 +126,10 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+
+  .site-footer-container {
+    flex-direction: column;
+  }
 
   .site-footer {
     padding-top: 1rem;

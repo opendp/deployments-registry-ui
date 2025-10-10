@@ -1,3 +1,4 @@
+/* global CustomTag */
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 // Helper function to parse markdown with optional wrapper class
@@ -39,10 +40,27 @@ function parseInlineMarkdown(text, wrapperClass = '', truncate = false, startInd
 const DESCRIPTION_CHAR_LIMIT = 100;
 
 export function getColumnsConfig(deploymentsData) {
+    // Load deployment hints
+    let deploymentHints = {};
+    const hintsScript = document.getElementById('deployment-hints');
+    if (hintsScript) {
+        try {
+            deploymentHints = JSON.parse(hintsScript.textContent);
+
+            if (!deploymentHints.tile_names) {
+                throw new Error('Missing tile_names in deployment hints');
+            }
+        } catch (e) {
+            console.warn('Encountered error parsing deployment hints JSON: \n', e);
+        }
+    }
+
     const tierSet = new Set();
     const productSet = new Set();
     const curatorSet = new Set();
     const privacyUnitSet = new Set();
+    const AccountingTagsSet = new Set();
+    const ImplementationTagsSet = new Set();
 
     deploymentsData.forEach(dep => {
         const { tier } = dep;
@@ -51,6 +69,8 @@ export function getColumnsConfig(deploymentsData) {
         const data_product_type = deployment.product.data_product_type ?? '';
         const data_curators = deployment.product.data_curators ?? null; // may be array or string; null if absent
         const privacy_unit = deployment.privacy_loss?.privacy_unit ?? '';
+        const accounting = deployment.accounting || {};
+        const implementation = deployment.implementation || {};
 
         if (tier) tierSet.add(tier);
         if (data_product_type) productSet.add(data_product_type);
@@ -62,6 +82,16 @@ export function getColumnsConfig(deploymentsData) {
             }
         }
         if (privacy_unit) privacyUnitSet.add(privacy_unit);
+        if (Object.keys(accounting).length > 0) {
+            Object.keys(accounting).forEach(key => {
+                AccountingTagsSet.add(key);
+            });
+        }
+        if (Object.keys(implementation).length > 0) {
+            Object.keys(implementation).forEach(key => {
+                ImplementationTagsSet.add(key);
+            });
+        }
     });
 
     // tier search pane config
@@ -116,6 +146,54 @@ export function getColumnsConfig(deploymentsData) {
             }
         }))
     };
+
+    function getTagName(key) {
+        const shortNames = deploymentHints?.tile_names || {};
+        return key in shortNames ? shortNames[key] : key.replaceAll('_', ' ');
+    }
+    function showTag(value) {
+        return(value
+            && value.trim().length > 0
+            && value !== "No information provided")
+    }
+
+    const AccountingSearchPaneConfig = {
+        className: 'accounting-filter',
+        header: 'Accounting',
+        options: Array.from(AccountingTagsSet).map(accountingTag => ({
+            label: getTagName(accountingTag),
+            value: function (rowData) {
+                const tagValue = rowData?.deployment?.accounting?.[accountingTag];
+                return showTag(tagValue);
+            }
+        }))
+    };
+
+    const ImplementationSearchPaneConfig = {
+        className: 'implementation-filter',
+        header: 'Implementation',
+        options: Array.from(ImplementationTagsSet).map(implementationTag => ({
+            label: getTagName(implementationTag),
+            value: function (rowData) {
+                const tagValue = rowData?.deployment?.implementation?.[implementationTag];
+                return showTag(tagValue);
+            }
+        }))
+    };
+
+    function appendTags(container, config) {
+        const variants = CustomTag.variants;
+
+        Object.entries(config).forEach(([key, value], idx) => {
+            if (showTag(value)) {
+                const cont = document.createElement('div');
+                cont.classList.add(`${key}-tag-container`);
+                container.appendChild(cont);
+
+                new CustomTag(cont, getTagName(key), `variant-${variants[idx % variants.length]}`);
+            }
+        });
+    }
 
     const columnsConfig = [
         // TIER
@@ -324,7 +402,6 @@ export function getColumnsConfig(deploymentsData) {
                 show: true,
                 config: privacyUnitSearchPaneConfig,
             },
-            columnDef: { orderable: true },
         },
         // MODEL
         {
@@ -340,31 +417,51 @@ export function getColumnsConfig(deploymentsData) {
             searchPane: true
         },
         // ACCOUNTING
-        // {
-        //     column: {
-        //         data: null,
-        //         className: 'accounting-column',
-        //         title: 'Accounting',
-        //         render: () => {
-        //             return parseInlineMarkdown('--');
-        //         },
-        //     },
-        //     searchPane: { show: false },
-        // 	columnDef: { orderable: false },
-        // },
-        // // IMPLEMENTATION
-        // {
-        //     column: {
-        //         data: null,
-        //         className: 'implementation-column',
-        //         title: 'Implementation',
-        //         render: () => {
-        //             return parseInlineMarkdown('--');
-        //         },
-        //     },
-        //     searchPane: { show: false },
-        // 	columnDef: { orderable: false },
-        // },
+        {
+            column: {
+                data: null,
+                className: 'accounting-column',
+                title: 'Accounting',
+                render: (_, __, row) => {
+                    const accounting = row?.deployment?.accounting || {};
+
+                    const accountingCell = document.createElement('div');
+                    accountingCell.classList.add('accounting-cell');
+
+                    appendTags(accountingCell, accounting);
+
+                    return accountingCell.outerHTML;
+                },
+            },
+            searchPane: {
+                show: true,
+                config: AccountingSearchPaneConfig,
+            },
+            columnDef: { orderable: false },
+        },
+        // IMPLEMENTATION
+        {
+            column: {
+                data: null,
+                className: 'implementation-column',
+                title: 'Implementation',
+                render: (_, __, row) => {
+                    const implementation = row?.deployment?.implementation || {};
+
+                    const implementationCell = document.createElement('div');
+                    implementationCell.classList.add('implementation-cell');
+
+                    appendTags(implementationCell, implementation);
+
+                    return implementationCell.outerHTML;
+                },
+            },
+            searchPane: {
+                show: true,
+                config: ImplementationSearchPaneConfig,
+            },
+            columnDef: { orderable: false },
+        },
     ];
 
     const classNamePrefix = 'header-col-idx-';
@@ -387,6 +484,8 @@ export function getColumnsConfig(deploymentsData) {
         headerAttributes['id'] = `header-${c.column.title.toLowerCase().replace(/\s+/g, '-')}-${index}`;
 
         if ('searchPane' in c) {
+            headerAttributes['has-searchpane'] = 'true';
+
             if (typeof c.searchPane === 'boolean') {
                 const header = c.column.title;
                 const columnDefConfig = {

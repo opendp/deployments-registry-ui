@@ -69,6 +69,12 @@
 .privacy-loss-column { min-width: 175px; }
 .model-column { min-width: 70px }
 .accounting-column { min-width: 124px; }
+.accounting-cell,
+.implementation-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 .implementation-column { min-width: 124px; }
 
 /* Table Rows */

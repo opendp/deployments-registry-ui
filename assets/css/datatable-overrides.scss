@@ -18,6 +18,25 @@ table.dataTable#deployments-table thead>tr>td {
     padding: 8px;
 }
 
+table.dataTable#deployments-table thead>tr>th {
+    &.sorting,
+    &[has-searchpane="true"] {
+        padding-right: 32px;
+
+        .filter-trigger {
+            right: 14px;
+        }
+    }
+
+    &.sorting[has-searchpane="true"] {
+        padding-right: 64px;
+
+        .filter-trigger {
+            right: 28px;
+        }
+    }
+}
+
 table.dataTable#deployments-table thead>tr>th.sorting,
 table.dataTable#deployments-table thead>tr>th.sorting_asc,
 table.dataTable#deployments-table thead>tr>th.sorting_desc,
@@ -28,7 +47,6 @@ table.dataTable#deployments-table thead>tr>td.sorting_asc,
 table.dataTable#deployments-table thead>tr>td.sorting_desc,
 table.dataTable#deployments-table thead>tr>td.sorting_asc_disabled,
 table.dataTable#deployments-table thead>tr>td.sorting_desc_disabled {
-    padding-right: 64px;
 
     &::before,
     &::after {
@@ -180,6 +198,20 @@ button.filter-trigger {
     display: none !important;
 }
 
+table.dataTable#deployments-table thead>tr>th {
+    .filters-popover-wrapper {
+        left: 0;
+        right: unset;
+    }
+
+    &:last-child {
+        .filters-popover-wrapper {
+            right: 0;
+            left: unset;
+        }
+    }
+}
+
 .filters-popover-wrapper {
     min-width: 150px;
     width: 284px;
@@ -189,7 +221,6 @@ button.filter-trigger {
 
     display: none;
     position: absolute;
-    left: 0;
     top: calc(100% + 4px);
 
     background: #fff;
