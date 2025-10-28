@@ -91,7 +91,6 @@
 /* Deployment Header Container */
 .side-panel .deployment-header-container {
     padding-right: 4px;
-    flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
