@@ -140,7 +140,7 @@ probability" - with probability δ, the privacy guarantee may fail.
 This interpretation provides useful intuition, though [it is not
 precisely correct](https://arxiv.org/abs/1906.01337). The δ parameter
 should be set very small - typical values are around \\(10^{-5}\\) or
-smaller, and the rule of thumb is to set $\delta \leq \frac{1}{n^2}$
+smaller, and the rule of thumb is to set \\(\delta \leq \frac{1}{n^2}\\)
 where \\(n\\) is the size of the database. The formal definition says that
 for all neighboring databases \\(D_1\\) and \\(D_2\\) and subsets of outputs
 \\(S\\), a mechanism \\(M\\) satisfies \\((\epsilon, \delta)\\)-DP if:
@@ -169,7 +169,7 @@ of ϵ, and they cannot be directly compared. A zCDP guarantee can be
 "converted" into an approximate DP guarantee, which can allow for
 comparisons between parameters, but this conversion may be imprecise.
 The formal definition says that for all neighboring databases \\(D_1\\)
-and \\(D_2\\) and subsets of outputs \\(S\\), a mechanism $M$ satisfies
+and \\(D_2\\) and subsets of outputs \\(S\\), a mechanism \\(M\\) satisfies
 \\(\rho\\)-zCDP if:
 
 <!-- eslint-disable markdown/no-missing-label-refs -->
@@ -180,9 +180,9 @@ $$
 
 <!-- eslint-enable markdown/no-missing-label-refs -->
 
-where $D_\alpha$ is the [Rényi
+where \\(D_\alpha\\) is the [Rényi
 divergence](https://en.wikipedia.org/wiki/R%C3%A9nyi_entropy#R%C3%A9nyi_divergence)
-of order $\alpha$.
+of order \\(\alpha\\).
 
 ## Rényi DP
 
