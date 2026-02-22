@@ -63,6 +63,14 @@ defaults:
       layout: "docs"
       permalink: /privacy/:basename/
 
+# Deployment statuses shown in the public UI (whitelist).
+# See NIST IR 8588 §5.1 for the governance workflow.
+published_statuses:
+  - "Converted"
+  - "Approved"
+  - "Approved (Update Requested)"
+  - "Approved (Pending)"
+
 exclude:
   - eslint.config.mjs
   - node_modules/

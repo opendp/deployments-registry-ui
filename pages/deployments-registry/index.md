@@ -28,8 +28,8 @@ This registry is a collaborative resource for information about real-world diffe
 **Click on any row to see expanded details.**
 
 <script>
-    // Exclude draft deployments from visualizations and TSV download
-    const deployments = {{ site.data.deployments | where_exp: "item", "item.status != 'Draft'" | jsonify }};
+    // Only include deployments with a published status (see published_statuses in _config.yml)
+    const deployments = {{ site.data.deployments | where_exp: "item", "site.published_statuses contains item.status" | jsonify }};
     window.deployments = deployments;
 </script>
 <script type="module" src="/assets/js/download-tsv.js"></script>
@@ -74,8 +74,8 @@ This registry is a collaborative resource for information about real-world diffe
 [
 {% for deployment in site.data.deployments %}
     {% assign d = deployment[1] %}
-    {% comment %}Exclude draft deployments from the table{% endcomment %}
-    {% if d.status == "Draft" %}{% continue %}{% endif %}
+    {% comment %}Only include deployments with a published status (see published_statuses in _config.yml){% endcomment %}
+    {% unless site.published_statuses contains d.status %}{% continue %}{% endunless %}
     {% assign d_json = d | jsonify %}
     {% assign d_json_without_brace = d_json | replace_first: '{', '' %}
     {% assign anchor_value = d.url_slug | default: deployment[0] %}
