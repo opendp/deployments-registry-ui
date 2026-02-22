@@ -94,7 +94,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		createdRow: function(row, data, dataIndex) {
 			$(row).addClass('deployment-row');
 
-			$(row).attr('data-index', data.index || dataIndex);
+			$(row).attr('data-index', dataIndex);
 			$(row).attr('data-file-name', data.file_name);   // correct key: file_name (not fileName)
 			$(row).attr('data-anchor', data.anchor);         // this should work now
 		},

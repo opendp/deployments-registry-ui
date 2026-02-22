@@ -28,8 +28,8 @@ This registry is a collaborative resource for information about real-world diffe
 **Click on any row to see expanded details.**
 
 <script>
-    const deployments = {{ site.data.deployments | jsonify }};
-    // Provide full deployments object (with tier and metadata) to visualization code without altering existing data sources
+    // Exclude draft deployments from visualizations and TSV download
+    const deployments = {{ site.data.deployments | where_exp: "item", "item.status != 'Draft'" | jsonify }};
     window.deployments = deployments;
 </script>
 <script type="module" src="/assets/js/download-tsv.js"></script>
@@ -74,14 +74,16 @@ This registry is a collaborative resource for information about real-world diffe
 [
 {% for deployment in site.data.deployments %}
     {% assign d = deployment[1] %}
+    {% comment %}Exclude draft deployments from the table{% endcomment %}
+    {% if d.status == "Draft" %}{% continue %}{% endif %}
     {% assign d_json = d | jsonify %}
     {% assign d_json_without_brace = d_json | replace_first: '{', '' %}
     {% assign anchor_value = d.url_slug | default: deployment[0] %}
+    {% if first_rendered %},{% endif %}{% assign first_rendered = true %}
     {
         "file_name": {{ deployment[0] | jsonify }},
-        "index": {{ forloop.index0 }},
         "anchor": {{ anchor_value | jsonify }},
-        {{ d_json_without_brace }}{% unless forloop.last %},{% endunless %}
+        {{ d_json_without_brace }}
 {% endfor %}
 ]
 </script>
