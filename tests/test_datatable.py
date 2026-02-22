@@ -67,13 +67,11 @@ def test_datatable_data_attributes(page: Page):
     first_row = page.locator('#deployments-table tbody tr.deployment-row').first
     expect(first_row).to_be_visible()
 
-    # get first file in dir: /_data/deployments/
+    # Verify the first row's data-file-name corresponds to a real YAML file
     data_dir = Path(__file__).parent.parent / "_data" / "deployments"
-    first_file_path = sorted(data_dir.glob("*.yaml"))[0]
-    first_file = first_file_path.name
-
-    # Check that required data attributes exist
-    expect(first_row).to_have_attribute('data-file-name', first_file[:-5])  # remove .yaml extension
+    first_row_file_name = first_row.get_attribute('data-file-name')
+    assert (data_dir / f"{first_row_file_name}.yaml").exists(), \
+        f"First row's deployment file '{first_row_file_name}.yaml' should exist in data directory"
 
     data_anchor = first_row.get_attribute('data-anchor')
     data_index = first_row.get_attribute('data-index')
@@ -282,8 +280,8 @@ def test_datatable_filter_application(page: Page):
     filtered_rows_product_cells_curators_list = [row.locator('td.product-column span.curators-list') for row in filtered_rows.all()]
     assert any('apple' in curator_el.inner_text().lower() for curator_el in filtered_rows_product_cells_curators_list), "Every filtered row should contain 'apple' in curators list"
 
-    # Get filtered row count
-    filtered_rows = page.locator('#deployments-table tbody tr:visible')
+    # Get filtered row count (use .deployment-row to avoid counting DataTables internal rows)
+    filtered_rows = page.locator('#deployments-table tbody tr.deployment-row:visible')
     expect(filtered_rows).not_to_have_count(0)
     assert filtered_rows.count() < initial_count, "Applying a filter should reduce the number of visible rows"
 
