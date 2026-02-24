@@ -28,9 +28,16 @@ This registry is a collaborative resource for information about real-world diffe
 **Click on any row to see expanded details.**
 
 <script>
-    // Only include deployments with a published status (see published_statuses in _config.yml)
-    const deployments = {{ site.data.deployments | where_exp: "item", "site.published_statuses contains item.status" | jsonify }};
+    // All deployments from Jekyll data files (unfiltered)
+    const allDeployments = {{ site.data.deployments | jsonify }};
+    // Statuses considered "published" — configured in _config.yml
+    const publishedStatuses = {{ site.published_statuses | jsonify }};
+    // Filter to only published deployments for visualizations and TSV download
+    const deployments = Object.fromEntries(
+        Object.entries(allDeployments).filter(([_, d]) => publishedStatuses.includes(d.status))
+    );
     window.deployments = deployments;
+    window.publishedStatuses = publishedStatuses;
 </script>
 <script type="module" src="/assets/js/download-tsv.js"></script>
 
@@ -74,16 +81,13 @@ This registry is a collaborative resource for information about real-world diffe
 [
 {% for deployment in site.data.deployments %}
     {% assign d = deployment[1] %}
-    {% comment %}Only include deployments with a published status (see published_statuses in _config.yml){% endcomment %}
-    {% unless site.published_statuses contains d.status %}{% continue %}{% endunless %}
     {% assign d_json = d | jsonify %}
     {% assign d_json_without_brace = d_json | replace_first: '{', '' %}
     {% assign anchor_value = d.url_slug | default: deployment[0] %}
-    {% if first_rendered %},{% endif %}{% assign first_rendered = true %}
     {
         "file_name": {{ deployment[0] | jsonify }},
         "anchor": {{ anchor_value | jsonify }},
-        {{ d_json_without_brace }}
+        {{ d_json_without_brace }}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]
 </script>

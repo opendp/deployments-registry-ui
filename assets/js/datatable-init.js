@@ -29,6 +29,14 @@ window.addEventListener('DOMContentLoaded', () => {
 		return;
 	}
 
+	// Filter to only published statuses (set in index.md from _config.yml)
+	const publishedStatuses = Array.isArray(window.publishedStatuses)
+		? window.publishedStatuses
+		: null;
+	deploymentsData = publishedStatuses
+		? deploymentsData.filter(d => publishedStatuses.includes(d.status))
+		: deploymentsData;
+
 	const columnsConfig = getColumnsConfig(deploymentsData);
 	const columns = columnsConfig.map(c => c.column);
 
@@ -164,7 +172,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 			// Initialize deployments features now that DataTable is fully set up
 			try {
-				initializeDeploymentsFeatures();
+				initializeDeploymentsFeatures(deploymentsData);
 			} catch (e) {
 				console.warn('Failed to initialize deployments features:', e);
 			}
