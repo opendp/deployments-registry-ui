@@ -64,7 +64,7 @@ defaults:
       permalink: /privacy/:basename/
 
 # Deployment statuses shown in the public UI (whitelist).
-# See NIST IR 8588 §5.1 for the governance workflow.
+# See NIST IR 8588 §5.1: https://nvlpubs.nist.gov/nistpubs/ir/2025/NIST.IR.8588.ipd.pdf#page=21
 published_statuses:
   - "Converted"
   - "Approved"
