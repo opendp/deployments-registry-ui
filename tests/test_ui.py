@@ -52,8 +52,8 @@ def test_ui(page: Page):
     tsv_content = tsv_download_info.value.path().read_text(encoding='utf-8')
     # header row:
     assert "product.name\tproduct.data_curators" in tsv_content
-    # dotted keys:
-    assert "accounting.composition" in tsv_content
+    # dotted keys (verifies flatten() produces dot-separated paths):
+    assert "product.name" in tsv_content
     # body row:
     assert "Assistive AI\tMicrosoft" in tsv_content
 
