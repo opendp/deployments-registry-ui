@@ -31,13 +31,15 @@ This registry is a collaborative resource for information about real-world diffe
     // All deployments from Jekyll data files (unfiltered)
     const allDeployments = {{ site.data.deployments | jsonify }};
     // Statuses considered "published" — configured in _config.yml
-    const publishedStatuses = {{ site.published_statuses | jsonify }};
+    var publishedStatuses = {{ site.published_statuses | jsonify }};
+    // Shared predicate for status filtering across table, visualizations, and TSV
+    window.isPublishedDeployment = function(deployment) {
+        return publishedStatuses.includes(deployment.status);
+    };
     // Filter to only published deployments for visualizations and TSV download
-    const deployments = Object.fromEntries(
-        Object.entries(allDeployments).filter(([_, d]) => publishedStatuses.includes(d.status))
+    var deployments = Object.fromEntries(
+        Object.entries(allDeployments).filter(([_, d]) => window.isPublishedDeployment(d))
     );
-    window.deployments = deployments;
-    window.publishedStatuses = publishedStatuses;
 </script>
 <script type="module" src="/assets/js/download-tsv.js"></script>
 

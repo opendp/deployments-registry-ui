@@ -7,7 +7,7 @@ let deploymentHints = { short_fields: [], extra_columns: {} };
 // Export the initialization function for use by datatable-init.js
 export function initializeDeploymentsFeatures(filteredData) {
   // Use pre-filtered data from datatable-init.js (already parsed & status-filtered)
-  deploymentsData = (filteredData || []).map(d => d.deployment);
+  deploymentsData = (filteredData).map(d => d.deployment);
 
   // Load deployment hints
   const hintsScript = document.getElementById('deployment-hints');
