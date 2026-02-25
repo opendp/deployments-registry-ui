@@ -36,13 +36,13 @@ def test_ui(page: Page):
     latex_node.is_hidden()
 
     # Click:
-    # US Census:
-    page.get_by_text("ρ: 2.63").click()
+    # Census County Business Patterns (Converted, has ρ in table):
+    page.get_by_text("ρ: 12.058").click()
 
     # Confirm visible
     latex_node.is_visible()
 
-    expect(page.get_by_text("Set of summary statistics (tables with counts of individuals").first).to_be_visible()
+    expect(page.get_by_text("Demonstration dataset releasing data on economic establishments").first).to_be_visible()
 
     # TODO: confirm the second paragraph is in a separate element.
 
@@ -52,8 +52,8 @@ def test_ui(page: Page):
     tsv_content = tsv_download_info.value.path().read_text(encoding='utf-8')
     # header row:
     assert "product.name\tproduct.data_curators" in tsv_content
-    # dotted keys:
-    assert "accounting.composition" in tsv_content
+    # dotted keys (verifies flatten() produces dot-separated paths):
+    assert "product.name" in tsv_content
     # body row:
     assert "Assistive AI\tMicrosoft" in tsv_content
 

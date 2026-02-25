@@ -28,9 +28,18 @@ This registry is a collaborative resource for information about real-world diffe
 **Click on any row to see expanded details.**
 
 <script>
-    const deployments = {{ site.data.deployments | jsonify }};
-    // Provide full deployments object (with tier and metadata) to visualization code without altering existing data sources
-    window.deployments = deployments;
+    // All deployments from Jekyll data files (unfiltered)
+    const allDeployments = {{ site.data.deployments | jsonify }};
+    // Statuses considered "published" — configured in _config.yml
+    var publishedStatuses = {{ site.published_statuses | jsonify }};
+    // Shared predicate for status filtering across table, visualizations, and TSV
+    window.isPublishedDeployment = function(deployment) {
+        return publishedStatuses.includes(deployment.status);
+    };
+    // Filter to only published deployments for visualizations and TSV download
+    var deployments = Object.fromEntries(
+        Object.entries(allDeployments).filter(([_, d]) => window.isPublishedDeployment(d))
+    );
 </script>
 <script type="module" src="/assets/js/download-tsv.js"></script>
 
@@ -79,7 +88,6 @@ This registry is a collaborative resource for information about real-world diffe
     {% assign anchor_value = d.url_slug | default: deployment[0] %}
     {
         "file_name": {{ deployment[0] | jsonify }},
-        "index": {{ forloop.index0 }},
         "anchor": {{ anchor_value | jsonify }},
         {{ d_json_without_brace }}{% unless forloop.last %},{% endunless %}
 {% endfor %}

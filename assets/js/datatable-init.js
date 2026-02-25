@@ -29,6 +29,8 @@ window.addEventListener('DOMContentLoaded', () => {
 		return;
 	}
 
+	deploymentsData = deploymentsData.filter(d => window.isPublishedDeployment(d));
+
 	const columnsConfig = getColumnsConfig(deploymentsData);
 	const columns = columnsConfig.map(c => c.column);
 
@@ -40,8 +42,8 @@ window.addEventListener('DOMContentLoaded', () => {
 		if ('searchPane' in c) {
 			if (typeof c.searchPane === 'boolean') {
 				automaticSearchPaneCols.push(idx);
-			} else if(typeof c.searchPane === 'object' && c.searchPane.show && 'config' in c.searchPane) {
-				if(Array.isArray(c.searchPane.config)) {
+			} else if (typeof c.searchPane === 'object' && c.searchPane.show && 'config' in c.searchPane) {
+				if (Array.isArray(c.searchPane.config)) {
 					customSearchPaneCols.push(...c.searchPane.config);
 				} else {
 					customSearchPaneCols.push(c.searchPane.config);
@@ -77,7 +79,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		},
 		columnDefs: columnDefs,
 		// Apply header attributes to <th> elements
-		headerCallback: function(thead) {
+		headerCallback: function (thead) {
 			const $thead = $(thead);
 			columnsConfig.forEach((c, index) => {
 				if (c.headerAttributes) {
@@ -91,10 +93,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			});
 		},
 		// Add data attributes to each row for easier lookup later
-		createdRow: function(row, data, dataIndex) {
+		createdRow: function (row, data, dataIndex) {
 			$(row).addClass('deployment-row');
 
-			$(row).attr('data-index', data.index || dataIndex);
+			$(row).attr('data-index', dataIndex);
 			$(row).attr('data-file-name', data.file_name);   // correct key: file_name (not fileName)
 			$(row).attr('data-anchor', data.anchor);         // this should work now
 		},
@@ -137,7 +139,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					if (!filterLabel) {
 						const subRowNo2 = searchPane.querySelector('.dtsp-subRow2');
 
-						if(subRowNo2) {
+						if (subRowNo2) {
 							const labelElement = document.createElement('div');
 							labelElement.classList.add('filter-label');
 							labelElement.textContent = label;
@@ -152,7 +154,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 
 			columnsConfig.forEach((c) => {
-				const {colIdx, searchPaneClassName} = c;
+				const { colIdx, searchPaneClassName } = c;
 
 				const thead = headers.find(th => parseInt(th.getAttribute('data-col-idx'), 10) === colIdx);
 				const thisColumnsSearchPanes = searchPanes.filter(sp => sp.classList.contains(searchPaneClassName));
@@ -164,7 +166,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 			// Initialize deployments features now that DataTable is fully set up
 			try {
-				initializeDeploymentsFeatures();
+				initializeDeploymentsFeatures(deploymentsData);
 			} catch (e) {
 				console.warn('Failed to initialize deployments features:', e);
 			}
@@ -174,8 +176,8 @@ window.addEventListener('DOMContentLoaded', () => {
 				MathJax.typeset?.(Array.from(document.querySelectorAll('.inline-markdown')));
 			} catch (err) {
 				if (!window.__mathjaxTypesetWarned) {
-				console.warn('[deployments.js] MathJax typeset failed or MathJax not loaded when rendering datatable.', err);
-				window.__mathjaxTypesetWarned = true; // avoid spamming console
+					console.warn('[deployments.js] MathJax typeset failed or MathJax not loaded when rendering datatable.', err);
+					window.__mathjaxTypesetWarned = true; // avoid spamming console
 				}
 			}
 		},
