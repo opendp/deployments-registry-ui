@@ -59,6 +59,8 @@ playwright install
 pytest
 ```
 
+Be sure that the Jekyll application is running (e.g., via `bundle exec jekyll serve`) when executing `pytest`.
+
 We're using [Playwright](https://playwright.dev/python/) for end-to-end tests. You can use it to [generate test code](https://playwright.dev/python/docs/codegen-intro) just by interacting with the app in a browser:
 
 ```shell
