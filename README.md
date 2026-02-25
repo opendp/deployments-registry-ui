@@ -128,7 +128,9 @@ icon: '<svg>...</svg>'  # Optional icon (used as part of page header)
 Add your page to `_navigation/main.md`. The navigation structure supports two types of sections:
 
 **Sections with sub-pages:**
+
 ```yaml
+---
 - section: your-section
   title: Section Title
   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">...</svg>'
@@ -137,14 +139,18 @@ Add your page to `_navigation/main.md`. The navigation structure supports two ty
     - path: /your-section/your-page/  # Note: URL path, not file path
       title: Your Page Title
       order: 1
+---
 ```
 
 **Direct link sections (no sub-pages):**
+
 ```yaml
+---
 - section: your-section
   title: Section Title
   path: /your-section/  # Direct link to a page
   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">...</svg>'
+---
 ```
 
 ### 4. Update _config.yml
@@ -152,12 +158,14 @@ Add your page to `_navigation/main.md`. The navigation structure supports two ty
 When adding a new section, you must also add it to the `defaults` in `_config.yml` to configure permalinks and layout:
 
 ```yaml
+---
 defaults:
   - scope:
       path: "pages/your-section"
     values:
       layout: "docs"
       permalink: /your-section/:basename/
+---
 ```
 
 ## Creating New Sections
