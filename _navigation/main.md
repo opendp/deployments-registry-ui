@@ -14,9 +14,6 @@ navigation:
       - path: /trust-models/
         title: Trust Models
         order: 3
-      - path: /further-reading/
-        title: Further Reading
-        order: 4
 
   - section: deployments-registry
     title: Deployments Registry
@@ -37,8 +34,8 @@ navigation:
       - path: /further-information/standards-and-guidance/
         title: Official Standards and Guidance
         order: 2
-      - path: /further-information/acknowledgements/
-        title: Acknowledgements
+      - path: /further-information/references-and-resources/
+        title: References and resources
         order: 3
 
   - section: privacy

@@ -1,7 +1,7 @@
 ---
 title: References and resources
 order: 2
-class: acknowledgements
+class: references-and-resources
 layout: docs
 ---
 # References and resources
