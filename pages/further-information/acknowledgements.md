@@ -19,7 +19,7 @@ layout: docs
 * [https://opendp.github.io/learning/](https://opendp.github.io/learning/)
 
 ## Interface design and software development
-Angela Barragan, Ishan Joshi, Jim Lamb, Priyanka Nanayakkara, Bhaswar Purohit, Anshu Raikwar
+Angela Barragan, Ishan Joshi, Jim Lamb, Chuck McCallum, Priyanka Nanayakkara, Bhaswar Purohit, Anshu Raikwar
  
 ## Authoring and reviewing entries & registry background text
 Nicolas Berrios, Elena Ghazi, Shlomi Hod, James Honaker, Priyanka Nanayakkara, Dmitrii Usynin, Salil Vadhan
