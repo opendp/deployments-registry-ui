@@ -4,8 +4,9 @@ order: 2
 class: acknowledgements
 layout: docs
 ---
+# References and resources
 
-# Registry ideation, development, and evaluation
+## Registry ideation, development, and evaluation
 
 * Dwork, C., Kohli, N., & Mulligan, D. (2019). [Differential Privacy in Practice: Expose Your Epsilons!](https://escholarship.org/uc/item/8vj5q8j7). Journal of Privacy and Confidentiality, 9(2). This paper proposed a registry for differential privacy deployments, including an initial set of attributes per deployment each entry should contain. They also interviewed practitioners about how they deploy differential privacy.
 
@@ -15,17 +16,18 @@ layout: docs
 
 * …your paper here! The registry is a community effort, and research studies on uptake of the registry are encouraged.
 
-# Educational material on differential privacy
+## Educational material on differential privacy
 * [https://opendp.github.io/learning/](https://opendp.github.io/learning/)
 
-## Interface design and software development
+## Contributions
+### Interface design and software development
 Angela Barragan, Ishan Joshi, Jim Lamb, Chuck McCallum, Priyanka Nanayakkara, Bhaswar Purohit, Anshu Raikwar
  
-## Authoring and reviewing entries & registry background text
+### Authoring and reviewing entries & registry background text
 Nicolas Berrios, Elena Ghazi, Shlomi Hod, James Honaker, Priyanka Nanayakkara, Dmitrii Usynin, Salil Vadhan
  
-## Project management
+### Project management
 Sharon Ayalde, James Honaker, Raman Prasad, Annie Wu 
 
-## Governance ideation
+### Governance ideation
 Micah Altman, Sharon Ayalde, Rachel Cummings, Damien Desfontaines, Jack Fitzsimons, Elena Ghazi, Andrew Gruen, James Honaker, Gary Howarth, Nitin Kohli, Chuck McCallum, Priyanka Nanayakkara, Joe P. Near, Rob Pisarczyk, Salil Vadhan
