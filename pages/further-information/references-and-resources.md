@@ -4,8 +4,6 @@ order: 2
 class: references-and-resources
 layout: docs
 ---
-# References and resources
-
 ## Registry ideation, development, and evaluation
 
 * Dwork, C., Kohli, N., & Mulligan, D. (2019). [Differential Privacy in Practice: Expose Your Epsilons!](https://escholarship.org/uc/item/8vj5q8j7). Journal of Privacy and Confidentiality, 9(2). This paper proposed a registry for differential privacy deployments, including an initial set of attributes per deployment each entry should contain. They also interviewed practitioners about how they deploy differential privacy.
