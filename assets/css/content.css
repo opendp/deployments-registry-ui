@@ -195,10 +195,11 @@
     gap: 24px;
 }
 
-.tier-info-card-dismiss {
+.tier-info-card .tier-info-card-dismiss {
     padding: 8px 0;
     border: none;
     background: none;
+    background-color: transparent;
     cursor: pointer;
     border-radius: 8px;
     color: #DADADA;
@@ -207,10 +208,12 @@
     font-weight: 500;
     line-height: 20px;
     text-align: center;
+    height: auto;
 }
 
-.tier-info-card-dismiss:hover {
+.tier-info-card .tier-info-card-dismiss:hover {
     color: #FFFFFF;
+    background-color: transparent;
 }
 
 .tier-info-card .tier-info-card-read-more {
@@ -235,21 +238,23 @@
 }
 
 /* Close button */
-.tier-info-card-close {
+.tier-info-card .tier-info-card-close {
     padding: 0;
     border: none;
     background: none;
+    background-color: transparent;
     cursor: pointer;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 16px;
-    height: 16px;
+    height: auto;
 }
 
-.tier-info-card-close:hover {
+.tier-info-card .tier-info-card-close:hover {
     opacity: 0.8;
+    background-color: transparent;
 }
 
 .tier-info-card-close svg {

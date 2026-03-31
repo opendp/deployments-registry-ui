@@ -201,8 +201,7 @@ function joinPath(base, key) {
 function setTierInfoCardVisibility(shouldShow) {
   const tierInfoCard = getTierInfoCard();
   const visible = shouldShow
-    && !window.__tierInfoCardDismissed
-    && window.innerWidth > 768;
+    && !window.__tierInfoCardDismissed;
 
   if (tierInfoCard) {
     tierInfoCard.classList.toggle('visible', visible);
