@@ -112,6 +112,7 @@
 /* Tier Info Card — right-side floating card (issue #163, Figma design) */
 .tier-info-card {
     position: fixed;
+    /* eslint-disable-next-line css/no-invalid-properties */
     top: var(--sidebar-padding-v);
     right: 2rem;
     transform: translateX(20px);
