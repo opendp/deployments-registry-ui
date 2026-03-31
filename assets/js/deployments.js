@@ -151,18 +151,11 @@ function selectDeploymentRow(index) {
       sidebar.classList.add('collapsed');
     }
 
-    // Hide tier info card before opening the panel (they share the same screen area)
-    const tierInfoCard = getTierInfoCard();
-    if (tierInfoCard) {
-      tierInfoCard.classList.remove('visible');
-    }
-
     // Expand side panel container and panel
     sidePanelContainers.forEach(container => {
       container.classList.add('expanded');
     });
     if (sidePanel) {
-      sidePanel.classList.remove('hidden-by-card');
       sidePanel.classList.add('expanded');
     }
 
@@ -205,16 +198,6 @@ function setTierInfoCardVisibility(shouldShow) {
 
   if (tierInfoCard) {
     tierInfoCard.classList.toggle('visible', visible);
-  }
-
-  // Hide or restore the side panel so it doesn't overlap the card
-  const sidePanel = document.querySelector('.side-panel');
-  if (sidePanel) {
-    if (visible) {
-      sidePanel.classList.add('hidden-by-card');
-    } else {
-      sidePanel.classList.remove('hidden-by-card');
-    }
   }
 }
 

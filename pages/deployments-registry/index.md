@@ -75,28 +75,27 @@ This registry is a collaborative resource for information about real-world diffe
 
 </div>
 
-<div class="tier-info-card" id="tier-info-card" aria-live="polite">
-    <div class="tier-info-card-icon-wrapper">
-        <i class="material-symbols-rounded icon" aria-hidden="true">check_circle</i>
-    </div>
-    <div class="tier-info-card-content">
-        <span class="tier-info-card-title">Information about Tiers</span>
-        <p class="tier-info-card-description">
-            Each deployment is assigned a tier, with higher tiers requiring more detailed information.
-        </p>
-        <div class="tier-info-card-actions">
-            <button type="button" class="tier-info-card-dismiss" data-tier-info-dismiss>Dismiss</button>
-            <a class="tier-info-card-read-more" href="{{ '/transparency-tiers/' | relative_url }}">Read More</a>
-        </div>
-    </div>
-    <button type="button" class="tier-info-card-close" data-tier-info-dismiss aria-label="Dismiss tier information">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.5 4.5L11.5 11.5M11.5 4.5L4.5 11.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-        </svg>
-    </button>
-</div>
-
 <div class="side-panel-container">
+    <div class="tier-info-card" id="tier-info-card" aria-live="polite">
+        <div class="tier-info-card-icon-wrapper">
+            <i class="material-symbols-rounded icon" aria-hidden="true">check_circle</i>
+        </div>
+        <div class="tier-info-card-content">
+            <span class="tier-info-card-title">Information about Tiers</span>
+            <p class="tier-info-card-description">
+                Each deployment is assigned a tier, with higher tiers requiring more detailed information.
+            </p>
+            <div class="tier-info-card-actions">
+                <button type="button" class="tier-info-card-dismiss" data-tier-info-dismiss>Dismiss</button>
+                <a class="tier-info-card-read-more" href="{{ '/transparency-tiers/' | relative_url }}">Read More</a>
+            </div>
+        </div>
+        <button type="button" class="tier-info-card-close" data-tier-info-dismiss aria-label="Dismiss tier information">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 4.5L11.5 11.5M11.5 4.5L4.5 11.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
     <div class="side-panel">
         <div class="side-panel-content" id="deployment-details">
         </div>
