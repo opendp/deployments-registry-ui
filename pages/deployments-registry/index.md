@@ -83,11 +83,11 @@ This registry is a collaborative resource for information about real-world diffe
         <div class="tier-info-card-content">
             <span class="tier-info-card-title">Information about Tiers</span>
             <p class="tier-info-card-description">
-                Each deployment is assigned a tier, with higher tiers requiring more detailed information.
+                Tier assignment reflects the granularity of deployment information disclosed in the registry, not the quality of the deployment.
             </p>
             <div class="tier-info-card-actions">
                 <button type="button" class="tier-info-card-dismiss" data-tier-info-dismiss>Dismiss</button>
-                <a class="tier-info-card-read-more" href="{{ '/transparency-tiers/' | relative_url }}">Read More</a>
+                <a class="tier-info-card-read-more" href="{{ '/transparency-tiers/' | relative_url }}" data-tier-info-dismiss>Read More</a>
             </div>
         </div>
         <button type="button" class="tier-info-card-close" data-tier-info-dismiss aria-label="Dismiss tier information">
