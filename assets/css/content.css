@@ -65,6 +65,198 @@
     gap: 4px;
 }
 
+/* Registry Table Callout — info line above the table (issue #163) */
+.deployments-registry-page .registry-table-callout {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px;
+    border: 1px solid rgba(0, 116, 158, 0.12);
+    border-radius: 8px;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+
+    color: #3A3A3A;
+    background: rgba(0, 164, 219, 0.05);
+
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+.deployments-registry-page .registry-table-callout .icon {
+    height: 20px;
+    width: 20px;
+
+    color: #00749E;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.deployments-registry-page .registry-table-callout p {
+    margin: 0;
+
+    color: #00749E;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.deployments-registry-page .registry-table-callout a {
+    color: #00749E;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+/* Tier Info Card — right-side floating card (issue #163, Figma design) */
+.tier-info-card {
+    position: fixed;
+    top: var(--sidebar-padding-v);
+    right: 2rem;
+    transform: translateX(20px);
+    z-index: 1001;
+    width: 550px;
+    max-width: calc(100vw - 4rem);
+
+    padding: 12px;
+    border: 1px solid rgba(0, 146, 202, 0.34);
+    border-radius: 12px;
+    background: #3A3A3A;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16);
+    box-sizing: border-box;
+    overflow: clip;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+}
+
+.tier-info-card.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+/* Icon wrapper — check_circle */
+.tier-info-card-icon-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 2px 0;
+    flex-shrink: 0;
+}
+
+.tier-info-card-icon-wrapper .icon {
+    color: #218358;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+/* Content column — title, description, actions */
+.tier-info-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+}
+
+.tier-info-card-title {
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.tier-info-card-description {
+    margin: 0;
+    color: #E7E7E7;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+/* Actions row — dismiss + read more */
+.tier-info-card-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.tier-info-card-dismiss {
+    padding: 8px 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 8px;
+    color: #DADADA;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+}
+
+.tier-info-card-dismiss:hover {
+    color: #FFFFFF;
+}
+
+.tier-info-card .tier-info-card-read-more {
+    padding: 8px 0;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tier-info-card .tier-info-card-read-more:hover,
+.tier-info-card .tier-info-card-read-more:visited {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+/* Close button */
+.tier-info-card-close {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+}
+
+.tier-info-card-close:hover {
+    opacity: 0.8;
+}
+
+.tier-info-card-close svg {
+    width: 16px;
+    height: 16px;
+}
+
 /* Content Responsive Design */
 @media (min-width: 768px) {
     .deployments-registry-page .post-title {
@@ -200,6 +392,21 @@
 
 /* Content Responsive Design */
 @media (max-width: 768px) {
+    .tier-info-card {
+        top: auto;
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        width: auto;
+        max-width: none;
+        border-radius: 12px;
+        transform: translateY(20px);
+    }
+
+    .tier-info-card.visible {
+        transform: translateY(0);
+    }
+
     .docs-content {
         order: 1;
         padding: 20px;

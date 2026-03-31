@@ -66,6 +66,13 @@
     transform: translateX(0);
 }
 
+.side-panel.hidden-by-card {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    pointer-events: none;
+}
+
 /* Side Panel Content */
 .side-panel-content {
     opacity: 0;

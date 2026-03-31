@@ -3,6 +3,11 @@ import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 let deploymentsData = [];
 let deploymentHints = { short_fields: [], extra_columns: {} };
+const tierInfoCardDismissedStorageKey = 'deployments-registry:tier-info-dismissed';
+
+function getTierInfoCard() {
+  return document.getElementById('tier-info-card');
+}
 
 // Export the initialization function for use by datatable-init.js
 export function initializeDeploymentsFeatures(filteredData) {
@@ -44,7 +49,7 @@ export function initializeDeploymentsFeatures(filteredData) {
 
     const descriptionText = row.querySelector('.description-text');
     const showMoreButton = row.querySelector('.show-more-btn');
-    if(descriptionText && showMoreButton) {
+    if (descriptionText && showMoreButton) {
       showMoreButton.addEventListener('click', function (e) {
         e.stopPropagation(); // Prevent row click event
         if (!Number.isNaN(rowIndex)) {
@@ -56,6 +61,7 @@ export function initializeDeploymentsFeatures(filteredData) {
 
   // Create modal overlay for mobile
   createModalOverlay();
+  initializeTierInfoCard();
 
   // Auto-select deployment if URL has #deployment_anchor
   // Runs only once on load
@@ -145,11 +151,18 @@ function selectDeploymentRow(index) {
       sidebar.classList.add('collapsed');
     }
 
+    // Hide tier info card before opening the panel (they share the same screen area)
+    const tierInfoCard = getTierInfoCard();
+    if (tierInfoCard) {
+      tierInfoCard.classList.remove('visible');
+    }
+
     // Expand side panel container and panel
     sidePanelContainers.forEach(container => {
       container.classList.add('expanded');
     });
     if (sidePanel) {
+      sidePanel.classList.remove('hidden-by-card');
       sidePanel.classList.add('expanded');
     }
 
@@ -183,6 +196,62 @@ function selectDeploymentRow(index) {
 function joinPath(base, key) {
   if (!base || base === '/') return '/' + key;
   return base + '/' + key;
+}
+
+function setTierInfoCardVisibility(shouldShow) {
+  const tierInfoCard = getTierInfoCard();
+  const visible = shouldShow
+    && !window.__tierInfoCardDismissed
+    && window.innerWidth > 768;
+
+  if (tierInfoCard) {
+    tierInfoCard.classList.toggle('visible', visible);
+  }
+
+  // Hide or restore the side panel so it doesn't overlap the card
+  const sidePanel = document.querySelector('.side-panel');
+  if (sidePanel) {
+    if (visible) {
+      sidePanel.classList.add('hidden-by-card');
+    } else {
+      sidePanel.classList.remove('hidden-by-card');
+    }
+  }
+}
+
+function readTierInfoCardDismissed() {
+  try {
+    return window.localStorage.getItem(tierInfoCardDismissedStorageKey) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function writeTierInfoCardDismissed(dismissed) {
+  try {
+    window.localStorage.setItem(tierInfoCardDismissedStorageKey, dismissed ? 'true' : 'false');
+  } catch {
+    // Ignore storage failures and keep the in-memory dismissal state.
+  }
+}
+
+function initializeTierInfoCard() {
+  if (window.__tierInfoCardInitialized) return;
+  window.__tierInfoCardInitialized = true;
+  window.__tierInfoCardDismissed = readTierInfoCardDismissed();
+
+  const dismissButtons = document.querySelectorAll('[data-tier-info-dismiss]');
+  dismissButtons.forEach((button) => {
+    button.addEventListener('click', function () {
+      window.__tierInfoCardDismissed = true;
+      writeTierInfoCardDismissed(true);
+      setTierInfoCardVisibility(false);
+    });
+  });
+
+  if (!window.__tierInfoCardDismissed) {
+    setTimeout(() => setTierInfoCardVisibility(true), 4000);
+  }
 }
 
 const shortFieldSet = new Set();
@@ -288,13 +357,13 @@ function generateDeploymentDetailsHTML(deployment, fileName) {
             ${description ? `<div class="description">${marked.parse(description)}</div>` : ''}
 
             ${data_repo_base_url && fileName ? (
-              `<a class="button download-btn" href="${data_repo_base_url}/${fileName}.yaml" target="_blank">
+      `<a class="button download-btn" href="${data_repo_base_url}/${fileName}.yaml" target="_blank">
                 View on GitHub
                 <span class="material-symbols-rounded icon">
                   arrow_outward
                 </span>
               </a>`
-            ) : ''}
+    ) : ''}
           </div>
 
           <button class="close-btn variant-ghost" onClick="clearSelection()">
