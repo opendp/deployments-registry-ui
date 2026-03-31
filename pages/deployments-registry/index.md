@@ -25,7 +25,7 @@ icon: 'assignment'
 
 This registry is a collaborative resource for information about real-world differential privacy deployments. Use the table and visualizations below to explore both technical and sociotechnical aspects of these deployments.
 
-**Click on any row to see expanded details.**
+**Click on a row to see more details about the deployment.**
 
 <script>
     // All deployments from Jekyll data files (unfiltered)
