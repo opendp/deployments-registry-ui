@@ -25,8 +25,6 @@ icon: 'assignment'
 
 This registry is a collaborative resource for information about real-world differential privacy deployments. Use the table and visualizations below to explore both technical and sociotechnical aspects of these deployments.
 
-**Click on a row to see more details about the deployment.**
-
 <script>
     // All deployments from Jekyll data files (unfiltered)
     const allDeployments = {{ site.data.deployments | jsonify }};
@@ -49,7 +47,7 @@ This registry is a collaborative resource for information about real-world diffe
 <!-- Filters Section -->
 <div class="filters-container">
     <div style="display: flex; flex-direction: column; gap: 8px;">
-        <span class="title" style="white-space: nowrap;">Deployments Registry</span>
+        <span class="title" style="white-space: nowrap;">All deployments</span>
     </div>
     <div class="filter-row" style="justify-content: right">
         <div class="search-container">
@@ -64,6 +62,13 @@ This registry is a collaborative resource for information about real-world diffe
     </div>
 </div>
 
+<div class="registry-table-callout" role="note">
+    <i class="material-symbols-rounded icon" aria-hidden="true">info</i>
+    <p>
+        Click on a row to see more details about the deployment.
+    </p>
+</div>
+
 <div class="table-container">
 <table id="deployments-table" class="display stripe"></table>
 </div>
@@ -71,6 +76,26 @@ This registry is a collaborative resource for information about real-world diffe
 </div>
 
 <div class="side-panel-container">
+    <div class="tier-info-card" id="tier-info-card" aria-live="polite">
+        <div class="tier-info-card-icon-wrapper">
+            <i class="material-symbols-rounded icon" aria-hidden="true">check_circle</i>
+        </div>
+        <div class="tier-info-card-content">
+            <span class="tier-info-card-title">Information about Tiers</span>
+            <p class="tier-info-card-description">
+                Tier assignment reflects the granularity of deployment information disclosed in the registry, not the quality of the deployment.
+            </p>
+            <div class="tier-info-card-actions">
+                <button type="button" class="tier-info-card-dismiss" data-tier-info-dismiss>Dismiss</button>
+                <a class="tier-info-card-read-more" href="{{ '/transparency-tiers/' | relative_url }}" data-tier-info-dismiss>Read More</a>
+            </div>
+        </div>
+        <button type="button" class="tier-info-card-close" data-tier-info-dismiss aria-label="Dismiss tier information">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 4.5L11.5 11.5M11.5 4.5L4.5 11.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
     <div class="side-panel">
         <div class="side-panel-content" id="deployment-details">
         </div>

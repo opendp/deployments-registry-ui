@@ -6,3 +6,7 @@ _site/
 **/__pycache__
 node_modules/
 test-results/
+.venv
+vendor/*
+.bundle
+.hypothesis/
