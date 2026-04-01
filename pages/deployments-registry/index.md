@@ -65,7 +65,7 @@ This registry is a collaborative resource for information about real-world diffe
 <div class="registry-table-callout" role="note">
     <i class="material-symbols-rounded icon" aria-hidden="true">info</i>
     <p>
-        Click on a row to see more details about each deployment.
+        Click on a row to see more details about the deployment.
     </p>
 </div>
 
