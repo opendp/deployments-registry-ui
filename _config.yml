@@ -70,6 +70,7 @@ published_statuses:
   - "Approved"
   - "Approved (Update Requested)"
   - "Approved (Pending)"
+  - "Pending"
 
 exclude:
   - eslint.config.mjs
